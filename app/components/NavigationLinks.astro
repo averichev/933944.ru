@@ -1,0 +1,12 @@
+---
+import { contact, navigation } from "../content/site";
+---
+<nav aria-label="Основная навигация">
+  <ul class="navigation-links">
+    {navigation.map((item) => <li>{item.href ?
+      <a href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : undefined}>{item.label}<span aria-hidden="true">↗</span></a> :
+      <span class="navigation-unavailable" aria-disabled="true" title="Раздел готовится">{item.label}<small>Скоро</small></span>
+    }</li>)}
+    <li><a href={contact.emailHref} data-inquiry="navigation">Контакты</a></li>
+  </ul>
+</nav>

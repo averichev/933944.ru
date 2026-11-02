@@ -1,0 +1,85 @@
+---
+import Icon from "./Icon.astro";
+import { getImage } from "astro:assets";
+import heroPhoto from "../assets/hero-cabbage-field.jpg";
+import { contact, heroImage } from "../content/site";
+const widths = [480, 800, 1280, 1920];
+const optimize = (format: "avif" | "webp", quality: number) => Promise.all(
+  widths.map((width) => getImage({ src: heroPhoto, width, format, quality })),
+);
+const [avif, webp] = await Promise.all([optimize("avif", 50), optimize("webp", 76)]);
+const srcset = (images: typeof avif) => images.map((image, index) => `${image.src} ${widths[index]}w`).join(", ");
+const benefits = [
+  { icon: "factory", lines: ["Собственное", "производство"] },
+  { icon: "engineering", lines: ["Разработка под\u00a0задачу", "хозяйства"] },
+  { icon: "service", lines: ["Сервис", "и\u00a0запасные части"] },
+] as const;
+---
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-photo">
+    <picture>
+      <source type="image/avif" srcset={srcset(avif)} sizes={heroImage.sizes} />
+      <img src={webp[2].src} srcset={srcset(webp)} sizes={heroImage.sizes} width={heroImage.width} height={heroImage.height} alt={heroImage.alt} loading="eager" fetchpriority="high" decoding="async" />
+    </picture>
+  </div>
+  <div class="hero-content">
+    <p class="hero-eyebrow"><span></span>Собственное производство<br />с&nbsp;2007&nbsp;года</p>
+    <h1 id="hero-title">Техника<br />для&nbsp;выращивания<br />и&nbsp;уборки овощей</h1>
+    <p class="hero-description">Проектируем и&nbsp;производим оборудование для&nbsp;посадки, ухода, уборки и&nbsp;транспортировки урожая.</p>
+    <div class="hero-actions">
+      <a class="button button-primary" href={contact.emailHref} data-inquiry="hero">Получить предложение<Icon name="arrow" size={20} /></a>
+      <a class="button button-secondary" href={contact.emailHref} data-equipment-selector>Подобрать технику<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none"><path d="M8 3v10m-4-4 4 4 4-4" stroke="currentColor" stroke-width="1.3" /></svg></a>
+    </div>
+    <ul class="hero-benefits" aria-label="Наши преимущества">
+      {benefits.map(({ icon, lines }) => <li><Icon name={icon} /><span>{lines[0]}<br />{lines[1]}</span></li>)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .hero { position: relative; isolation: isolate; display: grid; align-items: center; min-height: max(640px, 100svh); overflow: hidden; background: var(--color-paper); }
+  .hero-photo { position: absolute; z-index: 0; inset: 0 0 0 28%; }
+  .hero-photo picture { position: absolute; inset: 0; display: block; }
+  .hero-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 85% 50%; }
+  .hero-photo::after { position: absolute; inset: 0 -1px; content: ""; background: linear-gradient(90deg, var(--color-paper) 0%, rgb(246 245 240 / .98) 9%, rgb(246 245 240 / .87) 19%, rgb(246 245 240 / .47) 33%, rgb(246 245 240 / .08) 49%, transparent 65%); }
+  .hero-content { position: relative; z-index: 2; padding: 61px clamp(32px, 4.15vw, 80px) 42px; }
+  .hero-eyebrow { position: relative; margin: 0 0 30px; padding-left: 31px; font-size: 10px; font-weight: 700; line-height: 1.6; letter-spacing: .13em; text-transform: uppercase; color: var(--color-green); }
+  .hero-eyebrow > span { position: absolute; left: 5px; top: 1px; width: 3px; height: 31px; background: var(--color-yellow); transform: skewX(-35deg); }
+  h1 { max-width: 690px; margin: 0; font-size: clamp(46px, 4.45vw, 68px); font-weight: 700; line-height: 1.08; letter-spacing: -.055em; }
+  .hero-description { max-width: 432px; margin: 26px 0 0; color: var(--color-muted); font-size: 15px; line-height: 1.75; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 31px; }
+  .hero-benefits { display: flex; flex-wrap: wrap; gap: 28px; padding: 0; margin: 47px 0 0; list-style: none; }
+  .hero-benefits li { display: flex; align-items: center; gap: 10px; color: var(--color-green); }
+  .hero-benefits li span { color: var(--color-ink); font-size: 10px; font-weight: 500; line-height: 1.65; }
+  .hero-benefits svg { flex: none; }
+  @media (min-width: 1600px) {
+    .hero-content { padding-top: 82px; }
+    .hero-benefits { margin-top: 60px; }
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    .hero-photo { left: 17%; }
+    .hero-photo img { object-position: 85% center; }
+    .hero-photo::after { background: linear-gradient(90deg, var(--color-paper), rgb(246 245 240 / .93) 25%, rgb(246 245 240 / .72) 44%, rgb(246 245 240 / .14) 67%, transparent 83%); }
+    .hero-content { padding: 64px 32px 38px; }
+    h1 { font-size: clamp(42px, 4.45vw, 54px); }
+    .hero-description { max-width: 355px; }
+    .hero-actions { gap: 10px; }
+    .hero-actions .button { padding-inline: 16px; font-size: 11px; }
+    .hero-benefits { gap: 21px; }
+  }
+  @media (max-width: 767px) {
+    .hero { display: flex; flex-direction: column; align-items: stretch; min-height: calc(100svh - 83px); }
+    .hero-content { padding: 35px 24px 0; }
+    .hero-eyebrow { margin-bottom: 25px; font-size: 9px; }
+    h1 { font-size: clamp(32px, 9.55vw, 54px); line-height: 1.11; letter-spacing: -.055em; }
+    .hero-description { max-width: 450px; margin-top: 21px; font-size: 14px; line-height: 1.7; }
+    .hero-actions { flex-direction: column; align-items: stretch; gap: 10px; margin-top: 25px; max-width: 450px; }
+    .hero-actions .button { justify-content: space-between; min-height: 50px; padding-inline: 20px; }
+    .hero-benefits { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 12px; margin-top: 28px; }
+    .hero-benefits li { flex-direction: column; align-items: flex-start; gap: 9px; }
+    .hero-benefits li span { font-size: 9px; line-height: 1.6; }
+    .hero-photo { position: relative; order: 2; z-index: 0; inset: auto; flex: 1 0 auto; min-height: clamp(255px, 70vw, 470px); margin-top: 12px; }
+    .hero-photo img { position: absolute; inset: 0; object-position: 85% center; }
+    .hero-photo::after { background: linear-gradient(180deg, var(--color-paper), rgb(246 245 240 / .65) 9%, rgb(246 245 240 / .13) 23%, transparent 40%); }
+  }
+</style>

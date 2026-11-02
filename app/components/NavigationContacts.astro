@@ -1,0 +1,10 @@
+---
+import { contact } from "../content/site";
+---
+<div class="navigation-contact">
+  <span class="contact-caption">Обсудим вашу задачу</span>
+  <a class="contact-phone" href={contact.phoneHref}>{contact.phone}</a>
+  <span class="contact-note">Бесплатно по России</span>
+  <a class="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a>
+  <a class="button button-primary sidebar-cta" href={contact.emailHref} data-inquiry="sidebar">Получить предложение<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.5" /></svg></a>
+</div>

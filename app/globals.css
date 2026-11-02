@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@font-face { font-family: Manrope; src: url("/fonts/manrope-500.woff2") format("woff2"); font-style: normal; font-weight: 400 500; font-display: swap; }
+@font-face { font-family: Manrope; src: url("/fonts/manrope-700.woff2") format("woff2"); font-style: normal; font-weight: 600 800; font-display: swap; }
+
+@theme {
+  --color-green: #086137;
+  --color-yellow: #ffc800;
+  --color-ink: #172720;
+  --color-paper: #f6f5f0;
+  --color-white: #ffffff;
+  --color-muted: #57635b;
+  --color-line: #dedfd8;
+  --font-sans: "Manrope", "Arial", sans-serif;
+}
+
+:root { --sidebar-width: 236px; color: var(--color-ink); background: var(--color-paper); font-family: var(--font-sans); font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; }
+button, input, textarea { font: inherit; }
+a { color: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+::selection { background: var(--color-yellow); color: var(--color-ink); }
+:focus-visible { outline: 2px solid var(--color-green); outline-offset: 5px; }
+main { margin-left: var(--sidebar-width); }
+.button { display: inline-flex; align-items: center; justify-content: center; gap: 17px; min-height: 51px; padding: 15px 22px; border: 1px solid transparent; border-radius: 3px; font-size: 12px; font-weight: 700; line-height: 1.4; text-decoration: none; cursor: pointer; transition: background-color 160ms ease, border-color 160ms ease; }
+.button svg { flex: none; }
+.button-primary { background: var(--color-yellow); color: var(--color-ink); }
+.button-primary:hover { background: #edbb00; }
+.button-secondary { background: rgb(246 245 240 / .92); border-color: #a8afa7; color: var(--color-ink); }
+.button-secondary:hover { background: var(--color-white); border-color: var(--color-green); }
+.skip-link { position: fixed; z-index: 100; top: 10px; left: 16px; padding: 12px 20px; background: var(--color-yellow); color: var(--color-ink); transform: translateY(-200%); }
+.skip-link:focus { transform: translateY(0); }
+@media (max-width: 767px) { main { margin-left: 0; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

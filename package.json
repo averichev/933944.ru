@@ -1,0 +1,25 @@
+{
+  "name": "isvo-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1 --port 4321",
+    "build": "astro build",
+    "check": "astro check",
+    "preview": "astro preview --host 127.0.0.1 --port 4321",
+    "audit": "npm run build && node scripts/audit.mjs"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@tailwindcss/vite": "4.3.3",
+    "@types/node": "22.19.19",
+    "astro": "7.3.5",
+    "lighthouse": "13.6.0",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3"
+  }
+}

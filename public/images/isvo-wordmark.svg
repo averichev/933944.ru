@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 455 100"
+  width="455"
+  height="100"
+  role="img"
+  aria-labelledby="title"
+>
+  <title id="title">Логотип ИСВО</title>
+
+  <!-- И: жёлтая диагональ -->
+  <path d="M0 100 76 0h24L24 100Z" fill="#FFC800"/>
+
+  <!-- И: зелёные стойки с болтами -->
+  <path
+    d="M0 0h24v100H0ZM12 9a3 3 0 1 0 0 6 3 3 0 1 0 0-6ZM12 85a3 3 0 1 0 0 6 3 3 0 1 0 0-6ZM76 0h24v100H76ZM88 9a3 3 0 1 0 0 6 3 3 0 1 0 0-6ZM88 85a3 3 0 1 0 0 6 3 3 0 1 0 0-6Z"
+    fill="#086137"
+    fill-rule="evenodd"
+  />
+
+  <!-- С -->
+  <path d="M210 0h-50l-30 30v40l30 30h50V76h-40l-16-16V40l16-16h40Z" fill="#086137"/>
+
+  <!-- В -->
+  <path
+    d="M240 0h60l25 25v15l-15 10 15 10v15l-25 25h-60Zm24 24h31l6 6v4l-6 6h-31Zm0 36h31l6 6v4l-6 6h-31Z"
+    fill="#086137"
+    fill-rule="evenodd"
+  />
+
+  <!-- О -->
+  <path
+    d="M385 0h40l30 30v40l-30 30h-40l-30-30V30Zm10 24h20l16 16v20l-16 16h-20l-16-16V40Z"
+    fill="#086137"
+    fill-rule="evenodd"
+  />
+</svg>
