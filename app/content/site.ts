@@ -15,7 +15,7 @@ export const navigation = [
 ] as const;
 
 export const heroImage = {
-  sizes: "(max-width: 767px) 100vw, (max-width: 1199px) calc(83vw - 195.88px), calc(72vw - 169.92px)",
+  sizes: "(max-width: 767px) 100vw, (max-width: 1199px) calc(83vw - 222.44px), calc(72vw - 192.96px)",
   width: 1920,
   height: 1440,
   alt: "Лента и рама овощеуборочного транспортера ИСВО НОУТ-5 в работе на капустном поле",

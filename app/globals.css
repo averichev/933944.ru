@@ -14,17 +14,29 @@
   --font-sans: "Manrope", "Arial", sans-serif;
 }
 
-:root { --sidebar-width: 236px; color: var(--color-ink); background: var(--color-paper); font-family: var(--font-sans); font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+:root {
+  --sidebar-width: 268px;
+  --font-size-caption: .75rem;
+  --font-size-small: .8125rem;
+  --font-size-control: .875rem;
+  --font-size-body: 1.0625rem;
+  color: var(--color-ink);
+  background: var(--color-paper);
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; min-width: 320px; }
+body { margin: 0; min-width: 320px; font-size: var(--font-size-body); line-height: 1.65; }
 button, input, textarea { font: inherit; }
 a { color: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
 ::selection { background: var(--color-yellow); color: var(--color-ink); }
 :focus-visible { outline: 2px solid var(--color-green); outline-offset: 5px; }
 main { margin-left: var(--sidebar-width); }
-.button { display: inline-flex; align-items: center; justify-content: center; gap: 17px; min-height: 51px; padding: 15px 22px; border: 1px solid transparent; border-radius: 3px; font-size: 12px; font-weight: 700; line-height: 1.4; text-decoration: none; cursor: pointer; transition: background-color 160ms ease, border-color 160ms ease; }
+.button { display: inline-flex; align-items: center; justify-content: center; gap: 17px; min-height: 51px; padding: 15px 22px; border: 1px solid transparent; border-radius: 3px; font-size: var(--font-size-control); font-weight: 700; line-height: 1.4; text-decoration: none; cursor: pointer; transition: background-color 160ms ease, border-color 160ms ease; }
 .button svg { flex: none; }
 .button-primary { background: var(--color-yellow); color: var(--color-ink); }
 .button-primary:hover { background: #edbb00; }
@@ -32,5 +44,5 @@ main { margin-left: var(--sidebar-width); }
 .button-secondary:hover { background: var(--color-white); border-color: var(--color-green); }
 .skip-link { position: fixed; z-index: 100; top: 10px; left: 16px; padding: 12px 20px; background: var(--color-yellow); color: var(--color-ink); transform: translateY(-200%); }
 .skip-link:focus { transform: translateY(0); }
-@media (max-width: 767px) { main { margin-left: 0; } }
+@media (max-width: 767px) { :root { --font-size-body: 1rem; } main { margin-left: 0; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
