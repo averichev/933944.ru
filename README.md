@@ -273,20 +273,25 @@ make audit-desktop
 `outputs/lighthouse-desktop.report.*`. Аудит запускается отдельно от `release`,
 чтобы обычная сборка не зависела от установленного браузера.
 
-Lighthouse зафиксирован на **13.5.0**. Проверка 03.11.2026 выявила в 13.6.0
-цепочку `@sentry/node → @sentry/bundler-plugins → glob → minimatch` с двумя
-уязвимостями ([glob](https://github.com/advisories/GHSA-3g3m-2fjr-6pw4),
-[minimatch](https://github.com/advisories/GHSA-g3hv-75wg-m249)); npm учитывал
-также зависимые пакеты и сообщал о пяти уязвимостях. В дереве зависимостей
-13.5.0 этой цепочки нет, `npm audit` показывает 0 уязвимостей. Версия и её
-зависимости закреплены в `package-lock.json`; при следующем обновлении
-нужно повторить `npm audit`, `make release` и запуск Lighthouse.
-При установке остаётся отдельное предупреждение `deprecated` для
-`@opentelemetry/sdk-trace-base`: его использует Sentry 10 внутри Lighthouse.
-Это предупреждение об устаревшем пакете, и оно не подавляется. Исторические
-замеры ниже выполнены в Lighthouse 13.6.0; оценки разных версий могут отличаться.
-После смены версии прошли `make release` и оба профиля Lighthouse;
-отчёты сохранены в `outputs/dependency-audit/`.
+Lighthouse зафиксирован на **13.6.0** с Sentry 11, который уже не использует
+устаревший `@opentelemetry/sdk-trace-base`. Проверка 03.11.2026 выявила,
+что `@sentry/bundler-plugins@11.10.0` всё ещё требует уязвимый `glob@^13.0.6`.
+В `package.json` задан точечный
+[`overrides`](https://docs.npmjs.com/cli/v11/configuring-npm/package-json/#overrides)
+только для этой версии Sentry: `glob@14.0.2`. В `package-lock.json` закреплён
+его `minimatch@11.0.4`. Это официальные версии с исправлениями
+[glob](https://github.com/advisories/GHSA-3g3m-2fjr-6pw4) и
+[minimatch](https://github.com/advisories/GHSA-g3hv-75wg-m249).
+
+Правило временное: его нужно удалить после перехода Sentry на исправленный
+`glob`, затем повторить `npm audit --include=dev`, `make release` и оба профиля
+Lighthouse. Переход между основными версиями `glob` проверен отдельно на
+используемом Sentry API в ESM и CommonJS: поиск файлов, массивы шаблонов,
+исключения и прекращение обхода после отмены. Чистая установка через
+`make release` прошла без предупреждений, `npm audit --include=dev` показывает
+0 уязвимостей. Оба профиля Lighthouse прошли; отчёты — `outputs/dependency-update/`.
+Версии инструментов у исторических замеров сохранены; оценки разных версий
+Lighthouse могут отличаться.
 
 Это лабораторная оценка готовой страницы, без серверного сжатия и кеширования.
 На хостинге остаются Brotli/Gzip, корректные `Content-Type` для AVIF/WOFF2,
