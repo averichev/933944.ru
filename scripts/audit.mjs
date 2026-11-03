@@ -12,6 +12,7 @@ await readFile(resolve(directory, "index.html")); // Fail before launching Chrom
 await mkdir(dirname(output), { recursive: true });
 const types = {
   ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css",
+  ".txt": "text/plain; charset=utf-8",
   ".svg": "image/svg+xml", ".avif": "image/avif", ".webp": "image/webp",
   ".png": "image/png", ".jpg": "image/jpeg", ".ttf": "font/ttf", ".woff2": "font/woff2",
 };
