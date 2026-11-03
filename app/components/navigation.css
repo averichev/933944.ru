@@ -1,4 +1,4 @@
-.sidebar { position: fixed; z-index: 10; inset: 0 auto 0 0; display: flex; flex-direction: column; width: var(--sidebar-width); padding: 42px 24px 23px; border-right: 1px solid var(--color-line); background: var(--color-white); overflow-y: auto; }
+.sidebar { position: fixed; z-index: 10; inset: 0 auto 0 0; display: flex; flex-direction: column; width: var(--sidebar-width); padding: 42px 24px 23px; border-right: 1px solid var(--color-line); background: var(--color-white); overflow-x: hidden; overflow-y: auto; }
 .brand { display: flex; flex-direction: column; align-items: flex-start; gap: 13px; text-decoration: none; color: var(--color-green); }
 .brand img { width: 153px; height: auto; }
 .brand > span { font-size: var(--font-size-caption); font-weight: 700; line-height: 1.5; letter-spacing: .025em; }
@@ -39,7 +39,13 @@ body:has(dialog[open]) { overflow: hidden; }
 .inquiry-dialog .button { width: 100%; margin-top: 30px; }
 .dialog-email { display: block; width: fit-content; margin: 17px auto 0; font-size: var(--font-size-control); text-underline-offset: 4px; }
 @media (min-width: 768px) and (max-height: 760px) {
-  .sidebar .navigation-links { margin-block: 40px 24px; }
+  .sidebar { padding-block: 24px 16px; }
+  .sidebar .navigation-links { margin-block: 24px 16px; }
+  .sidebar .navigation-links li > a, .sidebar .navigation-unavailable { min-height: 44px; padding-block: 10px; }
+  .sidebar .contact-caption { margin-bottom: 8px; }
+  .sidebar .contact-email { margin-top: 12px; }
+  .sidebar .sidebar-cta { margin-top: 18px; }
+  .sidebar-footer { margin-top: 16px; }
 }
 @media (max-width: 767px) {
   .sidebar { display: none; }

@@ -1,14 +1,7 @@
 ---
 import Icon from "./Icon.astro";
-import { getImage } from "astro:assets";
-import heroPhoto from "../assets/hero-cabbage-field.jpg";
-import { contact, heroImage } from "../content/site";
-const widths = [480, 800, 1280, 1920];
-const optimize = (format: "avif" | "webp", quality: number) => Promise.all(
-  widths.map((width) => getImage({ src: heroPhoto, width, format, quality })),
-);
-const [avif, webp] = await Promise.all([optimize("avif", 50), optimize("webp", 76)]);
-const srcset = (images: typeof avif) => images.map((image, index) => `${image.src} ${widths[index]}w`).join(", ");
+import HeroGallery from "./HeroGallery.astro";
+import { contact } from "../content/site";
 const benefits = [
   { icon: "factory", lines: ["Собственное", "производство"] },
   { icon: "engineering", lines: ["Разработка под\u00a0задачу", "хозяйства"] },
@@ -16,18 +9,13 @@ const benefits = [
 ] as const;
 ---
 <section class="hero" aria-labelledby="hero-title">
-  <div class="hero-photo">
-    <picture>
-      <source type="image/avif" srcset={srcset(avif)} sizes={heroImage.sizes} />
-      <img src={webp[2].src} srcset={srcset(webp)} sizes={heroImage.sizes} width={heroImage.width} height={heroImage.height} alt={heroImage.alt} loading="eager" fetchpriority="high" decoding="async" />
-    </picture>
-  </div>
   <div class="hero-content">
     <p class="hero-eyebrow"><span></span>Собственное производство<br />с&nbsp;2007&nbsp;года</p>
     <h1 id="hero-title">Техника<br />для&nbsp;выращивания<br />и&nbsp;уборки овощей</h1>
-    <p class="hero-description">Проектируем и&nbsp;производим оборудование для&nbsp;посадки, ухода, уборки и&nbsp;транспортировки урожая.</p>
+    <p class="hero-description">Оборудование для&nbsp;посадки, ухода, уборки и&nbsp;транспортировки урожая.</p>
     <div class="hero-actions">
       <a class="button button-primary" href={contact.emailHref} data-inquiry="hero">Получить предложение<Icon name="arrow" size={20} /></a>
+      <HeroGallery />
       <a class="button button-secondary" href={contact.emailHref} data-equipment-selector>Подобрать технику<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none"><path d="M8 3v10m-4-4 4 4 4-4" stroke="currentColor" stroke-width="1.3" /></svg></a>
     </div>
     <ul class="hero-benefits" aria-label="Наши преимущества">
@@ -37,12 +25,10 @@ const benefits = [
 </section>
 
 <style>
-  .hero { position: relative; isolation: isolate; display: grid; align-items: center; min-height: max(640px, 100svh); overflow: hidden; background: var(--color-paper); }
-  .hero-photo { position: absolute; z-index: 0; inset: 0 0 0 28%; }
-  .hero-photo picture { position: absolute; inset: 0; display: block; }
-  .hero-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 85% 50%; }
-  .hero-photo::after { position: absolute; inset: 0 -1px; content: ""; background: linear-gradient(90deg, var(--color-paper) 0%, rgb(246 245 240 / .98) 9%, rgb(246 245 240 / .95) 25%, rgb(246 245 240 / .88) 33%, rgb(246 245 240 / .47) 49%, transparent 65%); }
-  .hero-content { position: relative; z-index: 2; padding: 61px clamp(32px, 4.15vw, 80px) 42px; }
+  .hero { position: relative; isolation: isolate; display: grid; align-items: center; min-height: 100svh; overflow: clip; background: var(--color-paper); }
+  .hero-content { padding: 61px clamp(32px, 4.15vw, 80px) 42px; }
+  /* Keep the gallery anchored to the Hero while its DOM order follows the mobile reading order. */
+  .hero-content > :not(.hero-actions), .hero-actions > .button { position: relative; z-index: 2; }
   .hero-eyebrow { position: relative; margin: 0 0 30px; padding-left: 31px; font-size: var(--font-size-caption); font-weight: 700; line-height: 1.6; letter-spacing: .1em; text-transform: uppercase; color: var(--color-green); }
   .hero-eyebrow > span { position: absolute; left: 5px; top: 1px; width: 3px; height: 31px; background: var(--color-yellow); transform: skewX(-35deg); }
   h1 { max-width: 690px; margin: 0; font-size: clamp(46px, 4.45vw, 68px); font-weight: 700; line-height: 1.08; letter-spacing: -.055em; }
@@ -57,9 +43,6 @@ const benefits = [
     .hero-benefits { margin-top: 60px; }
   }
   @media (min-width: 768px) and (max-width: 1199px) {
-    .hero-photo { left: 17%; }
-    .hero-photo img { object-position: 85% center; }
-    .hero-photo::after { background: linear-gradient(90deg, var(--color-paper), rgb(246 245 240 / .98) 25%, rgb(246 245 240 / .92) 45%, rgb(246 245 240 / .85) 65%, rgb(246 245 240 / .32) 85%, transparent); }
     .hero-content { padding: 64px 32px 38px; }
     h1 { font-size: clamp(42px, 4.45vw, 54px); }
     .hero-description { max-width: 400px; }
@@ -67,23 +50,24 @@ const benefits = [
     .hero-actions .button { padding-inline: 16px; }
     .hero-benefits { gap: 21px; }
   }
-  @media (min-width: 768px) and (max-width: 991px) {
-    .hero-photo::after { background: linear-gradient(90deg, var(--color-paper), rgb(246 245 240 / .95) 45%, rgb(246 245 240 / .86) 85%, rgb(246 245 240 / .68)); }
+  @media (min-width: 768px) and (max-height: 760px) {
+    .hero-content { padding-block: 32px; }
+    .hero-eyebrow { margin-bottom: 22px; }
+    .hero-description { margin-top: 20px; }
+    .hero-actions { margin-top: 24px; }
+    .hero-benefits { margin-top: 32px; }
   }
   @media (max-width: 767px) {
-    .hero { display: flex; flex-direction: column; align-items: stretch; min-height: calc(100svh - 83px); }
-    .hero-content { padding: 35px 24px 0; }
-    .hero-eyebrow { margin-bottom: 25px; }
+    .hero { display: block; min-height: calc(100svh - 83px); }
+    .hero-content { width: 100%; max-width: 560px; margin-inline: auto; padding: 28px 24px 32px; }
+    .hero-eyebrow { margin-bottom: 20px; }
     h1 { font-size: clamp(32px, 9.55vw, 54px); line-height: 1.11; letter-spacing: -.055em; }
-    .hero-description { max-width: 450px; margin-top: 21px; }
-    .hero-actions { flex-direction: column; align-items: stretch; gap: 10px; margin-top: 25px; max-width: 450px; }
+    .hero-description { margin-top: 18px; }
+    .hero-actions { flex-direction: column; align-items: stretch; gap: 16px; margin-top: 22px; }
     .hero-actions .button { justify-content: space-between; min-height: 50px; padding-inline: 20px; }
     .hero-benefits { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 12px; margin-top: 28px; }
     .hero-benefits li { flex-direction: column; align-items: flex-start; gap: 9px; }
     .hero-benefits li span { font-size: var(--font-size-caption); }
-    .hero-photo { position: relative; order: 2; z-index: 0; inset: auto; flex: 1 0 auto; min-height: clamp(255px, 70vw, 470px); margin-top: 12px; }
-    .hero-photo img { position: absolute; inset: 0; object-position: 85% center; }
-    .hero-photo::after { background: linear-gradient(180deg, var(--color-paper), rgb(246 245 240 / .65) 9%, rgb(246 245 240 / .13) 23%, transparent 40%); }
   }
   @media (max-width: 374px) {
     .hero-benefits { grid-template-columns: 1fr; gap: 16px; }
