@@ -273,6 +273,21 @@ make audit-desktop
 `outputs/lighthouse-desktop.report.*`. Аудит запускается отдельно от `release`,
 чтобы обычная сборка не зависела от установленного браузера.
 
+Lighthouse зафиксирован на **13.5.0**. Проверка 03.11.2026 выявила в 13.6.0
+цепочку `@sentry/node → @sentry/bundler-plugins → glob → minimatch` с двумя
+уязвимостями ([glob](https://github.com/advisories/GHSA-3g3m-2fjr-6pw4),
+[minimatch](https://github.com/advisories/GHSA-g3hv-75wg-m249)); npm учитывал
+также зависимые пакеты и сообщал о пяти уязвимостях. В дереве зависимостей
+13.5.0 этой цепочки нет, `npm audit` показывает 0 уязвимостей. Версия и её
+зависимости закреплены в `package-lock.json`; при следующем обновлении
+нужно повторить `npm audit`, `make release` и запуск Lighthouse.
+При установке остаётся отдельное предупреждение `deprecated` для
+`@opentelemetry/sdk-trace-base`: его использует Sentry 10 внутри Lighthouse.
+Это предупреждение об устаревшем пакете, и оно не подавляется. Исторические
+замеры ниже выполнены в Lighthouse 13.6.0; оценки разных версий могут отличаться.
+После смены версии прошли `make release` и оба профиля Lighthouse;
+отчёты сохранены в `outputs/dependency-audit/`.
+
 Это лабораторная оценка готовой страницы, без серверного сжатия и кеширования.
 На хостинге остаются Brotli/Gzip, корректные `Content-Type` для AVIF/WOFF2,
 политика кеширования и проверка публичного URL в PageSpeed Insights.

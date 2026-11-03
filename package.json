@@ -19,7 +19,7 @@
     "@tailwindcss/vite": "4.3.3",
     "@types/node": "22.19.19",
     "astro": "7.3.5",
-    "lighthouse": "13.6.0",
+    "lighthouse": "13.5.0",
     "tailwindcss": "4.3.3",
     "typescript": "5.9.3"
   }
