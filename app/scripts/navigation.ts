@@ -10,6 +10,14 @@ const menuToggle = document.querySelector<HTMLButtonElement>(".menu-toggle")!;
 const inquiryTitle = document.querySelector<HTMLElement>("#inquiry-title")!;
 let returnFocus: HTMLElement | null = null;
 
+function restoreVisibleFocus(target: HTMLElement) {
+  // The opener can disappear when the window crosses a navigation breakpoint.
+  const fallback = menuToggle.getClientRects().length ? menuToggle :
+    document.querySelector<HTMLElement>(".site-navigation a[aria-current]") ??
+    document.querySelector<HTMLElement>(".site-navigation .brand");
+  (target.getClientRects().length ? target : fallback)?.focus({ preventScroll: true });
+}
+
 function closeMenu() {
   menu.close();
   menu.classList.remove("is-closing");
@@ -24,7 +32,7 @@ function dismissDialog(dialog: HTMLDialogElement) {
     if (!dialog.classList.contains("is-closing")) return;
     dialog.close();
     // Safari does not always focus a tapped opener, so native restoration can miss it.
-    if (dialog === menu) menuToggle.focus({ preventScroll: true });
+    if (dialog === menu) restoreVisibleFocus(menuToggle);
   });
 }
 
@@ -35,7 +43,7 @@ menuToggle.addEventListener("click", () => {
 menu.addEventListener("close", () => {
   menuToggle.setAttribute("aria-expanded", "false");
 });
-inquiry.addEventListener("close", () => returnFocus?.focus({ preventScroll: true }));
+inquiry.addEventListener("close", () => { if (returnFocus) restoreVisibleFocus(returnFocus); });
 
 for (const dialog of [menu, inquiry]) {
   const dismiss = () => dismissDialog(dialog);
@@ -87,5 +95,8 @@ document.addEventListener("click", (event) => {
 });
 
 matchMedia("(min-width: 768px)").addEventListener("change", (event) => {
-  if (event.matches) closeMenu();
+  if (event.matches && menu.open) {
+    closeMenu();
+    restoreVisibleFocus(menuToggle);
+  }
 });

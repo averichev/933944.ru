@@ -1,0 +1,64 @@
+---
+import { Picture } from "astro:assets";
+import ArrowUpRight from "@lucide/astro/icons/arrow-up-right";
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import ProductLinks from "../../../components/ProductLinks.astro";
+import { equipmentDirections, directionHref } from "../../../content/equipment";
+import { products, productsForDirection, type Product } from "../../../content/products";
+import { contact } from "../../../content/site";
+
+export function getStaticPaths() {
+  return products.map(product => ({ params: { direction: product.direction, product: product.slug }, props: { product } }));
+}
+interface Props { product: Product; }
+const { product } = Astro.props;
+const direction = equipmentDirections.find(item => item.id === product.direction)!;
+const related = productsForDirection(product.direction).filter(item => item.slug !== product.slug);
+const emailHref = `mailto:${contact.email}?subject=${encodeURIComponent(`Запрос предложения — ${product.name}`)}`;
+const imageWidths = product.image ? [...new Set([480, 800, 1200, 1600].map(width => Math.min(width, product.image!.src.width)))] : [];
+---
+<SiteLayout title={`${product.name} — ${product.purpose} | ИСВО`} description={product.description}>
+  <article class="product-page">
+    <nav class="breadcrumbs" aria-label="Хлебные крошки">
+      <a href="/#equipment-selector">Техника</a><span aria-hidden="true">/</span>
+      <a href={directionHref(direction.id)}>{direction.title}</a><span aria-hidden="true">/</span><span aria-current="page">{product.name}</span>
+    </nav>
+    <header class="product-header"><p class="eyebrow">{direction.title}</p><h1>{product.name}</h1><p class="product-purpose">{product.purpose}</p></header>
+    <div class:list={["product-overview", { "product-overview--with-image": product.image }]}>
+      {product.image && <div class="product-image"><Picture src={product.image.src} alt={product.image.alt} width={Math.min(1200, product.image.src.width)} widths={imageWidths} sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1199px) calc(100vw - 64px), calc((100vw - 268px - clamp(64px, 8.3vw, 160px) - 32px) * .524)" formats={["avif"]} fallbackFormat="webp" quality={65} loading="eager" fetchpriority="high" /></div>}
+      <div class="product-summary">
+        <p class="product-description">{product.description}</p>
+        <dl>{product.specs.map(spec => <div><dt>{spec.label}</dt><dd>{spec.value}</dd></div>)}</dl>
+        <a class="button button-primary" href={emailHref}>Запросить предложение<ArrowUpRight size={20} stroke-width={1.5} aria-hidden="true" focusable="false" /></a>
+        <a class="product-phone" href={contact.phoneHref}>{contact.phone}</a>
+      </div>
+    </div>
+    <section class="product-details" aria-labelledby="details-title"><h2 id="details-title">Особенности и применение</h2><ul>{product.features.map(feature => <li>{feature}</li>)}</ul></section>
+    <section class="related" aria-labelledby="related-title"><h2 id="related-title">Другая техника направления</h2><ProductLinks products={related} /></section>
+  </article>
+</SiteLayout>
+<style>
+  .product-page { max-width: 1600px; margin-inline: auto; padding: 40px var(--page-gutter) 80px; }
+  .breadcrumbs { display: flex; flex-wrap: wrap; gap: 8px 12px; color: var(--color-muted); font-size: var(--font-size-small); margin-bottom: 48px; }
+  .breadcrumbs a { text-underline-offset: 4px; }
+  .eyebrow { margin: 0 0 12px; font-size: var(--font-size-caption); font-weight: 700; color: var(--color-green); letter-spacing: .1em; text-transform: uppercase; }
+  h1 { margin: 0; font-size: clamp(2.2rem, 4.2vw, 4rem); font-weight: 700; letter-spacing: -.045em; line-height: 1.1; text-wrap: balance; }
+  .product-purpose { margin: 16px 0 32px; font-size: clamp(1.1rem, 1.8vw, 1.5rem); color: var(--color-muted); }
+  .product-overview { display: grid; gap: 32px; }
+  .product-overview--with-image { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: start; }
+  .product-image { overflow: hidden; border-radius: var(--radius-small); background: var(--color-line); }
+  .product-image :global(img) { display: block; width: 100%; height: auto; }
+  .product-summary { min-width: 0; max-width: 70ch; }
+  .product-description { margin: 0 0 24px; }
+  dl { margin: 0 0 28px; }
+  dl > div { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--color-line); font-size: var(--font-size-control); }
+  dt { color: var(--color-muted); } dd { margin: 0; font-weight: 700; }
+  .product-phone { display: block; width: fit-content; margin-top: 16px; text-underline-offset: 4px; font-size: var(--font-size-control); }
+  h2 { font-size: clamp(1.5rem, 2vw, 2rem); font-weight: 700; letter-spacing: -.035em; line-height: 1.2; margin: 0 0 24px; }
+  .product-details { margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--color-line); }
+  .product-details ul { max-width: 72ch; padding-left: 20px; margin: 0; } .product-details li { padding-left: 8px; margin-bottom: 12px; }
+  .product-details li::marker { color: var(--color-green); }
+  .related { margin-top: 56px; }
+  @media (max-width: 1199px) { .product-overview--with-image { grid-template-columns: 1fr; } }
+  @media (max-width: 767px) { .product-page { padding-top: 24px; } .breadcrumbs { margin-bottom: 32px; } .product-details, .related { margin-top: 40px; } }
+</style>

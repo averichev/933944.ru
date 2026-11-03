@@ -6,6 +6,7 @@
 @theme {
   --color-green: #086137;
   --color-yellow: #ffc800;
+  --color-terracotta: #75513f;
   --color-ink: #172720;
   --color-paper: #f6f5f0;
   --color-white: #ffffff;
@@ -16,10 +17,28 @@
 
 :root {
   --sidebar-width: 268px;
+  --site-header-height: 0px;
   --font-size-caption: .75rem;
   --font-size-small: .8125rem;
   --font-size-control: .875rem;
   --font-size-body: 1.0625rem;
+  --font-size-section: clamp(2rem, 3.6vw, 3.5rem);
+  --font-size-card: clamp(1.5rem, 2vw, 1.875rem);
+  --space-2: .5rem;
+  --space-3: .75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --page-gutter: clamp(32px, 4.15vw, 80px);
+  --radius-small: 3px;
+  /* Leaf silhouette: top-right stays sharp at both component scales. */
+  --radius-leaf-control: 16px 0 16px 16px;
+  --radius-leaf-card: 32px 0 32px 32px;
+  --duration-fast: 160ms;
+  --duration-image: 400ms;
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --focus-ring: 2px solid var(--color-green);
   color: var(--color-ink);
   background: var(--color-paper);
   font-family: var(--font-sans);
@@ -34,9 +53,9 @@ button, input, textarea { font: inherit; }
 a { color: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
 ::selection { background: var(--color-yellow); color: var(--color-ink); }
-:focus-visible { outline: 2px solid var(--color-green); outline-offset: 5px; }
+:focus-visible { outline: var(--focus-ring); outline-offset: 5px; }
 main { margin-left: var(--sidebar-width); }
-.button { display: inline-flex; align-items: center; justify-content: center; gap: 17px; min-height: 51px; padding: 15px 22px; border: 1px solid transparent; border-radius: 3px; font-size: var(--font-size-control); font-weight: 700; line-height: 1.4; text-decoration: none; cursor: pointer; transition: background-color 160ms ease, border-color 160ms ease; }
+.button { display: inline-flex; align-items: center; justify-content: center; gap: 17px; min-height: 51px; padding: 15px 22px; border: 1px solid transparent; border-radius: var(--radius-leaf-control); font-size: var(--font-size-control); font-weight: 700; line-height: 1.4; text-decoration: none; cursor: pointer; transition: background-color var(--duration-fast) ease, border-color var(--duration-fast) ease; }
 .button svg { flex: none; }
 .button-primary { background: var(--color-yellow); color: var(--color-ink); }
 .button-primary:hover { background: #edbb00; }
@@ -44,5 +63,7 @@ main { margin-left: var(--sidebar-width); }
 .button-secondary:hover { background: var(--color-white); border-color: var(--color-green); }
 .skip-link { position: fixed; z-index: 100; top: 10px; left: 16px; padding: 12px 20px; background: var(--color-yellow); color: var(--color-ink); transform: translateY(-200%); }
 .skip-link:focus { transform: translateY(0); }
-@media (max-width: 767px) { :root { --font-size-body: 1rem; } main { margin-left: 0; } }
+@media (max-width: 1199px) { :root { --sidebar-width: 0px; } }
+@media (min-width: 768px) and (max-width: 1199px) { :root { --page-gutter: 32px; --site-header-height: 192px; } }
+@media (max-width: 767px) { :root { --font-size-body: 1rem; --page-gutter: 24px; --site-header-height: 76px; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after, *::backdrop { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

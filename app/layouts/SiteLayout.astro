@@ -1,6 +1,7 @@
 ---
 import "../globals.css";
 import SiteNavigation from "../components/SiteNavigation.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 import manropeRegular from "../assets/fonts/manrope-500.woff2?url";
 import manropeBold from "../assets/fonts/manrope-700.woff2?url";
 interface Props { title: string; description: string; }
@@ -23,5 +24,6 @@ const { title, description } = Astro.props;
     <SiteNavigation />
     <noscript><style>.menu-toggle { display: none; }</style></noscript>
     <main id="main-content" tabindex="-1"><slot /></main>
+    <SiteFooter />
   </body>
 </html>

@@ -5,20 +5,24 @@ import X from "@lucide/astro/icons/x";
 import Brand from "./Brand.astro";
 import NavigationLinks from "./NavigationLinks.astro";
 import NavigationContacts from "./NavigationContacts.astro";
-import { contact } from "../content/site";
+import VineDivider from "./VineDivider.astro";
+import { contact, equipmentNavigation } from "../content/site";
 import "./navigation.css";
 ---
-<aside class="sidebar" aria-label="Навигация и контакты ИСВО">
+<header class="site-navigation" aria-label="Навигация и контакты ИСВО">
   <Brand />
+  <VineDivider id="header-vine" />
   <NavigationLinks />
-  <NavigationContacts />
-  <p class="sidebar-footer">Инженерия. Производство. Сервис.</p>
-</aside>
+  <NavigationContacts showEmail={false} />
+</header>
 <header class="mobile-header">
-  <Brand />
-  <button type="button" class="menu-toggle" aria-label="Открыть меню" aria-controls="mobile-menu" aria-expanded="false">
-    <Menu size={24} stroke-width={1.75} aria-hidden="true" focusable="false" />
-  </button>
+  <Brand compact />
+  <nav class="mobile-header-actions" aria-label="Быстрая навигация">
+    <a class="mobile-equipment-link" href={equipmentNavigation.href} aria-current={Astro.url.pathname.startsWith("/catalog/") ? "location" : undefined}>{equipmentNavigation.label}</a>
+    <button type="button" class="menu-toggle" aria-label="Открыть меню" aria-controls="mobile-menu" aria-expanded="false">
+      <Menu size={18} stroke-width={1.75} aria-hidden="true" focusable="false" /><span>Меню</span>
+    </button>
+  </nav>
 </header>
 <dialog id="mobile-menu" class="mobile-menu" aria-label="Меню сайта">
   <div class="mobile-menu-top">

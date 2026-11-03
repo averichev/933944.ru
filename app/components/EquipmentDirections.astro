@@ -1,0 +1,70 @@
+---
+import EquipmentDirectionCard from "./EquipmentDirectionCard.astro";
+import { equipmentDirections } from "../content/equipment";
+
+// Composition belongs to this section; catalog pages can use the same data/cards
+// with their own variants and image sizes.
+const mobileSizes = "(max-width: 559px) calc(100vw - 48px), (max-width: 767px) 512px";
+const compactSizes = `${mobileSizes}, (max-width: 1199px) calc((100vw - 84px) / 2), calc((100vw - 288px - clamp(64px, 8.3vw, 160px)) / 2.3)`;
+const layouts = {
+  seeding: { variant: "stacked", sizes: compactSizes },
+  "crop-care": {
+    variant: "split",
+    // In the narrow portrait strip, object-fit: cover scales the source by height.
+    // Its visible width would select an undersized, visibly blurred image.
+    sizes: `(max-width: 374px) calc(100vw - 48px), (max-width: 767px) 720px, (max-width: 1199px) calc((100vw - 84px) / 2), 720px`,
+  },
+  harvesting: {
+    variant: "featured",
+    sizes: `${mobileSizes}, (max-width: 1199px) calc((100vw - 64px) * 1.2 / 2.2), calc((100vw - 288px - clamp(64px, 8.3vw, 160px)) * 1.3 / 2.3)`,
+  },
+} as const;
+---
+<section id="equipment-selector" class="equipment-directions" aria-labelledby="equipment-title" tabindex="-1">
+  <div class="equipment-directions__inner">
+    <p class="equipment-directions__eyebrow">Направления техники</p>
+    <header class="equipment-directions__header">
+      <h2 id="equipment-title">Техника под задачи хозяйства</h2>
+      <p>От посева и ухода за растениями до уборки урожая — оборудование для разных этапов овощеводства.</p>
+    </header>
+    <ol class="equipment-directions__grid" role="list">
+      {equipmentDirections.map(direction => (
+        <li class={`equipment-directions__item equipment-directions__item--${direction.id}`}>
+          <EquipmentDirectionCard direction={direction} {...layouts[direction.id]} />
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .equipment-directions { padding: clamp(64px, 6vw, 104px) var(--page-gutter); border-top: 1px solid var(--color-line); scroll-margin-top: 24px; }
+  .equipment-directions:focus { outline: none; }
+  .equipment-directions:focus-visible .equipment-directions__eyebrow { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+  .equipment-directions__eyebrow { display: flex; align-items: center; gap: var(--space-4); margin: 0 0 var(--space-6); color: var(--color-green); font-size: var(--font-size-caption); line-height: 1.6; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .equipment-directions__eyebrow::before { content: ""; width: 3px; height: 22px; margin-inline: 7px; background: var(--color-yellow); transform: skewX(-35deg); }
+  .equipment-directions__header { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--space-8); align-items: end; margin-bottom: var(--space-12); }
+  h2 { max-width: 17ch; margin: 0; font-size: var(--font-size-section); line-height: 1.08; font-weight: 700; letter-spacing: -.055em; text-wrap: balance; }
+  .equipment-directions__header > p { max-width: 37ch; margin: 0 0 3px; color: var(--color-muted); font-size: var(--font-size-body); line-height: 1.7; }
+  .equipment-directions__grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 20px; margin: 0; padding: 0; list-style: none; }
+  .equipment-directions__item { min-width: 0; }
+  .equipment-directions__item--seeding { grid-column: 2; grid-row: 1; }
+  .equipment-directions__item--crop-care { grid-column: 2; grid-row: 2; }
+  .equipment-directions__item--harvesting { grid-column: 1; grid-row: 1 / 3; }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    .equipment-directions__header { grid-template-columns: 1fr; gap: var(--space-6); margin-bottom: var(--space-8); }
+    .equipment-directions__header > p { max-width: 48ch; }
+    .equipment-directions__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .equipment-directions__item--seeding { grid-column: 1; grid-row: 2; }
+    .equipment-directions__item--crop-care { grid-column: 2; grid-row: 2; }
+    .equipment-directions__item--harvesting { grid-column: 1 / -1; grid-row: 1; }
+  }
+  @media (max-width: 767px) {
+    .equipment-directions { padding-block: var(--space-12); }
+    .equipment-directions__inner { max-width: 512px; margin-inline: auto; }
+    .equipment-directions__eyebrow { margin-bottom: var(--space-6); }
+    .equipment-directions__header { grid-template-columns: 1fr; gap: var(--space-6); margin-bottom: var(--space-8); }
+    h2 { max-width: 15ch; font-size: clamp(2rem, 7.8vw, 2.75rem); }
+    .equipment-directions__grid { display: flex; flex-direction: column; gap: var(--space-6); }
+  }
+</style>

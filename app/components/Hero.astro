@@ -16,7 +16,7 @@ const benefits = [
     <div class="hero-actions">
       <a class="button button-primary" href={contact.emailHref} data-inquiry="hero">Получить предложение<Icon name="arrow" size={20} /></a>
       <HeroGallery />
-      <a class="button button-secondary" href={contact.emailHref} data-equipment-selector>Подобрать технику<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none"><path d="M8 3v10m-4-4 4 4 4-4" stroke="currentColor" stroke-width="1.3" /></svg></a>
+      <a class="button button-secondary" href="#equipment-selector" data-equipment-selector>Подобрать технику<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none"><path d="M8 3v10m-4-4 4 4 4-4" stroke="currentColor" stroke-width="1.3" /></svg></a>
     </div>
     <ul class="hero-benefits" aria-label="Наши преимущества">
       {benefits.map(({ icon, lines }) => <li><Icon name={icon} /><span>{lines[0]}<br />{lines[1]}</span></li>)}
@@ -25,7 +25,7 @@ const benefits = [
 </section>
 
 <style>
-  .hero { position: relative; isolation: isolate; display: grid; align-items: center; min-height: 100svh; overflow: clip; background: var(--color-paper); }
+  .hero { position: relative; isolation: isolate; display: grid; align-items: center; min-height: calc(100svh - var(--site-header-height)); overflow: clip; background: var(--color-paper); }
   .hero-content { padding: 61px clamp(32px, 4.15vw, 80px) 42px; }
   /* Keep the gallery anchored to the Hero while its DOM order follows the mobile reading order. */
   .hero-content > :not(.hero-actions), .hero-actions > .button { position: relative; z-index: 2; }
@@ -48,6 +48,7 @@ const benefits = [
     .hero-description { max-width: 400px; }
     .hero-actions { gap: 10px; }
     .hero-actions .button { padding-inline: 16px; }
+    .hero-actions [data-inquiry="hero"] { display: none; }
     .hero-benefits { gap: 21px; }
   }
   @media (min-width: 768px) and (max-height: 760px) {
@@ -58,7 +59,7 @@ const benefits = [
     .hero-benefits { margin-top: 32px; }
   }
   @media (max-width: 767px) {
-    .hero { display: block; min-height: calc(100svh - 83px); }
+    .hero { display: block; }
     .hero-content { width: 100%; max-width: 560px; margin-inline: auto; padding: 28px 24px 32px; }
     .hero-eyebrow { margin-bottom: 20px; }
     h1 { font-size: clamp(32px, 9.55vw, 54px); line-height: 1.11; letter-spacing: -.055em; }

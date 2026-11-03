@@ -1,11 +1,11 @@
 ---
 import ArrowUpRight from "@lucide/astro/icons/arrow-up-right";
-import { contact, navigation } from "../content/site";
+import { contact, equipmentNavigation, navigation } from "../content/site";
 ---
 <nav aria-label="Основная навигация">
   <ul class="navigation-links">
     {navigation.map((item) => <li>{item.href ?
-      <a href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : undefined}>{item.label}<ArrowUpRight size={20} stroke-width={1.75} aria-hidden="true" focusable="false" /></a> :
+      <a href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : item.href === equipmentNavigation.href && Astro.url.pathname.startsWith("/catalog/") ? "location" : undefined}>{item.label}<ArrowUpRight size={20} stroke-width={1.75} aria-hidden="true" focusable="false" /></a> :
       <span class="navigation-unavailable" aria-disabled="true" title="Раздел готовится">{item.label}<small>Скоро</small></span>
     }</li>)}
     <li><a href={contact.emailHref} data-inquiry="navigation">Контакты</a></li>

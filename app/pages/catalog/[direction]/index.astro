@@ -1,0 +1,35 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import ProductLinks from "../../../components/ProductLinks.astro";
+import { equipmentDirections, directionHref, type EquipmentDirection } from "../../../content/equipment";
+import { productsForDirection } from "../../../content/products";
+
+export function getStaticPaths() {
+  return equipmentDirections.map(direction => ({ params: { direction: direction.id }, props: { direction } }));
+}
+interface Props { direction: EquipmentDirection; }
+const { direction } = Astro.props;
+---
+<SiteLayout title={`${direction.title} — техника ИСВО`} description={direction.description}>
+  <div class="catalog-page">
+    <nav class="breadcrumbs" aria-label="Хлебные крошки"><a href="/#equipment-selector">Техника</a><span aria-hidden="true">/</span><span aria-current="page">{direction.title}</span></nav>
+    <header><p class="eyebrow">Каталог техники</p><h1>{direction.title}</h1><p class="intro">{direction.description}</p></header>
+    <nav class="directions" aria-label="Направления техники">
+      {equipmentDirections.map(item => <a href={directionHref(item.id)} aria-current={item.id === direction.id ? "page" : undefined}>{item.title}</a>)}
+    </nav>
+    <ProductLinks products={productsForDirection(direction.id)} />
+  </div>
+</SiteLayout>
+<style>
+  .catalog-page { padding: 40px var(--page-gutter) 80px; max-width: 1400px; margin-inline: auto; }
+  .breadcrumbs { display: flex; flex-wrap: wrap; gap: 8px 12px; color: var(--color-muted); font-size: var(--font-size-small); margin-bottom: 56px; }
+  .breadcrumbs a { text-underline-offset: 4px; }
+  .eyebrow { color: var(--color-green); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: .1em; font-weight: 700; }
+  h1 { margin: 12px 0 20px; font-size: var(--font-size-section); font-weight: 700; line-height: 1.1; letter-spacing: -.045em; text-wrap: balance; }
+  .intro { color: var(--color-muted); max-width: 50ch; margin-bottom: 40px; }
+  .directions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+  .directions a { display: flex; align-items: center; min-height: 44px; padding: 10px 16px; border: 1px solid var(--color-line); border-radius: var(--radius-leaf-control); text-decoration: none; font-size: var(--font-size-control); }
+  .directions a[aria-current="page"] { background: var(--color-green); border-color: var(--color-green); color: white; }
+  .directions a:hover { border-color: var(--color-green); }
+  @media (max-width: 767px) { .catalog-page { padding-top: 24px; } .breadcrumbs { margin-bottom: 32px; } }
+</style>

@@ -43,10 +43,7 @@ const photos = await Promise.all(heroPhotos.map(async (photo) => {
   .hero-photo::after { position: absolute; z-index: 3; inset: 0 -1px; content: ""; background: linear-gradient(90deg, var(--color-paper) 0%, rgb(246 245 240 / .98) 9%, rgb(246 245 240 / .95) 25%, rgb(246 245 240 / .88) 33%, rgb(246 245 240 / .47) 49%, transparent 65%); }
   @media (min-width: 768px) and (max-width: 1199px) {
     .hero-photo { left: 17%; }
-    .hero-photo::after { background: linear-gradient(90deg, var(--color-paper), rgb(246 245 240 / .98) 25%, rgb(246 245 240 / .92) 45%, rgb(246 245 240 / .85) 65%, rgb(246 245 240 / .32) 85%, transparent); }
-  }
-  @media (min-width: 768px) and (max-width: 991px) {
-    .hero-photo::after { background: linear-gradient(90deg, var(--color-paper), rgb(246 245 240 / .95) 45%, rgb(246 245 240 / .86) 85%, rgb(246 245 240 / .68)); }
+    .hero-photo::after { background: linear-gradient(90deg, var(--color-paper), rgb(246 245 240 / .95) 25%, rgb(246 245 240 / .88) 40%, rgb(246 245 240 / .47) 60%, transparent 85%); }
   }
   @media (max-width: 767px) {
     .hero-photo { position: relative; inset: auto; flex: none; width: 100%; height: clamp(200px, 60vw, 320px); }

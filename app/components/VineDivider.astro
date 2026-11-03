@@ -1,0 +1,58 @@
+---
+interface Props { id: string; }
+const { id } = Astro.props;
+const lobedLeafId = `${id}-lobed`;
+const ovalLeafId = `${id}-oval`;
+const narrowLeafId = `${id}-narrow`;
+const youngLeafId = `${id}-young`;
+const patternId = `${id}-pattern`;
+---
+<!-- No viewBox: the pattern keeps its natural size as the available width changes. -->
+<svg class="vine-divider" width="100%" height="28" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <g id={lobedLeafId}>
+      <path d="M0 0 C3-4 6-6 9-5 L8-9 Q13-9 16-5 L18-9 Q21-7 22-4 Q27-4 31-1 Q27 1 24 3 L24 6 Q20 7 17 4 L15 8 Q11 8 9 4 L6 6 Q2 4 0 0Z" />
+      <path d="M1 0 Q14-1 28-1 M9 0 13-4 M16-1 20 3" fill="none" stroke-width=".65" />
+    </g>
+    <g id={ovalLeafId}>
+      <path d="M0 0 C5-9 15-10 28-2 C21 7 9 10 0 0Z" />
+      <path d="M1 0 Q13 1 25-2 M10 0 14-4" fill="none" stroke-width=".65" />
+    </g>
+    <g id={narrowLeafId}>
+      <path d="M0 0 C8-5 18-6 32-2 C23 3 10 5 0 0Z" />
+      <path d="M1 0 Q16-1 29-2" fill="none" stroke-width=".65" />
+    </g>
+    <g id={youngLeafId}>
+      <path d="M0 0 Q4-6 9-5 Q10-10 15-7 Q19-7 24-3 Q20 0 18 3 Q13 7 9 3 Q4 5 0 0Z" />
+      <path d="M1 0 Q11 0 22-3 M10-1 13-5" fill="none" stroke-width=".65" />
+    </g>
+    <!-- Keep the 840px tile centred, revealing or cropping both ends on resize. -->
+    <pattern id={patternId} x="50%" width="840" height="28" patternUnits="userSpaceOnUse" patternTransform="translate(-420 0)">
+      <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M0 15 C40 8 72 21 112 16 S178 9 220 14 S286 22 330 16 S396 8 440 14 S508 22 552 16 S618 9 662 14 S728 22 772 17 C804 13 812 19.9 840 15" fill="none" stroke-width=".85" />
+        <g fill="none" stroke-width=".8">
+          <path d="M75 16 Q78 16 82 12 M237 16 Q241 16 245 19 M425 12 Q430 13 435 10 M600 12 Q605 13 610 16 M776 17 Q780 16 784 12" />
+          <path d="M18 13 Q20 16 24 18 M158 12 Q160 10 164 9 M324 17 Q326 19 329 20 M514 19 Q516 15 520 13 M688 17 Q691 18 695 19" />
+          <path d="M154 12 C158 13 163 16 160 19 C157 22 154 19 156 17 M526 19 C529 15 533 11 536 13 C540 15 537 18 535 16" opacity=".6" />
+        </g>
+        <g fill="currentColor" fill-opacity=".08" stroke-width=".9">
+          <use href={`#${youngLeafId}`} transform="translate(24 18) rotate(24) scale(.5)" />
+          <use href={`#${lobedLeafId}`} transform="translate(82 12) rotate(-27) scale(.62)" />
+          <use href={`#${narrowLeafId}`} transform="translate(164 9) rotate(-16) scale(.55)" />
+          <use href={`#${ovalLeafId}`} transform="translate(245 19) rotate(20) scale(.55)" />
+          <use href={`#${lobedLeafId}`} transform="translate(329 20) rotate(14) scale(.62)" />
+          <use href={`#${narrowLeafId}`} transform="translate(435 10) rotate(-17) scale(.68)" />
+          <use href={`#${ovalLeafId}`} transform="translate(520 13) rotate(-30) scale(.53)" />
+          <use href={`#${youngLeafId}`} transform="translate(610 16) rotate(28) scale(.56)" />
+          <use href={`#${narrowLeafId}`} transform="translate(695 19) rotate(14) scale(.59)" />
+          <use href={`#${lobedLeafId}`} transform="translate(784 12) rotate(-25) scale(.46)" />
+        </g>
+      </g>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill={`url(#${patternId})`} />
+</svg>
+
+<style>
+  .vine-divider { flex: none; width: 100%; height: 28px; overflow: hidden; color: color-mix(in srgb, var(--color-green) 58%, var(--color-white)); pointer-events: none; }
+</style>

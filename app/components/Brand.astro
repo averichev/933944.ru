@@ -1,6 +1,8 @@
 ---
 import logoUrl from "../assets/brand/isvo-tagline.svg?url";
+interface Props { compact?: boolean; }
+const { compact = false } = Astro.props;
 ---
 <a class="brand" href="/" aria-label="ИСВО — машины для овощеводства. Главная">
-  <img src={logoUrl} width="760" height="144" alt="ИСВО — машины для овощеводства" />
+  <img src={compact ? "/images/isvo-horizontal.svg" : logoUrl} width={compact ? 694 : 760} height={compact ? 102 : 144} alt="ИСВО — машины для овощеводства" />
 </a>

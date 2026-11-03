@@ -7,7 +7,7 @@ import salad from "../assets/hero-salad-conveyor.jpg";
 export const heroGallery = {
   holdMs: 6000,
   fadeMs: 1600,
-  sizes: "(max-width: 559px) calc(100vw - 48px), (max-width: 767px) 512px, (max-width: 1199px) calc(83vw - 222.44px), calc(72vw - 192.96px)",
+  sizes: "(max-width: 559px) calc(100vw - 48px), (max-width: 767px) 512px, (max-width: 1199px) 83vw, calc(72vw - 192.96px)",
 };
 
 // Cropped copies of catalog originals; sources and crop coordinates are in README.md.

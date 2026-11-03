@@ -1,0 +1,33 @@
+---
+import ArrowUpRight from "@lucide/astro/icons/arrow-up-right";
+import { productHref, type Product } from "../content/products";
+interface Props { products: Product[]; }
+const { products } = Astro.props;
+---
+<ul class="product-links" role="list">
+  {products.map(product => (
+    <li>
+      <a href={productHref(product)}>
+        <span class="product-links__name">{product.name}</span>
+        <span class="product-links__purpose">{product.purpose}</span>
+        <ArrowUpRight size={22} stroke-width={1.5} aria-hidden="true" focusable="false" />
+      </a>
+    </li>
+  ))}
+</ul>
+<style>
+  .product-links { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--color-line); }
+  li { border-bottom: 1px solid var(--color-line); }
+  a { display: grid; grid-template-columns: minmax(130px, .75fr) minmax(0, 1.25fr) auto; align-items: center; gap: var(--space-6); padding: 24px 12px; text-decoration: none; border-radius: var(--radius-small); transition: background-color var(--duration-fast) ease; }
+  .product-links__name { font-weight: 700; line-height: 1.4; }
+  .product-links__purpose { color: var(--color-muted); font-size: var(--font-size-control); }
+  a:hover { background: rgb(8 97 55 / .05); }
+  a:hover .product-links__name { text-decoration: underline; text-underline-offset: 4px; }
+  a:focus-visible { outline-offset: -3px; }
+  svg { color: var(--color-green); }
+  @media (max-width: 991px) {
+    a { grid-template-columns: minmax(0, 1fr) auto; gap: 6px 16px; padding: 20px 8px; }
+    .product-links__purpose { grid-column: 1; }
+    svg { grid-column: 2; grid-row: 1 / 3; }
+  }
+</style>
