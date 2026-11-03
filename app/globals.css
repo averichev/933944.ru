@@ -45,4 +45,4 @@ main { margin-left: var(--sidebar-width); }
 .skip-link { position: fixed; z-index: 100; top: 10px; left: 16px; padding: 12px 20px; background: var(--color-yellow); color: var(--color-ink); transform: translateY(-200%); }
 .skip-link:focus { transform: translateY(0); }
 @media (max-width: 767px) { :root { --font-size-body: 1rem; } main { margin-left: 0; } }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after, *::backdrop { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

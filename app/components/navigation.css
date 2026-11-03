@@ -19,18 +19,28 @@
 .button.sidebar-cta { width: 100%; min-height: 48px; margin-top: 26px; padding: 12px; gap: 8px; justify-content: space-between; }
 .sidebar-footer { margin: 27px 0 0; color: var(--color-muted); font-size: var(--font-size-caption); }
 .mobile-header { display: none; }
-dialog { color: var(--color-ink); background: var(--color-paper); border: 0; }
-dialog::backdrop { background: rgb(23 39 32 / .6); }
+/* Animate the overlay opacity, keeping the blur radius fixed to limit repaint work. */
+dialog { --dialog-offset: translateY(12px); color: var(--color-ink); background: var(--color-paper); border: 0; opacity: 0; transform: var(--dialog-offset); transition: opacity 240ms ease, transform 240ms cubic-bezier(.22, 1, .36, 1); }
+dialog[open] { opacity: 1; transform: none; }
+dialog::backdrop { background: rgb(23 39 32 / .46); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); opacity: 0; transition: opacity 240ms ease; }
+dialog[open]::backdrop { opacity: 1; }
+/* JavaScript keeps the native modal and its focus trap until this exit finishes. */
+dialog.is-closing { opacity: 0; transform: var(--dialog-offset); transition-duration: 160ms; transition-timing-function: ease-in; }
+dialog.is-closing::backdrop { opacity: 0; transition-duration: 160ms; }
+@starting-style {
+  dialog[open] { opacity: 0; transform: var(--dialog-offset); }
+  dialog[open]::backdrop { opacity: 0; }
+}
 body:has(dialog[open]) { overflow: hidden; }
 .close-button, .menu-toggle { display: grid; flex: none; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--color-line); border-radius: 3px; background: transparent; cursor: pointer; color: var(--color-green); }
 .close-button > svg { display: block; }
 .close-button:hover, .menu-toggle:hover { background: var(--color-white); }
-.mobile-menu { position: fixed; inset: 0 0 0 auto; width: min(100%, 390px); max-width: 100%; height: 100dvh; max-height: 100dvh; margin: 0; padding: 24px; overflow-y: auto; }
+.mobile-menu { --dialog-offset: translateX(100%); position: fixed; inset: 0 0 0 auto; width: min(100%, 390px); max-width: 100%; height: 100dvh; max-height: 100dvh; margin: 0; padding: 24px; overflow-y: auto; }
 .mobile-menu[open] { display: flex; flex-direction: column; }
 .mobile-menu-top { display: flex; justify-content: space-between; align-items: center; }
 .mobile-menu .navigation-links { margin-top: 35px; }
 .mobile-menu .navigation-contact { padding-bottom: 16px; }
-.inquiry-dialog { width: min(480px, calc(100% - 32px)); max-height: calc(100dvh - 32px); margin: auto; padding: 42px 32px 32px; border-radius: 5px; }
+.inquiry-dialog { width: min(480px, calc(100% - 32px)); max-height: calc(100dvh - 32px); margin: auto; padding: 42px 32px 32px; border-radius: 5px; box-shadow: 0 24px 80px rgb(10 25 17 / .2); }
 .inquiry-close { position: absolute; right: 16px; top: 16px; width: 36px; height: 36px; }
 .dialog-eyebrow { margin: 8px 0 24px; padding-right: 24px; font-size: var(--font-size-caption); line-height: 1.6; color: var(--color-green); text-transform: uppercase; letter-spacing: .09em; }
 .inquiry-dialog h2 { margin: 0; font-size: clamp(25px, 5vw, 34px); line-height: 1.15; letter-spacing: -.04em; }

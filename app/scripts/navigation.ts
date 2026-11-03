@@ -12,22 +12,40 @@ let returnFocus: HTMLElement | null = null;
 
 function closeMenu() {
   menu.close();
+  menu.classList.remove("is-closing");
   menuToggle.setAttribute("aria-expanded", "false");
+}
+
+function dismissDialog(dialog: HTMLDialogElement) {
+  if (!dialog.open || dialog.classList.contains("is-closing")) return;
+  dialog.classList.add("is-closing");
+  // CSS controls timing; reduced motion produces no animations and closes immediately.
+  void Promise.allSettled(dialog.getAnimations().map((animation) => animation.finished)).then(() => {
+    if (dialog.classList.contains("is-closing")) dialog.close();
+  });
 }
 
 menuToggle.addEventListener("click", () => {
   menu.showModal();
   menuToggle.setAttribute("aria-expanded", "true");
 });
-menu.addEventListener("close", () => menuToggle.setAttribute("aria-expanded", "false"));
+menu.addEventListener("close", () => {
+  menuToggle.setAttribute("aria-expanded", "false");
+});
 inquiry.addEventListener("close", () => returnFocus?.focus({ preventScroll: true }));
 
 for (const dialog of [menu, inquiry]) {
-  dialog.querySelector<HTMLButtonElement>("[data-close-dialog]")!.addEventListener("click", () => dialog.close());
+  const dismiss = () => dismissDialog(dialog);
+  dialog.addEventListener("close", () => dialog.classList.remove("is-closing"));
+  dialog.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    dismiss();
+  });
+  dialog.querySelector<HTMLButtonElement>("[data-close-dialog]")!.addEventListener("click", dismiss);
   dialog.addEventListener("click", (event) => {
     if (event.target !== dialog) return;
     const rect = dialog.getBoundingClientRect();
-    if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
+    if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dismiss();
   });
 }
 
