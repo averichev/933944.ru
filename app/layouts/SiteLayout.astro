@@ -1,6 +1,8 @@
 ---
 import "../globals.css";
 import SiteNavigation from "../components/SiteNavigation.astro";
+import manropeRegular from "../assets/fonts/manrope-500.woff2?url";
+import manropeBold from "../assets/fonts/manrope-700.woff2?url";
 interface Props { title: string; description: string; }
 const { title, description } = Astro.props;
 ---
@@ -12,8 +14,9 @@ const { title, description } = Astro.props;
     <meta name="description" content={description} />
     <meta name="theme-color" content="#086137" />
     <title>{title}</title>
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preload" href="/fonts/manrope-700.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="icon" href="/favicon.svg?v=1" type="image/svg+xml" sizes="any" />
+    <link rel="preload" href={manropeBold} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={manropeRegular} as="font" type="font/woff2" crossorigin />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Перейти к содержимому</a>

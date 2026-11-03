@@ -4,12 +4,13 @@ import { heroGallery, heroPhotos } from "../content/hero";
 
 const photos = await Promise.all(heroPhotos.map(async (photo) => {
   // Do not upscale smaller catalog photos, including the 1600px seeding photo.
-  const widths = [...new Set([480, 800, 1280, Math.min(1920, photo.image.width)])];
+  const widths = [...new Set([480, 640, 800, 1280, 1920].map((width) => Math.min(width, photo.image.width)))];
+  const fallbackIndex = widths.indexOf(Math.min(1280, photo.image.width));
   const optimize = async (format: "avif" | "webp", quality: number) => {
     const images = await Promise.all(widths.map((width) => getImage({ src: photo.image, width, format, quality })));
-    return { src: images[2].src, srcset: images.map((image, index) => `${image.src} ${widths[index]}w`).join(", ") };
+    return { src: images[fallbackIndex].src, srcset: images.map((image, index) => `${image.src} ${widths[index]}w`).join(", ") };
   };
-  const [avif, webp] = await Promise.all([optimize("avif", 50), optimize("webp", 76)]);
+  const [avif, webp] = await Promise.all([optimize("avif", 45), optimize("webp", 76)]);
   return { ...photo, avif, webp };
 }));
 ---
