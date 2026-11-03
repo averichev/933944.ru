@@ -6,7 +6,7 @@
 .navigation-links li > a, .navigation-unavailable { position: relative; display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 51px; padding: 12px 24px; font-size: var(--font-size-control); line-height: 1.5; text-decoration: none; }
 .navigation-links a[aria-current] { background: var(--color-paper); font-weight: 700; color: var(--color-green); }
 .navigation-links a[aria-current]::before { position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--color-yellow); content: ""; }
-.navigation-links a[aria-current] > span { color: var(--color-green); font-size: 16px; }
+.navigation-links a > svg { flex: none; }
 .navigation-links a:hover { color: var(--color-green); background: var(--color-paper); }
 .navigation-unavailable { color: var(--color-muted); cursor: default; }
 .navigation-unavailable small { flex: none; font-size: var(--font-size-caption); color: var(--color-muted); }

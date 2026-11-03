@@ -1,4 +1,7 @@
 ---
+import ArrowRight from "@lucide/astro/icons/arrow-right";
+import Menu from "@lucide/astro/icons/menu";
+import X from "@lucide/astro/icons/x";
 import Brand from "./Brand.astro";
 import NavigationLinks from "./NavigationLinks.astro";
 import NavigationContacts from "./NavigationContacts.astro";
@@ -14,14 +17,14 @@ import "./navigation.css";
 <header class="mobile-header">
   <Brand />
   <button type="button" class="menu-toggle" aria-label="Открыть меню" aria-controls="mobile-menu" aria-expanded="false">
-    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="1.5" /></svg>
+    <Menu size={24} stroke-width={1.75} aria-hidden="true" focusable="false" />
   </button>
 </header>
 <dialog id="mobile-menu" class="mobile-menu" aria-label="Меню сайта">
   <div class="mobile-menu-top">
     <Brand />
-    <button class="close-button" type="button" aria-label="Закрыть меню" data-close-dialog>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2" /></svg>
+    <button class="close-button" type="button" aria-label="Закрыть меню" data-close-dialog autofocus>
+      <X size={22} stroke-width={1.75} aria-hidden="true" focusable="false" />
     </button>
   </div>
   <NavigationLinks />
@@ -29,14 +32,14 @@ import "./navigation.css";
 </dialog>
 <dialog class="inquiry-dialog" aria-labelledby="inquiry-title" aria-describedby="inquiry-description">
   <button class="close-button inquiry-close" type="button" aria-label="Закрыть окно" data-close-dialog>
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2" /></svg>
+    <X size={20} stroke-width={1.75} aria-hidden="true" focusable="false" />
   </button>
   <p class="dialog-eyebrow">Напрямую с производителем</p>
   <h2 id="inquiry-title">Обсудим ваше хозяйство</h2>
   <p id="inquiry-description">Расскажите, какие овощи выращиваете и какую задачу хотите решить. Специалисты ИСВО помогут подобрать оборудование.</p>
   <a class="dialog-phone" href={contact.phoneHref}>{contact.phone}</a>
   <p class="contact-note">бесплатно по России</p>
-  <a class="button button-primary" href={contact.emailHref}>Написать в отдел продаж<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.5" /></svg></a>
+  <a class="button button-primary" href={contact.emailHref}>Написать в отдел продаж<ArrowRight size={20} stroke-width={1.75} aria-hidden="true" focusable="false" /></a>
   <a class="dialog-email" href={`mailto:${contact.email}`}>{contact.email}</a>
 </dialog>
 

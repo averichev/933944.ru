@@ -1,4 +1,5 @@
 ---
+import ArrowRight from "@lucide/astro/icons/arrow-right";
 import { contact } from "../content/site";
 ---
 <div class="navigation-contact">
@@ -6,5 +7,5 @@ import { contact } from "../content/site";
   <a class="contact-phone" href={contact.phoneHref}>{contact.phone}</a>
   <span class="contact-note">бесплатно по России</span>
   <a class="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a>
-  <a class="button button-primary sidebar-cta" href={contact.emailHref} data-inquiry="sidebar">Получить предложение<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.5" /></svg></a>
+  <a class="button button-primary sidebar-cta" href={contact.emailHref} data-inquiry="sidebar">Получить предложение<ArrowRight size={20} stroke-width={1.75} aria-hidden="true" focusable="false" /></a>
 </div>

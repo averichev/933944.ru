@@ -21,7 +21,10 @@ function dismissDialog(dialog: HTMLDialogElement) {
   dialog.classList.add("is-closing");
   // CSS controls timing; reduced motion produces no animations and closes immediately.
   void Promise.allSettled(dialog.getAnimations().map((animation) => animation.finished)).then(() => {
-    if (dialog.classList.contains("is-closing")) dialog.close();
+    if (!dialog.classList.contains("is-closing")) return;
+    dialog.close();
+    // Safari does not always focus a tapped opener, so native restoration can miss it.
+    if (dialog === menu) menuToggle.focus({ preventScroll: true });
   });
 }
 
