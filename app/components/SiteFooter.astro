@@ -33,8 +33,7 @@ const catalogNavigation = [
         </a>
       </section>
 
-      <nav class="site-footer__catalog" aria-labelledby="footer-catalog-title">
-        <h2 id="footer-catalog-title" class="site-footer__label">Техника</h2>
+      <nav class="site-footer__catalog" aria-label="Каталог и услуги">
         <ul role="list">
           {catalogNavigation.map(item => (
             <li>{Astro.url.pathname === item.href ?
@@ -66,7 +65,7 @@ const catalogNavigation = [
     background: var(--color-white);
     scroll-margin-top: 24px;
   }
-  .site-footer__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-8); padding-bottom: 40px; }
+  .site-footer__grid { display: grid; grid-template-columns: minmax(0, 280px) minmax(0, 1fr); gap: var(--space-8); padding-bottom: 40px; }
   .site-footer__grid > * { min-width: 0; }
   .site-footer__logo { display: block; flex: none; width: 51px; max-width: 100%; }
   .site-footer__logo img { display: block; width: 100%; height: auto; filter: grayscale(1); opacity: .65; }
@@ -79,7 +78,7 @@ const catalogNavigation = [
   .site-footer__note { color: var(--color-muted); font-size: var(--font-size-caption); }
   .site-footer__cta { justify-content: space-between; gap: 12px; max-width: 100%; margin-top: 16px; padding-inline: 16px; }
   .site-footer__catalog ul { list-style: none; margin: 0; padding: 0; }
-  .site-footer__catalog li { min-height: 44px; padding-block: 8px; font-size: var(--font-size-control); line-height: 1.5; }
+  .site-footer__catalog li { padding-block: 6px; font-size: var(--font-size-control); line-height: 1.5; }
   .site-footer__catalog [aria-current] { color: var(--color-green); }
   .site-footer__bottom { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; padding-top: 16px; border-top: 1px solid var(--color-line); color: var(--color-muted); font-size: var(--font-size-caption); }
   .site-footer__bottom p { margin: 0; }
