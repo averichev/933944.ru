@@ -1,7 +1,7 @@
 ---
 import ArrowRight from "@lucide/astro/icons/arrow-right";
 import markUrl from "../assets/brand/isvo-mark.svg?url";
-import { contact, individualProjectNavigation } from "../content/site";
+import { contact, individualProjectNavigation, site } from "../content/site";
 import { equipmentDirections, directionHref } from "../content/equipment";
 
 const year = new Date().getFullYear();
@@ -17,7 +17,7 @@ const catalogNavigation = [
         <a class="site-footer__logo" href="/" aria-label="ИСВО — главная">
           <img src={markUrl} width="304" height="192" alt="Фирменный знак ИСВО" />
         </a>
-        <p>Проектируем и производим технику для овощеводства с&nbsp;2007&nbsp;года.</p>
+        <p>{site.description}</p>
       </div>
 
       <section class="site-footer__contacts" aria-labelledby="footer-contacts-title">

@@ -2,10 +2,19 @@
 import "../globals.css";
 import SiteNavigation from "../components/SiteNavigation.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import { absoluteUrl, createPageSchema, serializeJsonLd, type BreadcrumbItem, type SchemaEntity } from "../lib/structured-data";
 import manropeRegular from "../assets/fonts/manrope-500.woff2?url";
 import manropeBold from "../assets/fonts/manrope-700.woff2?url";
-interface Props { title: string; description: string; }
-const { title, description } = Astro.props;
+interface Props {
+  title: string;
+  description: string;
+  pageType?: "WebPage" | "CollectionPage";
+  breadcrumbs?: readonly BreadcrumbItem[];
+  mainEntity?: SchemaEntity;
+}
+const { title, description, pageType, breadcrumbs, mainEntity } = Astro.props;
+const canonicalUrl = absoluteUrl(Astro.url.pathname);
+const structuredData = createPageSchema({ title, description, pathname: Astro.url.pathname, pageType, breadcrumbs, mainEntity });
 ---
 <!doctype html>
 <html lang="ru">
@@ -15,6 +24,8 @@ const { title, description } = Astro.props;
     <meta name="description" content={description} />
     <meta name="theme-color" content="#086137" />
     <title>{title}</title>
+    <link rel="canonical" href={canonicalUrl} />
+    <script type="application/ld+json" set:html={serializeJsonLd(structuredData)} />
     <link rel="icon" href="/favicon.svg?v=1" type="image/svg+xml" sizes="any" />
     <link rel="preload" href={manropeBold} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={manropeRegular} as="font" type="font/woff2" crossorigin />

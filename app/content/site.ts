@@ -1,3 +1,10 @@
+// Public origin documented in README.md; shared by Astro and structured data.
+export const site = {
+  name: "ИСВО",
+  url: "https://933944.ru/",
+  description: "Проектируем и производим технику для овощеводства с\u00a02007\u00a0года.",
+};
+
 // Contacts from the supplied original website: «Перая версия/контакты.png».
 export const contact = {
   phone: "8 800 222 67 11",

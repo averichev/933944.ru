@@ -4,10 +4,10 @@ import { contact } from "../content/site";
 interface Props { showEmail?: boolean; }
 const { showEmail = true } = Astro.props;
 ---
-<div class="navigation-contact">
+<address class="navigation-contact">
   <span class="contact-caption">Обсудим вашу задачу</span>
   <a class="contact-phone" href={contact.phoneHref}>{contact.phone}</a>
   <span class="contact-note">бесплатно по России</span>
   {showEmail && <a class="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a>}
   <a class="button button-primary sidebar-cta" href={contact.emailHref} data-inquiry="sidebar">Получить предложение<ArrowRight size={20} stroke-width={1.75} aria-hidden="true" focusable="false" /></a>
-</div>
+</address>

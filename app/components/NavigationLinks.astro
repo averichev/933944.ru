@@ -3,7 +3,7 @@ import ArrowUpRight from "@lucide/astro/icons/arrow-up-right";
 import { contact, equipmentNavigation, navigation } from "../content/site";
 ---
 <nav aria-label="Основная навигация">
-  <ul class="navigation-links">
+  <ul class="navigation-links" role="list">
     {navigation.map((item) => {
       const current = Astro.url.pathname === item.href ? "page" :
         item.href === equipmentNavigation.href && Astro.url.pathname.startsWith("/catalog/") ? "location" : undefined;
