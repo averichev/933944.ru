@@ -10,12 +10,20 @@ import kpm from "../assets/products/kpm.jpg";
 import nout3 from "../assets/products/nout-3.jpg";
 import nout6 from "../assets/products/nout-6.jpg";
 import table from "../assets/products/sp-1-144.jpg";
-import po1 from "../assets/products/po-1.jpg";
+import po1Main from "../assets/products/po-1/07.jpg";
+import po1Front from "../assets/products/po-1/04.jpg";
+import po1Back from "../assets/products/po-1/05.jpg";
+import po1Top from "../assets/products/po-1/06.jpg";
+import po1Operators from "../assets/products/po-1/03.jpg";
+import po1Line from "../assets/products/po-1/01.jpg";
+import po1Warehouse from "../assets/products/po-1/02.jpg";
 import lch2 from "../assets/products/lch-2.jpg";
 import lch4 from "../assets/products/lch-4.jpg";
 import calibrator from "../assets/products/calibrator.jpg";
 import inclineConveyor from "../assets/products/incline-conveyor.jpg";
 import containerTipper from "../assets/products/container-tipper.jpg";
+
+export interface ProductImage { src: ImageMetadata; alt: string; }
 
 export interface Product {
   slug: string;
@@ -25,7 +33,10 @@ export interface Product {
   description: string;
   features: string[];
   specs: { label: string; value: string }[];
-  image?: { src: ImageMetadata; alt: string };
+  image?: ProductImage;
+  /** Additional photographs, after the main image. Enables the detailed media layout. */
+  gallery?: ProductImage[];
+  video?: { youtubeId: string; title: string; poster: ProductImage };
   /** Supplied catalog sheet or image; provenance for future content updates, not a public URL. */
   source: string;
 }
@@ -130,8 +141,17 @@ export const products: Product[] = [
     slug: "po-1", direction: "storage-processing", name: "ПО-1", purpose: "Пневматический пост очистки овощей",
     description: "Пост для очистки капусты при предпродажной подготовке. Поток подогретого воздуха удаляет загрязнения, гнилые и вялые листья; оператор подрезает кочерыжку и контролирует очистку.",
     features: ["Две турбовоздуходувки независимо подают воздух к рабочему месту каждого оператора.", "Пост можно использовать отдельно или в составе модульной линии предпродажной подготовки капусты.", "Шкаф автоматики предусматривает защиту электродвигателей от скачков напряжения, перекоса фаз и перегрева."],
-    specs: [{ label: "Рабочие места", value: "2" }, { label: "Производительность поста", value: "10 т/смену" }, { label: "Потребляемая мощность", value: "4,5 кВт" }, { label: "Напряжение питания", value: "380 В" }],
-    image: { src: po1, alt: "Пост ПО-1 с двумя воздуховодами и рабочими местами для очистки капусты" },
+    specs: [{ label: "Рабочие места", value: "2" }, { label: "Производительность поста", value: "10 т/смену" }, { label: "Потребляемая мощность", value: "4,5 кВт" }, { label: "Напряжение питания", value: "380 В" }, { label: "Турбовоздуходувки", value: "2" }, { label: "Подача воздуха", value: "Независимая для каждого оператора" }],
+    image: { src: po1Main, alt: "ПО-1 в три четверти: два воздуховода, роликовый стол и турбовоздуходувки" },
+    gallery: [
+      { src: po1Front, alt: "ПО-1 спереди: рабочие места и две турбовоздуходувки" },
+      { src: po1Back, alt: "ПО-1 с обратной стороны: шкаф автоматики и роликовый стол" },
+      { src: po1Top, alt: "ПО-1 сверху: рабочая поверхность и желоб для удаления листьев" },
+      { src: po1Operators, alt: "Два оператора очищают капусту на посту ПО-1" },
+      { src: po1Line, alt: "Пост ПО-1 в работе на линии предпродажной подготовки капусты" },
+      { src: po1Warehouse, alt: "Пост ПО-1 в помещении для хранения и подготовки капусты" },
+    ],
+    video: { youtubeId: "egFz48Rl3DM", title: "Пост очистки овощей ПО-1. Инструкция по эксплуатации", poster: { src: po1Operators, alt: "Очистка капусты двумя операторами на посту ПО-1" } },
     source: `${processingSource}/КП_ПО-1_.jpg`,
   },
   {

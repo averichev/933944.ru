@@ -4,6 +4,8 @@ import ArrowUpRight from "@lucide/astro/icons/arrow-up-right";
 import SiteLayout from "../../../layouts/SiteLayout.astro";
 import ProductLinks from "../../../components/ProductLinks.astro";
 import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import ProductMedia from "../../../components/ProductMedia.astro";
+import ProductSpecifications from "../../../components/ProductSpecifications.astro";
 import { equipmentDirections, directionHref } from "../../../content/equipment";
 import { productHref, products, productsForDirection, type Product } from "../../../content/products";
 import { contact, equipmentNavigation } from "../../../content/site";
@@ -14,6 +16,7 @@ export function getStaticPaths() {
 }
 interface Props { product: Product; }
 const { product } = Astro.props;
+const hasMediaGallery = Boolean(product.image && product.gallery?.length);
 const direction = equipmentDirections.find(item => item.id === product.direction)!;
 const related = productsForDirection(product.direction).filter(item => item.slug !== product.slug);
 const emailHref = `mailto:${contact.email}?subject=${encodeURIComponent(`Запрос предложения — ${product.name}`)}`;
@@ -40,13 +43,12 @@ const mainEntity = {
   <article class="product-page" aria-labelledby="product-title">
     <Breadcrumbs items={breadcrumbs} />
     <header class="product-header"><p class="eyebrow">{direction.title}</p><h1 id="product-title">{product.name}</h1><p class="product-purpose">{product.purpose}</p></header>
-    <div class:list={["product-overview", { "product-overview--with-image": product.image }]}>
-      {product.image && <div class="product-image"><Picture src={product.image.src} alt={product.image.alt} width={Math.min(1200, product.image.src.width)} widths={imageWidths} sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1199px) calc(100vw - 64px), calc((100vw - 268px - clamp(64px, 8.3vw, 160px) - 32px) * .524)" formats={["avif"]} fallbackFormat="webp" quality={65} loading="eager" fetchpriority="high" /></div>}
+    <div class:list={["product-overview", { "product-overview--with-image": product.image, "product-overview--gallery": hasMediaGallery }]}>
+      {hasMediaGallery ? <ProductMedia product={product} /> : product.image && <div class="product-image"><Picture src={product.image.src} alt={product.image.alt} width={Math.min(1200, product.image.src.width)} widths={imageWidths} sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1199px) calc(100vw - 64px), calc((100vw - 268px - clamp(64px, 8.3vw, 160px) - 32px) * .524)" formats={["avif"]} fallbackFormat="webp" quality={65} loading="eager" fetchpriority="high" /></div>}
       <div class="product-summary">
         <p class="product-description">{product.description}</p>
-        {product.specs.length > 0 && <dl>{product.specs.map(spec => <div><dt>{spec.label}</dt><dd>{spec.value}</dd></div>)}</dl>}
+        {product.specs.length > 0 && (hasMediaGallery ? <ProductSpecifications specs={product.specs} /> : <dl>{product.specs.map(spec => <div><dt>{spec.label}</dt><dd>{spec.value}</dd></div>)}</dl>)}
         <a class="button button-primary" href={emailHref}>Запросить предложение<ArrowUpRight size={20} stroke-width={1.5} aria-hidden="true" focusable="false" /></a>
-        <a class="product-phone" href={contact.phoneHref}>{contact.phone}</a>
       </div>
     </div>
     <section class="product-details" aria-labelledby="details-title"><h2 id="details-title">Особенности и применение</h2><ul>{product.features.map(feature => <li>{feature}</li>)}</ul></section>
@@ -60,6 +62,7 @@ const mainEntity = {
   .product-purpose { margin: 16px 0 32px; font-size: clamp(1.1rem, 1.8vw, 1.5rem); color: var(--color-muted); }
   .product-overview { display: grid; gap: 32px; }
   .product-overview--with-image { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: start; }
+  .product-overview--gallery { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 40px; }
   .product-image { overflow: hidden; border-radius: var(--radius-small); background: var(--color-line); }
   .product-image :global(img) { display: block; width: 100%; height: auto; }
   .product-summary { min-width: 0; max-width: 70ch; }
@@ -67,12 +70,12 @@ const mainEntity = {
   dl { margin: 0 0 28px; }
   dl > div { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--color-line); font-size: var(--font-size-control); }
   dt { color: var(--color-muted); } dd { margin: 0; font-weight: 700; }
-  .product-phone { display: block; width: fit-content; margin-top: 16px; text-underline-offset: 4px; font-size: var(--font-size-control); }
   h2 { font-size: clamp(1.5rem, 2vw, 2rem); font-weight: 700; letter-spacing: -.035em; line-height: 1.2; margin: 0 0 24px; }
   .product-details { margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--color-line); }
   .product-details ul { max-width: 72ch; padding-left: 20px; margin: 0; } .product-details li { padding-left: 8px; margin-bottom: 12px; }
   .product-details li::marker { color: var(--color-green); }
   .related { margin-top: 56px; }
   @media (max-width: 1199px) { .product-overview--with-image { grid-template-columns: 1fr; } }
+  @media (min-width: 1024px) and (max-width: 1199px) { .product-overview--gallery { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); } }
   @media (max-width: 767px) { .product-page { padding-top: 24px; } .product-details, .related { margin-top: 40px; } }
 </style>
