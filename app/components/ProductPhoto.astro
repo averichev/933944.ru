@@ -8,8 +8,9 @@ interface Props {
   href: string;
   index: number;
   count: number;
+  fullWidth?: boolean;
 }
-const { photo, href, index, count } = Astro.props;
+const { photo, href, index, count, fullWidth = false } = Astro.props;
 const main = index === 0;
 ---
 <a class:list={["product-media__photo", { "product-media__photo--main": main }]}
@@ -17,7 +18,7 @@ const main = index === 0;
   aria-label={`Увеличить фото ${index + 1} из ${count}: ${photo.alt}`} aria-haspopup="dialog">
   <Picture src={photo.src} alt={photo.alt} width={main ? 800 : 480}
     widths={main ? [320, 480, 640, 800] : [160, 240, 320, 480]}
-    sizes={main ? "(max-width: 639px) min(calc(100vw - 48px), 330px), (max-width: 1023px) 390px, (max-width: 1199px) 300px, (max-width: 1599px) 340px, 440px" : "(max-width: 639px) calc((100vw - 68px) / 3), (max-width: 1023px) 160px, 180px"}
+    sizes={main ? (fullWidth ? "(max-width: 767px) calc(100vw - 48px), (max-width: 1023px) min(calc(100vw - 64px), 720px), (max-width: 1199px) calc((100vw - 104px) * .55), (max-width: 1868px) calc((100vw - 308px - 8.3vw) * .55), 764px" : "(max-width: 639px) min(calc(100vw - 48px), 330px), (max-width: 1023px) 390px, (max-width: 1199px) 300px, (max-width: 1599px) 340px, 440px") : "(max-width: 639px) calc((100vw - 68px) / 3), (max-width: 1023px) 240px, 260px"}
     formats={["avif"]} fallbackFormat="webp" quality={75} loading={main ? "eager" : "lazy"} fetchpriority={main ? "high" : "auto"} />
   {main && <span class="product-media__zoom"><ZoomIn size={16} stroke-width={1.75} aria-hidden="true" focusable="false" />Увеличить</span>}
 </a>

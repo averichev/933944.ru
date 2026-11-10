@@ -1,5 +1,5 @@
 ---
-import { getImage, Picture } from "astro:assets";
+import { getImage } from "astro:assets";
 import ArrowUpRight from "@lucide/astro/icons/arrow-up-right";
 import SiteLayout from "../../../layouts/SiteLayout.astro";
 import ProductLinks from "../../../components/ProductLinks.astro";
@@ -16,11 +16,9 @@ export function getStaticPaths() {
 }
 interface Props { product: Product; }
 const { product } = Astro.props;
-const hasMediaGallery = Boolean(product.image && product.gallery?.length);
 const direction = equipmentDirections.find(item => item.id === product.direction)!;
 const related = productsForDirection(product.direction).filter(item => item.slug !== product.slug);
 const emailHref = `mailto:${contact.email}?subject=${encodeURIComponent(`Запрос предложения — ${product.name}`)}`;
-const imageWidths = product.image ? [...new Set([480, 800, 1200, 1600].map(width => Math.min(width, product.image!.src.width)))] : [];
 const schemaImage = product.image ? await getImage({ src: product.image.src, width: Math.min(1200, product.image.src.width), format: "webp", quality: 65 }) : undefined;
 const breadcrumbs = [
   equipmentNavigation,
@@ -42,12 +40,12 @@ const mainEntity = {
 <SiteLayout title={`${product.name} — ${product.purpose} | ИСВО`} description={product.description} breadcrumbs={breadcrumbs} mainEntity={mainEntity}>
   <article class="product-page" aria-labelledby="product-title">
     <Breadcrumbs items={breadcrumbs} />
-    <header class:list={["product-header", { "product-header--inline": hasMediaGallery }]}><p class="eyebrow">{direction.title}</p><h1 id="product-title">{product.name}</h1><p class="product-purpose">{product.purpose}</p></header>
-    <div class:list={["product-overview", { "product-overview--with-image": product.image, "product-overview--gallery": hasMediaGallery }]}>
-      {hasMediaGallery ? <ProductMedia product={product} /> : product.image && <div class="product-image"><Picture src={product.image.src} alt={product.image.alt} width={Math.min(1200, product.image.src.width)} widths={imageWidths} sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1199px) calc(100vw - 64px), calc((100vw - 268px - clamp(64px, 8.3vw, 160px) - 32px) * .524)" formats={["avif"]} fallbackFormat="webp" quality={65} loading="eager" fetchpriority="high" /></div>}
+    <header class="product-header"><p class="eyebrow">{direction.title}</p><div class="product-heading"><h1 id="product-title">{product.name}</h1><p class="product-purpose">{product.purpose}</p></div></header>
+    <div class:list={["product-overview", { "product-overview--with-image": product.image }]}>
+      {product.image && <ProductMedia product={product} />}
       <div class="product-summary">
         <p class="product-description">{product.description}</p>
-        {product.specs.length > 0 && (hasMediaGallery ? <ProductSpecifications specs={product.specs} /> : <dl>{product.specs.map(spec => <div><dt>{spec.label}</dt><dd>{spec.value}</dd></div>)}</dl>)}
+        {product.specs.length > 0 && <ProductSpecifications specs={product.specs} />}
         <a class="button button-primary" href={emailHref}>Запросить предложение<ArrowUpRight size={20} stroke-width={1.5} aria-hidden="true" focusable="false" /></a>
       </div>
     </div>
@@ -58,29 +56,20 @@ const mainEntity = {
 <style>
   .product-page { max-width: 1600px; margin-inline: auto; padding: 40px var(--page-gutter) 80px; }
   .eyebrow { margin: 0 0 12px; font-size: var(--font-size-caption); font-weight: 700; color: var(--color-green); letter-spacing: .1em; text-transform: uppercase; }
+  .product-header { margin-bottom: 32px; }
+  .product-heading { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 32px; }
   h1 { margin: 0; font-size: clamp(2.2rem, 4.2vw, 4rem); font-weight: 700; letter-spacing: -.045em; line-height: 1.1; text-wrap: balance; }
-  .product-purpose { margin: 16px 0 32px; font-size: clamp(1.1rem, 1.8vw, 1.5rem); color: var(--color-muted); }
+  .product-heading h1 { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .product-purpose { flex: 1 1 22ch; max-width: 34ch; margin: 0; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4; color: var(--color-muted); }
   .product-overview { display: grid; gap: 32px; }
-  .product-overview--with-image { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: start; }
-  .product-overview--gallery { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 40px; }
-  .product-image { overflow: hidden; border-radius: var(--radius-small); background: var(--color-line); }
-  .product-image :global(img) { display: block; width: 100%; height: auto; }
+  .product-overview--with-image { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: start; gap: 40px; }
   .product-summary { min-width: 0; max-width: 70ch; }
   .product-description { margin: 0 0 24px; }
-  dl { margin: 0 0 28px; }
-  dl > div { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--color-line); font-size: var(--font-size-control); }
-  dt { color: var(--color-muted); } dd { margin: 0; font-weight: 700; }
   h2 { font-size: clamp(1.5rem, 2vw, 2rem); font-weight: 700; letter-spacing: -.035em; line-height: 1.2; margin: 0 0 24px; }
   .product-details { margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--color-line); }
   .product-details ul { max-width: 72ch; padding-left: 20px; margin: 0; } .product-details li { padding-left: 8px; margin-bottom: 12px; }
   .product-details li::marker { color: var(--color-green); }
   .related { margin-top: 56px; }
-  @media (min-width: 768px) {
-    .product-header--inline { display: grid; grid-template-columns: max-content minmax(0, 1fr); align-items: center; column-gap: 32px; margin-bottom: 32px; }
-    .product-header--inline .eyebrow { grid-column: 1 / -1; }
-    .product-header--inline .product-purpose { max-width: 34ch; margin: 0; line-height: 1.4; }
-  }
-  @media (max-width: 1199px) { .product-overview--with-image { grid-template-columns: 1fr; } }
-  @media (min-width: 1024px) and (max-width: 1199px) { .product-overview--gallery { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); } }
-  @media (max-width: 767px) { .product-page { padding-top: 24px; } .product-details, .related { margin-top: 40px; } }
+  @media (max-width: 1023px) { .product-overview--with-image { grid-template-columns: 1fr; } }
+  @media (max-width: 767px) { .product-page { padding-top: 24px; } .product-heading { display: block; } .product-purpose { margin-top: 16px; } .product-details, .related { margin-top: 40px; } }
 </style>
