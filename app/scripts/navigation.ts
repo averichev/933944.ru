@@ -13,7 +13,7 @@ let returnFocus: HTMLElement | null = null;
 function restoreVisibleFocus(target: HTMLElement) {
   // The opener can disappear when the window crosses a navigation breakpoint.
   const fallback = menuToggle.getClientRects().length ? menuToggle :
-    document.querySelector<HTMLElement>(".site-navigation a[aria-current]") ??
+    document.querySelector<HTMLElement>(".site-navigation .navigation-links a[href]") ??
     document.querySelector<HTMLElement>(".site-navigation .brand");
   (target.getClientRects().length ? target : fallback)?.focus({ preventScroll: true });
 }

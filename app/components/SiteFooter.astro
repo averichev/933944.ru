@@ -5,6 +5,10 @@ import { contact, individualProjectNavigation } from "../content/site";
 import { equipmentDirections, directionHref } from "../content/equipment";
 
 const year = new Date().getFullYear();
+const catalogNavigation = [
+  ...equipmentDirections.map(direction => ({ label: direction.title, href: directionHref(direction.id) })),
+  individualProjectNavigation,
+];
 ---
 <footer class="site-footer" id="contacts" aria-label="Контакты и каталог ИСВО">
   <div class="site-footer__inner">
@@ -30,10 +34,12 @@ const year = new Date().getFullYear();
       <nav class="site-footer__catalog" aria-labelledby="footer-catalog-title">
         <h2 id="footer-catalog-title" class="site-footer__label">Техника</h2>
         <ul role="list">
-          {equipmentDirections.map(direction => (
-            <li><a href={directionHref(direction.id)} aria-current={Astro.url.pathname === directionHref(direction.id) ? "page" : undefined}>{direction.title}</a></li>
+          {catalogNavigation.map(item => (
+            <li>{Astro.url.pathname === item.href ?
+              <span aria-current="page">{item.label}</span> :
+              <a href={item.href}>{item.label}</a>
+            }</li>
           ))}
-          <li><a href={individualProjectNavigation.href} aria-current={Astro.url.pathname === individualProjectNavigation.href ? "page" : undefined}>{individualProjectNavigation.label}</a></li>
         </ul>
       </nav>
     </div>
@@ -67,8 +73,8 @@ const year = new Date().getFullYear();
   .site-footer__note { color: var(--color-muted); font-size: var(--font-size-caption); }
   .site-footer__cta { justify-content: space-between; gap: 12px; max-width: 100%; margin-top: 16px; padding-inline: 16px; }
   .site-footer__catalog ul { list-style: none; margin: 0; padding: 0; }
-  .site-footer__catalog a { display: flex; align-items: center; min-height: 44px; padding-block: 8px; font-size: var(--font-size-control); line-height: 1.5; }
-  .site-footer__catalog a[aria-current] { color: var(--color-green); }
+  .site-footer__catalog li { min-height: 44px; padding-block: 8px; font-size: var(--font-size-control); line-height: 1.5; }
+  .site-footer__catalog [aria-current] { color: var(--color-green); }
   .site-footer__bottom { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; padding-top: 16px; border-top: 1px solid var(--color-line); color: var(--color-muted); font-size: var(--font-size-caption); }
   .site-footer__bottom p { margin: 0; }
   @media (min-width: 768px) and (max-width: 1199px) {

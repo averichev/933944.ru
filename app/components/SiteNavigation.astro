@@ -8,6 +8,9 @@ import NavigationContacts from "./NavigationContacts.astro";
 import VineDivider from "./VineDivider.astro";
 import { contact, equipmentNavigation } from "../content/site";
 import "./navigation.css";
+
+const equipmentCurrent = Astro.url.pathname.startsWith("/catalog/") ? "location" : undefined;
+const EquipmentTag = equipmentCurrent ? "span" : "a";
 ---
 <header class="site-navigation" aria-label="Навигация и контакты ИСВО">
   <Brand />
@@ -18,7 +21,7 @@ import "./navigation.css";
 <header class="mobile-header">
   <Brand compact />
   <nav class="mobile-header-actions" aria-label="Быстрая навигация">
-    <a class="mobile-equipment-link" href={equipmentNavigation.href} aria-current={Astro.url.pathname.startsWith("/catalog/") ? "location" : undefined}>{equipmentNavigation.label}</a>
+    <EquipmentTag class="mobile-equipment-link" href={equipmentCurrent ? undefined : equipmentNavigation.href} aria-current={equipmentCurrent}>{equipmentNavigation.label}</EquipmentTag>
     <button type="button" class="menu-toggle" aria-label="Открыть меню" aria-controls="mobile-menu" aria-expanded="false">
       <Menu size={18} stroke-width={1.75} aria-hidden="true" focusable="false" /><span>Меню</span>
     </button>
