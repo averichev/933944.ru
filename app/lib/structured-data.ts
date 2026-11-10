@@ -15,7 +15,7 @@ interface PageSchemaOptions {
   title: string;
   description: string;
   pathname: string;
-  pageType?: "WebPage" | "CollectionPage" | "AboutPage";
+  pageType?: "WebPage" | "CollectionPage" | "AboutPage" | "ContactPage";
   breadcrumbs?: readonly BreadcrumbItem[];
   mainEntity?: SchemaEntity;
 }
@@ -37,6 +37,14 @@ export function createPageSchema({ title, description, pathname, pageType = "Web
       logo: absoluteUrl("/images/isvo-horizontal.svg"),
       telephone: contact.phoneHref.replace("tel:", ""),
       email: contact.email,
+      address: {
+        "@type": "PostalAddress",
+        postalCode: contact.address.postalCode,
+        addressRegion: contact.address.region,
+        addressLocality: `${contact.address.district}, ${contact.address.locality}`,
+        streetAddress: contact.address.street,
+        addressCountry: contact.address.country,
+      },
     },
     {
       "@type": "WebSite",

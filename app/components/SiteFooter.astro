@@ -1,7 +1,7 @@
 ---
 import ArrowRight from "@lucide/astro/icons/arrow-right";
 import markUrl from "../assets/brand/isvo-mark.svg?url";
-import { contact, individualProjectNavigation, usedEquipmentNavigation, sparePartsNavigation, site } from "../content/site";
+import { contact, contactsNavigation, individualProjectNavigation, usedEquipmentNavigation, sparePartsNavigation, site } from "../content/site";
 import { equipmentDirections, directionHref } from "../content/equipment";
 
 const year = new Date().getFullYear();
@@ -48,6 +48,10 @@ const catalogNavigation = [
 
     <div class="site-footer__bottom">
       <p>© {year} ИСВО</p>
+      {Astro.url.pathname === contactsNavigation.href ?
+        <span aria-current="page">{contactsNavigation.label}</span> :
+        <a class="site-footer__contacts-link" href={contactsNavigation.href}>{contactsNavigation.label}</a>
+      }
       <p class="site-footer__signature">Инженерия. Производство. Сервис.</p>
     </div>
   </div>
@@ -79,6 +83,7 @@ const catalogNavigation = [
   .site-footer__catalog [aria-current] { color: var(--color-green); }
   .site-footer__bottom { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; padding-top: 16px; border-top: 1px solid var(--color-line); color: var(--color-muted); font-size: var(--font-size-caption); }
   .site-footer__bottom p { margin: 0; }
+  .site-footer .site-footer__contacts-link { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: 4px; }
   @media (min-width: 768px) and (max-width: 1199px) {
     .site-footer__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr); }
     .site-footer__contacts { display: block; }

@@ -1,6 +1,6 @@
 ---
 import ArrowUpRight from "@lucide/astro/icons/arrow-up-right";
-import { contact, equipmentNavigation, navigation } from "../content/site";
+import { equipmentNavigation, navigation } from "../content/site";
 ---
 <nav aria-label="Основная навигация">
   <ul class="navigation-links" role="list">
@@ -10,6 +10,5 @@ import { contact, equipmentNavigation, navigation } from "../content/site";
       const Tag = current ? "span" : "a";
       return <li><Tag class="navigation-link" href={current ? undefined : item.href} aria-current={current}>{item.label}<ArrowUpRight size={20} stroke-width={1.75} aria-hidden="true" focusable="false" /></Tag></li>;
     })}
-    <li><a class="navigation-link" href={contact.emailHref} data-inquiry="navigation">Контакты</a></li>
   </ul>
 </nav>

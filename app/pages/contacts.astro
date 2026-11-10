@@ -1,0 +1,147 @@
+---
+import ArrowUpRight from "@lucide/astro/icons/arrow-up-right";
+import ArrowRight from "@lucide/astro/icons/arrow-right";
+import MapPin from "@lucide/astro/icons/map-pin";
+import Clock from "@lucide/astro/icons/clock";
+import SiteLayout from "../layouts/SiteLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { contact, contactMap, contactsNavigation, individualProjectNavigation, sparePartsNavigation } from "../content/site";
+
+const title = "Контакты — адрес, телефоны и схема проезда | ИСВО";
+const description = `Свяжитесь с ИСВО: ${contact.phone}, ${contact.email}. ${contact.address.region}, ${contact.address.locality}, ${contact.address.street}. ${contact.workingHours}.`;
+const breadcrumbs = [{ label: "Главная", href: "/" }, contactsNavigation];
+const requestTopics = [
+  { label: "Подобрать технику", text: "Расскажите о культуре, технологии и нужной производительности.", href: contact.emailHref, action: "Написать в отдел продаж" },
+  { label: "Разработать оборудование", text: "Пришлите техническое задание или описание вашей идеи.", href: individualProjectNavigation.href, action: "Индивидуальный проект" },
+  { label: "Запчасти и обслуживание", text: "Укажите модель машины и приложите фотографии узла или детали.", href: sparePartsNavigation.href, action: "Запасные части и сервис" },
+];
+---
+<SiteLayout title={title} description={description} pageType="ContactPage" breadcrumbs={breadcrumbs}>
+  <article class="contacts-page contacts-container" aria-labelledby="contacts-title">
+    <header class="contacts-header">
+      <Breadcrumbs items={breadcrumbs} />
+      <p class="eyebrow">Напрямую с производителем</p>
+      <h1 id="contacts-title">{contactsNavigation.label}</h1>
+      <p class="contacts-lead">Начнём с вашей задачи</p>
+      <p class="contacts-intro">Подбор техники, индивидуальный проект или вопрос по обслуживанию — позвоните или напишите. Обсудим детали и следующий шаг.</p>
+    </header>
+
+    <section class="contact-panel" aria-labelledby="contact-panel-title">
+      <div class="contact-panel__heading">
+        <h2 id="contact-panel-title">Связаться с ИСВО</h2>
+        <span>Инженерия. Производство. Сервис.</span>
+      </div>
+      <address class="contact-methods">
+        <div class="contact-method">
+          <span class="contact-label">Бесплатно по России</span>
+          <a class="contact-method__primary" href={contact.phoneHref}>{contact.phone}</a>
+          <a class="contact-method__local" href={contact.localPhoneHref}>{contact.localPhone}</a>
+          <span class="contact-method__note">Городской телефон</span>
+        </div>
+        <div class="contact-method">
+          <span class="contact-label">Электронная почта</span>
+          <a class="contact-method__primary" href={`mailto:${contact.email}`}>{contact.email}<ArrowUpRight size={24} stroke-width={1.75} aria-hidden="true" focusable="false" /></a>
+          <p>К письму можно приложить техническое задание, фотографии или список запчастей.</p>
+        </div>
+      </address>
+    </section>
+
+    <section class="contacts-visit" aria-labelledby="contacts-visit-title">
+      <div class="contacts-visit__details">
+        <p class="eyebrow">Адрес и схема проезда</p>
+        <h2 id="contacts-visit-title">Приезжайте<br />в ИСВО</h2>
+        <p class="contacts-office">{contact.officeName}</p>
+        <div class="visit-detail">
+          <MapPin size={20} stroke-width={1.75} aria-hidden="true" focusable="false" />
+          <address>
+            <span>{contact.address.postalCode}, {contact.address.region},</span>
+            <span>{contact.address.district},</span>
+            <strong>{contact.address.locality}, {contact.address.street}</strong>
+          </address>
+        </div>
+        <div class="visit-detail">
+          <Clock size={20} stroke-width={1.75} aria-hidden="true" focusable="false" />
+          <div><span class="visit-detail__label">Время работы</span><strong>{contact.workingHours}</strong></div>
+        </div>
+        <p class="contacts-visit__note">Перед поездкой позвоните, чтобы согласовать время встречи и уточнить проезд.</p>
+        <a class="button button-primary" href={contactMap.routeHref} target="_blank" rel="noopener noreferrer">Построить маршрут<ArrowUpRight size={18} stroke-width={1.75} aria-hidden="true" focusable="false" /><span class="sr-only"> в Яндекс Картах, в новой вкладке</span></a>
+        <p class="contacts-coordinates">GPS: <span>{contact.coordinates.latitude}, {contact.coordinates.longitude}</span></p>
+      </div>
+      <div class="contacts-map">
+        <iframe src={contactMap.embedHref} title={`ИСВО на карте — ${contact.address.locality}, ${contact.address.street}`} width="640" height="480" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        <a href={contactMap.href} target="_blank" rel="noopener noreferrer">Открыть в Яндекс Картах<ArrowUpRight size={18} stroke-width={1.75} aria-hidden="true" focusable="false" /><span class="sr-only"> в новой вкладке</span></a>
+      </div>
+    </section>
+
+    <section class="contacts-topics" aria-labelledby="contacts-topics-title">
+      <h2 id="contacts-topics-title">С чем можем помочь?</h2>
+      <ul role="list">
+        {requestTopics.map(topic => (
+          <li>
+            <h3>{topic.label}</h3>
+            <p>{topic.text}</p>
+            <a href={topic.href}>{topic.action}<ArrowRight size={18} stroke-width={1.75} aria-hidden="true" focusable="false" /></a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </article>
+</SiteLayout>
+
+<style>
+  .contacts-container { max-width: 1500px; margin-inline: auto; padding-inline: var(--page-gutter); }
+  .contacts-header { padding-block: 40px; }
+  .eyebrow { margin: 0 0 20px; color: var(--color-green); font-size: var(--font-size-caption); font-weight: 700; line-height: 1.6; letter-spacing: .1em; text-transform: uppercase; }
+  h1 { margin: 0; font-size: clamp(2.75rem, 5vw, 4.5rem); line-height: 1.08; font-weight: 700; letter-spacing: -.055em; }
+  h2 { margin: 0; font-size: clamp(1.875rem, 3vw, 3rem); line-height: 1.15; font-weight: 700; letter-spacing: -.045em; text-wrap: balance; }
+  .contacts-lead { margin: 24px 0 16px; color: var(--color-green); font-size: clamp(1.5rem, 2.3vw, 2.25rem); line-height: 1.25; font-weight: 700; letter-spacing: -.04em; }
+  .contacts-intro { max-width: 62ch; margin: 0; color: var(--color-muted); }
+  .contact-panel { padding: clamp(24px, 3vw, 40px); border-radius: var(--radius-leaf-card); background: var(--color-green); color: var(--color-white); --focus-ring: 2px solid var(--color-yellow); }
+  .contact-panel__heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 12px 24px; margin-bottom: 32px; }
+  .contact-panel__heading h2 { font-size: 1.25rem; line-height: 1.4; letter-spacing: -.025em; }
+  .contact-panel__heading > span { color: rgb(255 255 255 / .8); font-size: var(--font-size-caption); }
+  .contact-methods { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; margin: 0; font-style: normal; }
+  .contact-method { min-width: 0; padding-top: 20px; border-top: 1px solid rgb(255 255 255 / .3); }
+  .contact-label { display: block; margin-bottom: 12px; color: var(--color-yellow); font-size: var(--font-size-control); }
+  .contact-method a { width: fit-content; min-height: 44px; text-decoration: none; }
+  .contact-method a:hover { text-decoration: underline; text-underline-offset: 6px; }
+  .contact-method__primary { display: flex; align-items: center; gap: 12px; font-size: clamp(1.5rem, 2.5vw, 2.5rem); line-height: 1.3; font-weight: 700; letter-spacing: -.04em; white-space: nowrap; }
+  .contact-method__primary svg { flex: none; color: var(--color-yellow); }
+  .contact-method__local { display: flex; align-items: center; margin-top: 16px; font-size: 1.125rem; }
+  .contact-method__note { display: block; color: rgb(255 255 255 / .8); font-size: var(--font-size-caption); }
+  .contact-method p { max-width: 36ch; margin: 16px 0 0; color: rgb(255 255 255 / .85); font-size: var(--font-size-control); }
+  .contacts-visit { display: grid; grid-template-columns: minmax(0, .45fr) minmax(0, .55fr); align-items: start; gap: clamp(32px, 4vw, 64px); padding-block: clamp(48px, 6vw, 88px); }
+  .contacts-office { margin: 24px 0; font-size: var(--font-size-control); font-weight: 700; }
+  .visit-detail { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; margin-top: 24px; }
+  .visit-detail > svg { margin-top: 4px; color: var(--color-green); }
+  .visit-detail address { font-style: normal; }
+  .visit-detail span, .visit-detail strong { display: block; }
+  .visit-detail strong { font-weight: 500; }
+  .visit-detail__label { color: var(--color-muted); font-size: var(--font-size-control); }
+  .contacts-visit__note { max-width: 42ch; margin: 24px 0; color: var(--color-muted); font-size: var(--font-size-control); }
+  .contacts-coordinates { margin: 16px 0 0; color: var(--color-muted); font-size: var(--font-size-caption); }
+  .contacts-coordinates span { white-space: nowrap; }
+  .contacts-map { min-width: 0; overflow: hidden; border: 1px solid var(--color-line); border-radius: var(--radius-leaf-card); background: var(--color-white); }
+  .contacts-map iframe { display: block; width: 100%; height: 480px; border: 0; background: var(--color-line); }
+  .contacts-map > a { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 60px; padding: 16px 24px; border-top: 1px solid var(--color-line); color: var(--color-green); font-size: var(--font-size-control); text-underline-offset: 4px; }
+  .contacts-map > a > svg { flex: none; }
+  .contacts-topics { padding-block: 40px clamp(48px, 6vw, 88px); border-top: 1px solid var(--color-line); }
+  .contacts-topics h2 { font-size: clamp(1.75rem, 2.5vw, 2.5rem); }
+  .contacts-topics ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin: 32px 0 0; padding: 0; list-style: none; }
+  .contacts-topics li { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; padding-top: 20px; border-top: 1px solid var(--color-line); }
+  .contacts-topics h3 { margin: 0; font-size: 1.125rem; line-height: 1.4; font-weight: 700; letter-spacing: -.025em; }
+  .contacts-topics p { margin: 12px 0 16px; color: var(--color-muted); font-size: var(--font-size-control); }
+  .contacts-topics a { display: inline-flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; margin-top: auto; color: var(--color-green); font-size: var(--font-size-control); font-weight: 700; text-underline-offset: 4px; }
+  .contacts-topics a > svg { flex: none; }
+  @media (max-width: 767px) {
+    .contacts-container { max-width: 560px; }
+    .contacts-header { padding-top: 24px; }
+    .contact-methods, .contacts-visit, .contacts-topics ul { grid-template-columns: minmax(0, 1fr); }
+    .contact-panel { margin-inline: calc(-1 * var(--page-gutter)); padding: 32px var(--page-gutter); }
+    .contact-panel__heading > span { display: none; }
+    .contact-method__primary { font-size: clamp(1.5rem, 6.5vw, 2rem); }
+    .contacts-map iframe { height: 360px; }
+    .contacts-map > a { padding-inline: 20px; }
+    .contacts-topics ul { gap: 24px; }
+  }
+</style>
