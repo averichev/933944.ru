@@ -14,17 +14,20 @@ export const contact = {
   projectEmailHref: "mailto:906711@bk.ru?subject=" + encodeURIComponent("Индивидуальный проект — ИСВО"),
   usedEquipmentEmailHref: "mailto:906711@bk.ru?subject=" + encodeURIComponent("Предложение техники Б/У или Trade-in — ИСВО"),
   usedEquipmentAvailabilityEmailHref: "mailto:906711@bk.ru?subject=" + encodeURIComponent("Наличие техники Б/У — ИСВО"),
+  sparePartsEmailHref: "mailto:906711@bk.ru?subject=" + encodeURIComponent("Подбор запасных частей — ИСВО"),
+  serviceEmailHref: "mailto:906711@bk.ru?subject=" + encodeURIComponent("Сервисное обращение — ИСВО"),
 };
 
 // Null means that the new page is not built yet; never point to a dead route.
 export const equipmentNavigation = { label: "Техника", href: "/#equipment-selector" } as const;
 export const usedEquipmentNavigation = { label: "Техника Б/У", href: "/used-equipment/" } as const;
 export const individualProjectNavigation = { label: "Индивидуальный проект", href: "/individual-project/" } as const;
+export const sparePartsNavigation = { label: "Запасные части и сервис", href: "/spare-parts-service/" } as const;
 export const navigation = [
   { label: "Главная", href: "/" },
   equipmentNavigation,
   usedEquipmentNavigation,
   individualProjectNavigation,
   { label: "О компании", href: null },
-  { label: "Сервис и запчасти", href: null },
+  sparePartsNavigation,
 ] as const;
