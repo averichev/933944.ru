@@ -42,7 +42,7 @@ const mainEntity = {
 <SiteLayout title={`${product.name} — ${product.purpose} | ИСВО`} description={product.description} breadcrumbs={breadcrumbs} mainEntity={mainEntity}>
   <article class="product-page" aria-labelledby="product-title">
     <Breadcrumbs items={breadcrumbs} />
-    <header class="product-header"><p class="eyebrow">{direction.title}</p><h1 id="product-title">{product.name}</h1><p class="product-purpose">{product.purpose}</p></header>
+    <header class:list={["product-header", { "product-header--inline": hasMediaGallery }]}><p class="eyebrow">{direction.title}</p><h1 id="product-title">{product.name}</h1><p class="product-purpose">{product.purpose}</p></header>
     <div class:list={["product-overview", { "product-overview--with-image": product.image, "product-overview--gallery": hasMediaGallery }]}>
       {hasMediaGallery ? <ProductMedia product={product} /> : product.image && <div class="product-image"><Picture src={product.image.src} alt={product.image.alt} width={Math.min(1200, product.image.src.width)} widths={imageWidths} sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1199px) calc(100vw - 64px), calc((100vw - 268px - clamp(64px, 8.3vw, 160px) - 32px) * .524)" formats={["avif"]} fallbackFormat="webp" quality={65} loading="eager" fetchpriority="high" /></div>}
       <div class="product-summary">
@@ -75,6 +75,11 @@ const mainEntity = {
   .product-details ul { max-width: 72ch; padding-left: 20px; margin: 0; } .product-details li { padding-left: 8px; margin-bottom: 12px; }
   .product-details li::marker { color: var(--color-green); }
   .related { margin-top: 56px; }
+  @media (min-width: 768px) {
+    .product-header--inline { display: grid; grid-template-columns: max-content minmax(0, 1fr); align-items: center; column-gap: 32px; margin-bottom: 32px; }
+    .product-header--inline .eyebrow { grid-column: 1 / -1; }
+    .product-header--inline .product-purpose { max-width: 34ch; margin: 0; line-height: 1.4; }
+  }
   @media (max-width: 1199px) { .product-overview--with-image { grid-template-columns: 1fr; } }
   @media (min-width: 1024px) and (max-width: 1199px) { .product-overview--gallery { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); } }
   @media (max-width: 767px) { .product-page { padding-top: 24px; } .product-details, .related { margin-top: 40px; } }
