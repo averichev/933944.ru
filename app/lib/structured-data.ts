@@ -15,7 +15,7 @@ interface PageSchemaOptions {
   title: string;
   description: string;
   pathname: string;
-  pageType?: "WebPage" | "CollectionPage";
+  pageType?: "WebPage" | "CollectionPage" | "AboutPage";
   breadcrumbs?: readonly BreadcrumbItem[];
   mainEntity?: SchemaEntity;
 }
