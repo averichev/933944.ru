@@ -29,18 +29,19 @@ const mainEntity = {
   "@type": "Product",
   "@id": `${absoluteUrl(productHref(product))}#product`,
   url: absoluteUrl(productHref(product)),
-  name: product.name,
+  name: `${product.name} — ${product.purpose}`,
   description: product.description,
   category: direction.title,
   manufacturer: { "@id": organizationId },
+  brand: { "@id": organizationId },
   ...(schemaImage && { image: absoluteUrl(schemaImage.src) }),
   additionalProperty: product.specs.map(spec => ({ "@type": "PropertyValue", name: spec.label, value: spec.value })),
 };
 ---
-<SiteLayout title={`${product.name} — ${product.purpose} | ИСВО`} description={product.description} breadcrumbs={breadcrumbs} mainEntity={mainEntity}>
+<SiteLayout title={`${product.seoTitle ?? `${product.name} — ${product.purpose}`} | ИСВО`} description={`${product.name}: ${product.description}`} image={product.image} breadcrumbs={breadcrumbs} mainEntity={mainEntity}>
   <article class="product-page" aria-labelledby="product-title">
     <Breadcrumbs items={breadcrumbs} />
-    <header class="product-header"><p class="eyebrow">{direction.title}</p><div class="product-heading"><h1 id="product-title">{product.name}</h1><p class="product-purpose">{product.purpose}</p></div></header>
+    <header class="product-header"><p class="eyebrow">{direction.title}</p><h1 id="product-title" class="product-heading"><span class="product-model">{product.name}</span>{" "}<span class="product-purpose">{product.purpose}</span></h1></header>
     <div class:list={["product-overview", { "product-overview--with-image": product.image }]}>
       {product.image && <ProductMedia product={product} />}
       <div class="product-summary">
@@ -59,8 +60,8 @@ const mainEntity = {
   .product-header { margin-bottom: 32px; }
   .product-heading { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 32px; }
   h1 { margin: 0; font-size: clamp(2.2rem, 4.2vw, 4rem); font-weight: 700; letter-spacing: -.045em; line-height: 1.1; text-wrap: balance; }
-  .product-heading h1 { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
-  .product-purpose { flex: 1 1 22ch; max-width: 34ch; margin: 0; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4; color: var(--color-muted); }
+  .product-model { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .product-purpose { flex: 1 1 22ch; max-width: 34ch; margin: 0; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4; font-weight: 500; letter-spacing: normal; color: var(--color-muted); }
   .product-overview { display: grid; gap: 32px; }
   .product-overview--with-image { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: start; gap: 40px; }
   .product-summary { min-width: 0; max-width: 70ch; }
@@ -71,5 +72,5 @@ const mainEntity = {
   .product-details li::marker { color: var(--color-green); }
   .related { margin-top: 56px; }
   @media (max-width: 1023px) { .product-overview--with-image { grid-template-columns: 1fr; } }
-  @media (max-width: 767px) { .product-page { padding-top: 24px; } .product-heading { display: block; } .product-purpose { margin-top: 16px; } .product-details, .related { margin-top: 40px; } }
+  @media (max-width: 767px) { .product-page { padding-top: 24px; } .product-heading { display: block; } .product-purpose { display: block; margin-top: 16px; } .product-details, .related { margin-top: 40px; } }
 </style>

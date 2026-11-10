@@ -37,7 +37,7 @@ const brief = [
   { title: "Технические требования", text: "Производительность, габариты, имеющаяся техника и ограничения." },
   { title: "Исходные материалы", text: "Техническое задание, эскизы, фотографии или видео рабочего процесса." },
 ];
-const title = "Индивидуальный проект — разработка и производство техники | ИСВО";
+const title = "Разработка техники для овощеводства на заказ | ИСВО";
 const description = "Разработаем и изготовим оборудование по техническому заданию заказчика. От эскиза и рабочих чертежей до готового рабочего решения для овощеводства.";
 const breadcrumbs = [{ label: "Главная", href: "/" }, individualProjectNavigation];
 const mainEntity = {
@@ -50,7 +50,7 @@ const mainEntity = {
   provider: { "@id": organizationId },
 };
 ---
-<SiteLayout title={title} description={description} breadcrumbs={breadcrumbs} mainEntity={mainEntity}>
+<SiteLayout title={title} description={description} image={{ src: manufacturing, alt: "Изготовление оборудования ИСВО в производственном цехе" }} breadcrumbs={breadcrumbs} mainEntity={mainEntity}>
   <article class="project-page" aria-labelledby="project-title">
     <header class="project-hero project-container">
       <Breadcrumbs items={breadcrumbs} />

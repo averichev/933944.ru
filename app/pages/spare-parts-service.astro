@@ -10,7 +10,7 @@ import { contact, sparePartsNavigation } from "../content/site";
 import { sparePartGroups, partRequestHref } from "../content/spare-parts";
 import { absoluteUrl, organizationId } from "../lib/structured-data";
 
-const title = `${sparePartsNavigation.label} | ИСВО`;
+const title = "Запчасти и сервис техники для овощеводства | ИСВО";
 const description = "Транспортёрные ленты, гидромотор, ролики, оси и валы для оборудования ИСВО. Запросите подбор запасной части или обратитесь с вопросом по обслуживанию техники.";
 const breadcrumbs = [{ label: "Главная", href: "/" }, sparePartsNavigation];
 const mainEntity = {
@@ -35,7 +35,7 @@ const serviceSteps = [
 ];
 const heroImage = sparePartGroups[0].image;
 ---
-<SiteLayout title={title} description={description} breadcrumbs={breadcrumbs} mainEntity={mainEntity}>
+<SiteLayout title={title} description={description} image={heroImage} breadcrumbs={breadcrumbs} mainEntity={mainEntity}>
   <article class="parts-page" aria-labelledby="parts-title">
     <header class="parts-hero parts-container">
       <Breadcrumbs items={breadcrumbs} />

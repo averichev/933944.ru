@@ -2,7 +2,7 @@
 export const site = {
   name: "ИСВО",
   url: "https://933944.ru/",
-  description: "Проектируем и производим технику для овощеводства с\u00a02007\u00a0года.",
+  description: "Разрабатываем и производим технику для овощеводства. Работаем с хозяйствами с\u00a02007\u00a0года.",
 };
 
 // Contacts from the supplied original website: «Перая версия/контакты.png».

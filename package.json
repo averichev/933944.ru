@@ -10,17 +10,20 @@
     "dev": "astro dev --host 127.0.0.1 --port 4321",
     "build": "astro build",
     "check": "astro check",
+    "check:seo": "node scripts/check-seo.mjs",
     "preview": "astro preview --host 127.0.0.1 --port 4321",
     "audit": "npm run build && node scripts/audit.mjs"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
+    "@astrojs/sitemap": "3.7.4",
     "@lucide/astro": "1.67.0",
     "@tailwindcss/vite": "4.3.3",
     "@types/masonry-layout": "4.2.8",
     "@types/node": "22.19.19",
     "astro": "7.3.5",
     "lighthouse": "13.6.0",
+    "parse5": "8.0.0",
     "tailwindcss": "4.3.3",
     "typescript": "5.9.3"
   },

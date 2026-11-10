@@ -18,12 +18,13 @@ interface PageSchemaOptions {
   pageType?: "WebPage" | "CollectionPage" | "AboutPage" | "ContactPage";
   breadcrumbs?: readonly BreadcrumbItem[];
   mainEntity?: SchemaEntity;
+  image?: { url: string; width: number; height: number; caption: string };
 }
 
 export const absoluteUrl = (href: string) => new URL(href, site.url).href;
 export const organizationId = absoluteUrl("/#organization");
 
-export function createPageSchema({ title, description, pathname, pageType = "WebPage", breadcrumbs = [], mainEntity }: PageSchemaOptions) {
+export function createPageSchema({ title, description, pathname, pageType = "WebPage", breadcrumbs = [], mainEntity, image }: PageSchemaOptions) {
   const url = absoluteUrl(pathname);
   const websiteId = absoluteUrl("/#website");
   const breadcrumbId = `${url}#breadcrumbs`;
@@ -37,6 +38,13 @@ export function createPageSchema({ title, description, pathname, pageType = "Web
       logo: absoluteUrl("/images/isvo-horizontal.svg"),
       telephone: contact.phoneHref.replace("tel:", ""),
       email: contact.email,
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: contact.localPhoneHref.replace("tel:", ""),
+        email: contact.email,
+        contactType: "sales",
+        availableLanguage: "ru",
+      },
       address: {
         "@type": "PostalAddress",
         postalCode: contact.address.postalCode,
@@ -63,6 +71,8 @@ export function createPageSchema({ title, description, pathname, pageType = "Web
       inLanguage: "ru-RU",
       isPartOf: { "@id": websiteId },
       publisher: { "@id": organizationId },
+      ...(image && { primaryImageOfPage: { "@type": "ImageObject", contentUrl: image.url, width: image.width, height: image.height, caption: image.caption } }),
+      ...(["AboutPage", "ContactPage"].includes(pageType) && { about: { "@id": organizationId } }),
       ...(breadcrumbs.length > 1 && { breadcrumb: { "@id": breadcrumbId } }),
       ...(mainEntity && { mainEntity: { "@id": mainEntity["@id"] } }),
     },

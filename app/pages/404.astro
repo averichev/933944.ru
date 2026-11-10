@@ -1,0 +1,24 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { equipmentDirections, directionHref } from "../content/equipment";
+---
+<SiteLayout title="Страница не найдена | ИСВО" description="Эта страница недоступна. Перейдите на главную, выберите направление техники или свяжитесь с ИСВО." noindex>
+  <section class="not-found" aria-labelledby="not-found-title">
+    <p class="eyebrow">Ошибка 404</p>
+    <h1 id="not-found-title">Страница не найдена</h1>
+    <p>Возможно, адрес изменился или в ссылке есть опечатка. Выберите нужный раздел сайта.</p>
+    <nav aria-label="Разделы каталога"><ul>{equipmentDirections.map(direction => <li><a href={directionHref(direction.id)}>{direction.title}</a></li>)}</ul></nav>
+    <div class="not-found__actions"><a class="button button-primary" href="/">На главную</a><a href="/contacts/">Связаться с ИСВО</a></div>
+  </section>
+</SiteLayout>
+<style>
+  .not-found { max-width: 1000px; margin-inline: auto; padding: clamp(40px, 8vw, 100px) var(--page-gutter); }
+  .eyebrow { color: var(--color-green); font-size: var(--font-size-caption); font-weight: 700; }
+  h1 { margin: 16px 0 24px; font-size: clamp(2rem, 4vw, 4rem); line-height: 1.1; font-weight: 700; letter-spacing: -.045em; }
+  .not-found > p:not(.eyebrow) { max-width: 50ch; color: var(--color-muted); }
+  nav { margin-block: 24px; }
+  ul { padding-left: 20px; }
+  li a { display: inline-flex; align-items: center; min-height: 44px; }
+  a { text-underline-offset: 4px; }
+  .not-found__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 20px 32px; }
+</style>
