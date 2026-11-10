@@ -4,13 +4,16 @@ export const contact = {
   phoneHref: "tel:+78002226711",
   email: "906711@bk.ru",
   emailHref: "mailto:906711@bk.ru?subject=" + encodeURIComponent("Запрос предложения — ИСВО"),
+  projectEmailHref: "mailto:906711@bk.ru?subject=" + encodeURIComponent("Индивидуальный проект — ИСВО"),
 };
 
 // Null means that the new page is not built yet; never point to a dead route.
 export const equipmentNavigation = { label: "Техника", href: "/#equipment-selector" } as const;
+export const individualProjectNavigation = { label: "Индивидуальный проект", href: "/individual-project/" } as const;
 export const navigation = [
   { label: "Главная", href: "/" },
   equipmentNavigation,
+  individualProjectNavigation,
   { label: "О компании", href: null },
   { label: "Сервис и запчасти", href: null },
 ] as const;

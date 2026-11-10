@@ -1,0 +1,36 @@
+---
+import ArrowRight from "@lucide/astro/icons/arrow-right";
+import { individualProjectNavigation } from "../content/site";
+---
+<section class="project-teaser" aria-labelledby="project-teaser-title">
+  <div class="project-teaser__inner">
+    <div class="project-teaser__copy">
+      <p class="project-teaser__eyebrow">{individualProjectNavigation.label}</p>
+      <h2 id="project-teaser-title">Ваша задача.<br />Наше инженерное решение.</h2>
+      <p class="project-teaser__description">Разработаем и изготовим оборудование по вашему техническому заданию — от первого эскиза до готового рабочего решения для вашего хозяйства.</p>
+      <a class="button button-primary" href={individualProjectNavigation.href}>Подробнее о проекте<ArrowRight size={20} stroke-width={1.75} aria-hidden="true" focusable="false" /></a>
+    </div>
+    <ol class="project-teaser__path" role="list" aria-label="Путь от задачи к решению">
+      <li><span class="project-teaser__number" aria-hidden="true">01</span><span>Ваше техническое задание</span></li>
+      <li><span class="project-teaser__number" aria-hidden="true">02</span><span>Эскиз и разработка</span></li>
+      <li><span class="project-teaser__number" aria-hidden="true">03</span><span>Готовое рабочее решение</span></li>
+    </ol>
+  </div>
+</section>
+
+<style>
+  .project-teaser { padding: clamp(48px, 6vw, 88px) var(--page-gutter); color: var(--color-white); background: var(--color-green); --focus-ring: 2px solid var(--color-yellow); }
+  .project-teaser__inner { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); align-items: center; gap: clamp(32px, 5vw, 80px); max-width: 1280px; margin-inline: auto; }
+  .project-teaser__eyebrow { margin: 0 0 24px; color: var(--color-yellow); font-size: var(--font-size-caption); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  h2 { margin: 0; font-size: clamp(1.875rem, 3.1vw, 3rem); line-height: 1.15; font-weight: 700; letter-spacing: -.045em; text-wrap: balance; }
+  .project-teaser__description { max-width: 49ch; margin: 24px 0 28px; color: rgb(255 255 255 / .85); }
+  .project-teaser__path { margin: 0; padding: 0; list-style: none; }
+  .project-teaser__path li { display: grid; grid-template-columns: 36px minmax(0, 1fr); align-items: baseline; gap: 16px; padding: 24px 0; border-bottom: 1px solid rgb(255 255 255 / .25); font-size: clamp(1rem, 1.4vw, 1.25rem); line-height: 1.5; }
+  .project-teaser__path li:first-child { border-top: 1px solid rgb(255 255 255 / .25); }
+  .project-teaser__number { color: var(--color-yellow); font-size: var(--font-size-small); font-weight: 700; }
+  @media (max-width: 767px) {
+    .project-teaser__inner { grid-template-columns: 1fr; max-width: 512px; }
+    .project-teaser__description { margin-top: 20px; }
+    .project-teaser__path li { padding-block: 18px; }
+  }
+</style>

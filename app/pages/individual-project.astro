@@ -1,0 +1,191 @@
+---
+import { Picture } from "astro:assets";
+import ArrowRight from "@lucide/astro/icons/arrow-right";
+import ArrowDown from "@lucide/astro/icons/arrow-down";
+import Check from "@lucide/astro/icons/check";
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { contact, individualProjectNavigation } from "../content/site";
+import manufacturing from "../assets/individual-project-manufacturing.jpg";
+
+const stages = [
+  {
+    title: "Разбираемся в задаче",
+    text: "Изучаем ваше техническое задание: какую операцию нужно выполнять, в каких условиях и с какой производительностью. Уточняем ограничения и согласуем требования к результату.",
+    result: "Согласованное техническое задание",
+  },
+  {
+    title: "Находим решение",
+    text: "Предлагаем конструкцию и готовим эскиз. Вместе с вами обсуждаем компоновку, габариты и совместимость с существующей техникой. Согласуем состав работ, стоимость и сроки.",
+    result: "Эскиз и понятный план работ",
+  },
+  {
+    title: "Проектируем и изготавливаем",
+    text: "Прорабатываем конструкцию и готовим рабочие чертежи. Изготавливаем детали, подбираем комплектующие и собираем оборудование по согласованному проекту.",
+    result: "Оборудование по вашему проекту",
+  },
+  {
+    title: "Проверяем и передаём",
+    text: "Проверяем работу оборудования и соответствие согласованным требованиям. Обсуждаем порядок передачи и ввода в работу, объясняем особенности эксплуатации и обслуживания.",
+    result: "Готовое рабочее решение",
+  },
+];
+const brief = [
+  { title: "Задача", text: "Какую операцию нужно механизировать и какой результат вы хотите получить." },
+  { title: "Условия работы", text: "Культура, схема посадки, особенности поля или помещения." },
+  { title: "Технические требования", text: "Производительность, габариты, имеющаяся техника и ограничения." },
+  { title: "Исходные материалы", text: "Техническое задание, эскизы, фотографии или видео рабочего процесса." },
+];
+---
+<SiteLayout title="Индивидуальный проект — разработка и производство техники | ИСВО" description="Разработаем и изготовим оборудование по техническому заданию заказчика. От эскиза и рабочих чертежей до готового рабочего решения для овощеводства.">
+  <article class="project-page">
+    <header class="project-hero project-container">
+      <nav class="project-breadcrumbs" aria-label="Хлебные крошки">
+        <a href="/">Главная</a><span aria-hidden="true">/</span><span aria-current="page">{individualProjectNavigation.label}</span>
+      </nav>
+      <div class="project-hero__grid">
+        <div class="project-hero__copy">
+          <p class="eyebrow">Разработка и производство</p>
+          <h1>{individualProjectNavigation.label}</h1>
+          <p class="project-hero__promise">От эскиза до готового<br class="desktop-break" /> рабочего решения.</p>
+          <p class="project-hero__description">У каждого хозяйства свои задачи. Когда для них нужна особая техника, мы готовы разработать и изготовить её по вашему техническому заданию.</p>
+          <p class="project-hero__description">Превратим вашу идею в продуманную конструкцию — с учётом технологии выращивания, условий работы и оборудования, которое уже есть в хозяйстве.</p>
+          <div class="project-hero__actions">
+            <a class="button button-primary" href="#project-brief">Обсудить проект<ArrowRight size={20} stroke-width={1.75} aria-hidden="true" focusable="false" /></a>
+            <a class="project-process-link" href="#project-process">Как мы работаем<ArrowDown size={16} stroke-width={1.75} aria-hidden="true" focusable="false" /></a>
+          </div>
+        </div>
+        <figure class="project-hero__figure">
+          <div class="project-hero__image">
+            {/* Cover scales the landscape source by height in the desktop portrait frame. */}
+            <Picture src={manufacturing} alt="Сварка металлической рамы оборудования в производственном цехе" width={960} widths={[400, 640, 960, 1440]} sizes="(max-width: 559px) calc((100vw - 48px) * 1.125), (max-width: 767px) 576px, 800px" formats={["avif"]} fallbackFormat="webp" quality={65} loading="eager" fetchpriority="high" />
+          </div>
+          <figcaption><span class="project-hero__caption-mark" aria-hidden="true"></span><span>От инженерной идеи<br /><strong>к воплощению в металле</strong></span></figcaption>
+        </figure>
+      </div>
+    </header>
+
+    <section class="project-principle project-container" aria-labelledby="project-principle-title">
+      <h2 id="project-principle-title">Под вашу технологию.<br /><span>Под ваши условия.</span></h2>
+      <p>Адаптировать серийную машину, разработать отдельный узел или создать новое оборудование — начнём с задачи и выберем подходящий путь. Уже на этапе проектирования учитываем удобство эксплуатации, доступ к узлам и дальнейшее обслуживание.</p>
+    </section>
+
+    <section id="project-process" class="project-process project-container" aria-labelledby="project-process-title">
+      <div class="section-heading">
+        <p class="eyebrow">Как мы работаем</p>
+        <h2 id="project-process-title">От первого разговора<br />до работающей техники</h2>
+        <p>Двигаемся последовательно: сначала согласуем задачу и решение, затем переходим к изготовлению.</p>
+      </div>
+      <ol class="project-stages" role="list">
+        {stages.map((stage, index) => (
+          <li class="project-stage">
+            <span class="project-stage__number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+            <div class="project-stage__body">
+              <h3>{stage.title}</h3>
+              <p>{stage.text}</p>
+              <p class="project-stage__result"><Check size={16} stroke-width={2} aria-hidden="true" focusable="false" />{stage.result}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section id="project-brief" class="project-brief" aria-labelledby="project-brief-title">
+      <div class="project-container project-brief__grid">
+        <div class="project-brief__copy">
+          <p class="eyebrow">Начнём с вашей задачи</p>
+          <h2 id="project-brief-title">Есть идея?<br />Давайте придадим ей форму.</h2>
+          <p>Отправьте техническое задание на почту. Если готового ТЗ пока нет, начните с описания задачи — вместе уточним требования и исходные данные.</p>
+          <a class="button button-primary" href={contact.projectEmailHref}>Отправить ТЗ<ArrowRight size={20} stroke-width={1.75} aria-hidden="true" focusable="false" /></a>
+          <a class="project-brief__email" href={contact.projectEmailHref}>{contact.email}</a>
+          <div class="project-brief__phone"><span>Удобнее обсудить голосом?</span><a href={contact.phoneHref}>{contact.phone}</a><small>Бесплатно по России</small></div>
+        </div>
+        <div class="project-brief__checklist">
+          <h3>Что поможет на старте</h3>
+          <ul role="list">
+            {brief.map(item => <li><Check size={18} stroke-width={1.75} aria-hidden="true" focusable="false" /><div><h4>{item.title}</h4><p>{item.text}</p></div></li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+  </article>
+</SiteLayout>
+
+<style>
+  .project-container { max-width: 1500px; margin-inline: auto; padding-inline: var(--page-gutter); }
+  .project-hero { padding-top: 40px; padding-bottom: clamp(48px, 6vw, 88px); }
+  .project-breadcrumbs { display: flex; flex-wrap: wrap; gap: 8px 12px; margin-bottom: 48px; color: var(--color-muted); font-size: var(--font-size-small); }
+  .project-breadcrumbs a { text-underline-offset: 4px; }
+  .project-hero__grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 40px; align-items: center; }
+  .eyebrow { margin: 0 0 20px; color: var(--color-green); font-size: var(--font-size-caption); font-weight: 700; line-height: 1.6; letter-spacing: .1em; text-transform: uppercase; }
+  h1 { margin: 0; font-size: clamp(1.875rem, 4.2vw, 4rem); font-weight: 700; line-height: 1.08; letter-spacing: -.055em; }
+  .project-hero__promise { margin: 24px 0; color: var(--color-green); font-size: clamp(1.25rem, 1.85vw, 1.75rem); line-height: 1.4; letter-spacing: -.035em; font-weight: 700; }
+  .project-hero__description { max-width: 51ch; margin: 0 0 16px; color: var(--color-muted); }
+  .project-hero__actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; margin-top: 28px; }
+  .project-process-link { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font-size: var(--font-size-control); text-underline-offset: 5px; }
+  .project-process-link svg { flex: none; }
+  .project-hero__figure { align-self: stretch; display: flex; flex-direction: column; min-width: 0; margin: 0; overflow: hidden; border-radius: var(--radius-leaf-card); background: var(--color-green); }
+  .project-hero__image { position: relative; flex: 1; min-height: 320px; }
+  .project-hero__image :global(picture) { position: absolute; inset: 0; }
+  .project-hero__image :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 65% center; }
+  figcaption { display: flex; align-items: center; gap: 16px; padding: 24px; color: var(--color-white); font-size: var(--font-size-control); line-height: 1.6; }
+  figcaption strong { font-weight: 700; }
+  .project-hero__caption-mark { flex: none; width: 28px; height: 28px; border: 2px solid var(--color-yellow); border-radius: var(--radius-leaf-control); }
+  .project-principle { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); align-items: start; gap: 32px; padding-block: 40px; border-block: 1px solid var(--color-line); }
+  .project-principle h2 { font-size: clamp(1.5rem, 2.3vw, 2.25rem); }
+  .project-principle h2 span { color: var(--color-green); }
+  .project-principle p { margin: 0; color: var(--color-muted); max-width: 65ch; }
+  h2 { margin: 0; font-size: var(--font-size-section); line-height: 1.13; font-weight: 700; letter-spacing: -.045em; text-wrap: balance; }
+  .project-process { padding-block: clamp(48px, 6vw, 88px); scroll-margin-top: 32px; }
+  .section-heading { max-width: 760px; margin-bottom: 48px; }
+  .section-heading > p:last-child { max-width: 53ch; margin: 24px 0 0; color: var(--color-muted); }
+  .project-stages { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; margin: 0; padding: 0; list-style: none; }
+  .project-stage { display: flex; align-items: flex-start; gap: 24px; padding-top: 24px; border-top: 1px solid var(--color-line); }
+  .project-stage__number { color: var(--color-green); font-size: clamp(1.75rem, 2.5vw, 2.5rem); font-weight: 700; line-height: 1.1; letter-spacing: -.06em; }
+  .project-stage__body { min-width: 0; }
+  .project-stage h3 { margin: 0; font-size: clamp(1.125rem, 1.6vw, 1.375rem); font-weight: 700; line-height: 1.35; letter-spacing: -.025em; }
+  .project-stage p { margin: 16px 0 0; color: var(--color-muted); font-size: var(--font-size-control); line-height: 1.8; }
+  .project-stage .project-stage__result { display: flex; align-items: flex-start; gap: 8px; color: var(--color-green); font-size: var(--font-size-small); font-weight: 700; line-height: 1.6; }
+  .project-stage__result svg { flex: none; margin-top: 2px; }
+  .project-brief { padding-block: clamp(48px, 6vw, 88px); color: var(--color-white); background: var(--color-green); scroll-margin-top: 24px; --focus-ring: 2px solid var(--color-yellow); }
+  .project-brief__grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 80px); }
+  .project-brief .eyebrow { color: var(--color-yellow); }
+  .project-brief h2 { font-size: clamp(1.875rem, 3vw, 3rem); }
+  .project-brief__copy > p:not(.eyebrow) { max-width: 44ch; margin: 24px 0 28px; color: rgb(255 255 255 / .85); }
+  .project-brief__email { display: block; width: fit-content; min-height: 44px; padding-block: 12px 8px; font-size: var(--font-size-control); text-underline-offset: 4px; }
+  .project-brief__phone { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; margin-top: 24px; }
+  .project-brief__phone > span { font-size: var(--font-size-control); color: rgb(255 255 255 / .85); }
+  .project-brief__phone a { display: inline-flex; align-items: center; min-height: 44px; font-size: clamp(1.5rem, 2.5vw, 2rem); line-height: 1.3; font-weight: 700; letter-spacing: -.035em; text-decoration: none; white-space: nowrap; }
+  .project-brief__phone small { font-size: var(--font-size-caption); color: rgb(255 255 255 / .85); }
+  .project-brief__checklist { align-self: start; padding: clamp(24px, 3vw, 40px); border: 1px solid rgb(255 255 255 / .3); border-radius: var(--radius-leaf-card); }
+  .project-brief__checklist h3 { margin: 0 0 28px; font-size: 1.25rem; line-height: 1.4; font-weight: 700; letter-spacing: -.025em; }
+  .project-brief__checklist ul { display: grid; gap: 24px; margin: 0; padding: 0; list-style: none; }
+  .project-brief__checklist li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 12px; }
+  .project-brief__checklist svg { color: var(--color-yellow); margin-top: 3px; }
+  .project-brief__checklist h4 { margin: 0 0 6px; font-size: var(--font-size-control); font-weight: 700; line-height: 1.6; }
+  .project-brief__checklist p { margin: 0; color: rgb(255 255 255 / .85); font-size: var(--font-size-small); line-height: 1.7; }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    .project-hero__grid { gap: 32px; }
+    .project-hero__description { font-size: 1rem; }
+    .project-stages { gap: 32px; }
+    .project-stage { gap: 16px; }
+  }
+  @media (max-width: 767px) {
+    .project-container { max-width: 560px; }
+    .project-hero { padding-top: 24px; }
+    .project-breadcrumbs { margin-bottom: 32px; }
+    .project-hero__grid, .project-principle, .project-stages, .project-brief__grid { grid-template-columns: 1fr; }
+    .project-hero__grid { gap: 32px; }
+    h1 { font-size: clamp(1.875rem, 8.6vw, 3.75rem); }
+    .project-hero__promise { font-size: 1.375rem; }
+    .desktop-break { display: none; }
+    .project-hero__image { min-height: 0; aspect-ratio: 4 / 3; }
+    figcaption { padding: 20px 24px; }
+    .project-principle { gap: 20px; padding-block: 32px; }
+    .project-process h2 { font-size: clamp(1.875rem, 7.6vw, 2.75rem); }
+    .section-heading { margin-bottom: 32px; }
+    .project-stages { gap: 32px; }
+    .project-stage { gap: 20px; }
+    .project-stage h3 { font-size: 1.25rem; }
+    .project-brief__grid { gap: 40px; }
+  }
+</style>
