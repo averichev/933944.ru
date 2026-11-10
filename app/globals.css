@@ -32,9 +32,9 @@
   --space-12: 3rem;
   --page-gutter: clamp(32px, 4.15vw, 80px);
   --radius-small: 3px;
-  /* Leaf silhouette: top-right stays sharp at both component scales. */
-  --radius-leaf-control: 16px 0 16px 16px;
-  --radius-leaf-card: 32px 0 32px 32px;
+  /* Match the mark: top-right and bottom-left stay sharp at both scales. */
+  --radius-leaf-control: 16px 0 16px 0;
+  --radius-leaf-card: 32px 0 32px 0;
   --duration-fast: 160ms;
   --duration-image: 400ms;
   --ease-out: cubic-bezier(.22, 1, .36, 1);
