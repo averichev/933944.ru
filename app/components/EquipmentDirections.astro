@@ -18,6 +18,11 @@ const layouts = {
     variant: "featured",
     sizes: `${mobileSizes}, (max-width: 1199px) calc((100vw - 64px) * 1.2 / 2.2), calc((100vw - 288px - clamp(64px, 8.3vw, 160px)) * 1.3 / 2.3)`,
   },
+  "storage-processing": {
+    variant: "wide",
+    // Cover scales the landscape photo by height in the desktop portrait column.
+    sizes: `${mobileSizes}, 1200px`,
+  },
 } as const;
 ---
 <section id="equipment-selector" class="equipment-directions" aria-labelledby="equipment-title" tabindex="-1">
@@ -25,7 +30,7 @@ const layouts = {
     <p class="equipment-directions__eyebrow">Направления техники</p>
     <header class="equipment-directions__header">
       <h2 id="equipment-title">Техника под задачи хозяйства</h2>
-      <p>От посева и ухода за растениями до уборки урожая — оборудование для разных этапов овощеводства.</p>
+      <p>От посева и ухода за растениями до уборки и подготовки овощей к продаже — оборудование для разных этапов овощеводства.</p>
     </header>
     <ol class="equipment-directions__grid" role="list">
       {equipmentDirections.map(direction => (
@@ -51,6 +56,7 @@ const layouts = {
   .equipment-directions__item--seeding { grid-column: 2; grid-row: 1; }
   .equipment-directions__item--crop-care { grid-column: 2; grid-row: 2; }
   .equipment-directions__item--harvesting { grid-column: 1; grid-row: 1 / 3; }
+  .equipment-directions__item--storage-processing { grid-column: 1 / -1; grid-row: 3; }
   @media (min-width: 768px) and (max-width: 1199px) {
     .equipment-directions__header { grid-template-columns: 1fr; gap: var(--space-6); margin-bottom: var(--space-8); }
     .equipment-directions__header > p { max-width: 48ch; }

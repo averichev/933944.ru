@@ -44,7 +44,7 @@ const mainEntity = {
       {product.image && <div class="product-image"><Picture src={product.image.src} alt={product.image.alt} width={Math.min(1200, product.image.src.width)} widths={imageWidths} sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1199px) calc(100vw - 64px), calc((100vw - 268px - clamp(64px, 8.3vw, 160px) - 32px) * .524)" formats={["avif"]} fallbackFormat="webp" quality={65} loading="eager" fetchpriority="high" /></div>}
       <div class="product-summary">
         <p class="product-description">{product.description}</p>
-        <dl>{product.specs.map(spec => <div><dt>{spec.label}</dt><dd>{spec.value}</dd></div>)}</dl>
+        {product.specs.length > 0 && <dl>{product.specs.map(spec => <div><dt>{spec.label}</dt><dd>{spec.value}</dd></div>)}</dl>}
         <a class="button button-primary" href={emailHref}>Запросить предложение<ArrowUpRight size={20} stroke-width={1.5} aria-hidden="true" focusable="false" /></a>
         <a class="product-phone" href={contact.phoneHref}>{contact.phone}</a>
       </div>

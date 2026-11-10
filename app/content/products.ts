@@ -10,6 +10,12 @@ import kpm from "../assets/products/kpm.jpg";
 import nout3 from "../assets/products/nout-3.jpg";
 import nout6 from "../assets/products/nout-6.jpg";
 import table from "../assets/products/sp-1-144.jpg";
+import po1 from "../assets/products/po-1.jpg";
+import lch2 from "../assets/products/lch-2.jpg";
+import lch4 from "../assets/products/lch-4.jpg";
+import calibrator from "../assets/products/calibrator.jpg";
+import inclineConveyor from "../assets/products/incline-conveyor.jpg";
+import containerTipper from "../assets/products/container-tipper.jpg";
 
 export interface Product {
   slug: string;
@@ -20,14 +26,15 @@ export interface Product {
   features: string[];
   specs: { label: string; value: string }[];
   image?: { src: ImageMetadata; alt: string };
-  /** Supplied catalog sheet; provenance for future content updates, not a public URL. */
+  /** Supplied catalog sheet or image; provenance for future content updates, not a public URL. */
   source: string;
 }
 
 const seedingSource = "Посев и посадка/Сеялка/КП_СКР и МКР и СП_.jpg";
 const harvestingSource = "Уборка урожая/Навесной овощеуборочный транспортер";
+const processingSource = "Хранение и переработка";
 
-// Names, descriptions and specifications transcribed from the supplied Каталог/ sheets.
+// Content comes from the supplied Каталог/ sheets and images; numeric specs require a sheet.
 // Availability, prices and lead times are deliberately not inferred from undated sheets.
 export const products: Product[] = [
   {
@@ -118,6 +125,54 @@ export const products: Product[] = [
     features: ["Работник укладывает мешок на эластичную ленту; второй работник принимает его в прицепе.", "Используется для мешков с картофелем, свёклой, морковью, капустой и другой сельхозпродукцией."],
     specs: [{ label: "Грузоподъёмность", value: "300 кг" }, { label: "Высота загрузки", value: "400–700 мм" }, { label: "Масса", value: "800 кг" }],
     source: "Уборка урожая/Навесной транспортер подъёма мешков/КП_НОУТ-1_.jpg",
+  },
+  {
+    slug: "po-1", direction: "storage-processing", name: "ПО-1", purpose: "Пневматический пост очистки овощей",
+    description: "Пост для очистки капусты при предпродажной подготовке. Поток подогретого воздуха удаляет загрязнения, гнилые и вялые листья; оператор подрезает кочерыжку и контролирует очистку.",
+    features: ["Две турбовоздуходувки независимо подают воздух к рабочему месту каждого оператора.", "Пост можно использовать отдельно или в составе модульной линии предпродажной подготовки капусты.", "Шкаф автоматики предусматривает защиту электродвигателей от скачков напряжения, перекоса фаз и перегрева."],
+    specs: [{ label: "Рабочие места", value: "2" }, { label: "Производительность поста", value: "10 т/смену" }, { label: "Потребляемая мощность", value: "4,5 кВт" }, { label: "Напряжение питания", value: "380 В" }],
+    image: { src: po1, alt: "Пост ПО-1 с двумя воздуховодами и рабочими местами для очистки капусты" },
+    source: `${processingSource}/КП_ПО-1_.jpg`,
+  },
+  {
+    slug: "lch-2", direction: "storage-processing", name: "ЛЧ-2", purpose: "Линия очистки капусты",
+    description: "Модульная линия для предпродажной подготовки капусты. Объединяет подачу продукции, посты пневматической очистки и отвод удалённых листьев.",
+    features: ["Компоновка предусматривает два поста очистки, расположенных вдоль транспортера.", "На схеме показан вариант с оборачивателями овощных контейнеров и наклонным транспортером.", "Состав линии и размещение оборудования согласуются под задачи хозяйства."],
+    specs: [],
+    image: { src: lch2, alt: "Схема линии ЛЧ-2 с двумя постами очистки, контейнерами и транспортерами" },
+    source: `${processingSource}/ЛЧ-2 Линия чистки (полн ко ???) 02.JPG`,
+  },
+  {
+    slug: "lch-4", direction: "storage-processing", name: "ЛЧ-4", purpose: "Линия очистки капусты",
+    description: "Модульная линия подготовки капусты с четырьмя постами очистки и общей системой транспортеров для перемещения продукции и удалённых листьев.",
+    features: ["Четыре поста пневматической очистки располагаются последовательно вдоль линии.", "Компоновка объединяет зону подачи из контейнеров, рабочие посты и наклонный транспортер.", "Состав линии и размещение оборудования согласуются под задачи хозяйства."],
+    specs: [],
+    image: { src: lch4, alt: "Схема линии ЛЧ-4 с четырьмя постами очистки и наклонным транспортером" },
+    source: `${processingSource}/ЛЧ-4 Линия чистки (без КР  ? ??????).JPG`,
+  },
+  {
+    slug: "calibrator", direction: "storage-processing", name: "Калибратор", purpose: "Калибровка овощной продукции",
+    description: "Оборудование для калибровки овощей на этапе предпродажной подготовки. Ленточный транспортер объединён с рабочими узлами и приёмными столами.",
+    features: ["Приёмные столы расположены рядом с транспортером.", "Рабочие узлы и ленточный транспортер собраны на общей раме с пультом управления."],
+    specs: [],
+    image: { src: calibrator, alt: "Калибратор ИСВО с ленточным транспортером и двумя приёмными столами" },
+    source: `${processingSource}/Калибратор_03.jpg`,
+  },
+  {
+    slug: "incline-conveyor", direction: "storage-processing", name: "Наклонный транспортер", purpose: "Перемещение продукции между узлами линии",
+    description: "Наклонный ленточный транспортер для перемещения продукции между рабочими уровнями линии подготовки овощей.",
+    features: ["Лента оснащена поперечными планками для перемещения продукции под наклоном.", "Рама установлена на опорах с колёсами; рядом с лентой расположен пульт управления."],
+    specs: [],
+    image: { src: inclineConveyor, alt: "Наклонный ленточный транспортер ИСВО на раме с колёсами" },
+    source: `${processingSource}/Наклонник_01.jpg`,
+  },
+  {
+    slug: "container-tipper", direction: "storage-processing", name: "Оборачиватель контейнеров", purpose: "Выгрузка овощей из контейнера",
+    description: "Оборудование для наклона овощного контейнера и выгрузки продукции в зоне послеуборочной подготовки.",
+    features: ["Контейнер размещается в поворотной раме.", "Наклон выполняется гидравлическим механизмом; оборудование оснащено пультом управления."],
+    specs: [],
+    image: { src: containerTipper, alt: "Оборачиватель овощных контейнеров ИСВО с поворотной рамой и гидравлическим приводом" },
+    source: `${processingSource}/Оборачиватель_04.jpg`,
   },
 ];
 
