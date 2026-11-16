@@ -24,12 +24,12 @@ export const contact = {
   // Use the hours in the original page's main contact block; its header/footer differ.
   workingHours: "Пн–Пт, 09:00–17:00",
   coordinates: { latitude: 57.564704, longitude: 39.834711 },
-  emailHref: "mailto:906711@bk.ru?subject=" + encodeURIComponent("Запрос предложения — ИСВО"),
-  projectEmailHref: "mailto:906711@bk.ru?subject=" + encodeURIComponent("Индивидуальный проект — ИСВО"),
-  usedEquipmentEmailHref: "mailto:906711@bk.ru?subject=" + encodeURIComponent("Предложение техники Б/У или Trade-in — ИСВО"),
-  usedEquipmentAvailabilityEmailHref: "mailto:906711@bk.ru?subject=" + encodeURIComponent("Наличие техники Б/У — ИСВО"),
-  sparePartsEmailHref: "mailto:906711@bk.ru?subject=" + encodeURIComponent("Подбор запасных частей — ИСВО"),
-  serviceEmailHref: "mailto:906711@bk.ru?subject=" + encodeURIComponent("Сервисное обращение — ИСВО"),
+  emailHref: "mailto:906711@bk.ru?subject=" + encodeURIComponent("Запрос предложения"),
+  projectEmailHref: "mailto:906711@bk.ru?subject=" + encodeURIComponent("Индивидуальный проект"),
+  usedEquipmentEmailHref: "mailto:906711@bk.ru?subject=" + encodeURIComponent("Предложение техники Б/У или Trade-in"),
+  usedEquipmentAvailabilityEmailHref: "mailto:906711@bk.ru?subject=" + encodeURIComponent("Наличие техники Б/У"),
+  sparePartsEmailHref: "mailto:906711@bk.ru?subject=" + encodeURIComponent("Подбор запасных частей"),
+  serviceEmailHref: "mailto:906711@bk.ru?subject=" + encodeURIComponent("Сервисное обращение"),
 };
 
 const mapPoint = `${contact.coordinates.longitude},${contact.coordinates.latitude}`;

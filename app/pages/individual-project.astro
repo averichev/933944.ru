@@ -5,6 +5,8 @@ import ArrowDown from "@lucide/astro/icons/arrow-down";
 import Check from "@lucide/astro/icons/check";
 import SiteLayout from "../layouts/SiteLayout.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
+import ProcessIllustration from "../components/ProcessIllustration.astro";
+import ContactIllustration from "../components/ContactIllustration.astro";
 import { contact, individualProjectNavigation } from "../content/site";
 import { absoluteUrl, organizationId } from "../lib/structured-data";
 import manufacturing from "../assets/individual-project-manufacturing.jpg";
@@ -50,7 +52,7 @@ const mainEntity = {
   provider: { "@id": organizationId },
 };
 ---
-<SiteLayout title={title} description={description} image={{ src: manufacturing, alt: "Изготовление оборудования ИСВО в производственном цехе" }} breadcrumbs={breadcrumbs} mainEntity={mainEntity}>
+<SiteLayout title={title} description={description} image={{ src: manufacturing, alt: "Изготовление оборудования в производственном цехе" }} breadcrumbs={breadcrumbs} mainEntity={mainEntity}>
   <article class="project-page" aria-labelledby="project-title">
     <header class="project-hero project-container">
       <Breadcrumbs items={breadcrumbs} />
@@ -90,6 +92,7 @@ const mainEntity = {
       <ol class="project-stages" role="list">
         {stages.map((stage, index) => (
           <li class="project-stage">
+            <div class="project-stage__visual"><ProcessIllustration step={index} /></div>
             <span class="project-stage__number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
             <div class="project-stage__body">
               <h3>{stage.title}</h3>
@@ -109,7 +112,7 @@ const mainEntity = {
           <p>Отправьте техническое задание на почту. Если готового ТЗ пока нет, начните с описания задачи — вместе уточним требования и исходные данные.</p>
           <a class="button button-primary" href={contact.projectEmailHref}>Отправить ТЗ<ArrowRight size={20} stroke-width={1.75} aria-hidden="true" focusable="false" /></a>
           <a class="project-brief__email" href={contact.projectEmailHref}>{contact.email}</a>
-          <div class="project-brief__phone"><span>Удобнее обсудить голосом?</span><a href={contact.phoneHref}>{contact.phone}</a><small>Бесплатно по России</small></div>
+          <div class="project-brief__phone"><ContactIllustration /><span>Удобнее обсудить голосом?</span><a href={contact.phoneHref}>{contact.phone}</a><small>Бесплатно по России</small></div>
         </div>
         <div class="project-brief__checklist">
           <h3>Что поможет на старте</h3>
@@ -149,7 +152,8 @@ const mainEntity = {
   .section-heading { max-width: 760px; margin-bottom: 48px; }
   .section-heading > p:last-child { max-width: 53ch; margin: 24px 0 0; color: var(--color-muted); }
   .project-stages { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; margin: 0; padding: 0; list-style: none; }
-  .project-stage { display: flex; align-items: flex-start; gap: 24px; padding-top: 24px; border-top: 1px solid var(--color-line); }
+  .project-stage { display: grid; grid-template-columns: 40px minmax(0, 1fr); align-items: start; gap: 20px 16px; }
+  .project-stage__visual { grid-column: 1 / -1; overflow: hidden; border-radius: var(--radius-leaf-control); }
   .project-stage__number { color: var(--color-green); font-size: clamp(1.75rem, 2.5vw, 2.5rem); font-weight: 700; line-height: 1.1; letter-spacing: -.06em; }
   .project-stage__body { min-width: 0; }
   .project-stage h3 { margin: 0; font-size: clamp(1.25rem, 1.8vw, 1.5rem); font-weight: 700; line-height: 1.35; letter-spacing: -.025em; }

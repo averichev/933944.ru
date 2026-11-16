@@ -27,7 +27,8 @@ const main = index === 0;
   .product-media__photo:focus-visible { outline-offset: -4px; }
   .product-media__photo :global(picture) { display: block; }
   .product-media__photo :global(img) { display: block; width: 100%; height: auto; }
-  .product-media__photo--main { border-radius: var(--radius-leaf-card); }
+  .product-media__photo--main { width: fit-content; max-width: 100%; margin-inline: auto; border-radius: var(--radius-leaf-card); }
+  .product-media__photo--main :global(img) { width: auto; max-width: 100%; max-height: 440px; }
   .product-media__zoom { position: absolute; right: 10px; bottom: 10px; display: inline-flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: var(--radius-leaf-control); background: var(--color-white); color: var(--color-green); font-size: var(--font-size-caption); font-weight: 700; }
   .product-media__photo:hover .product-media__zoom { background: var(--color-yellow); }
 </style>

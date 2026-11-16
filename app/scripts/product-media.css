@@ -15,6 +15,11 @@
 .glightbox-isvo .ginlined-content { padding: 0; }
 .product-lightbox-video { width: 100%; background: #101510; }
 .product-lightbox-video iframe { display: block; width: 100%; height: auto; max-height: calc(100dvh - 180px); aspect-ratio: 16 / 9; border: 0; }
+.product-lightbox-video__link { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 12px; color: white; font-size: var(--font-size-control); text-underline-offset: 4px; }
+@media (max-width: 351px) {
+  /* RUTUBE requires at least 320 × 180. Use the full small-screen width. */
+  .glightbox-isvo .ginner-container:has(> .gslide-inline) { width: 100vw; }
+}
 @media (max-width: 767px) {
   .glightbox-isvo .gprev, .glightbox-isvo .gnext { top: auto; bottom: max(16px, env(safe-area-inset-bottom)); transform: none; }
   .glightbox-isvo .gslide-description { max-height: 18vh; overflow-y: auto; }

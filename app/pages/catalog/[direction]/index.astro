@@ -4,7 +4,7 @@ import ProductLinks from "../../../components/ProductLinks.astro";
 import Breadcrumbs from "../../../components/Breadcrumbs.astro";
 import { equipmentDirections, directionHref, type EquipmentDirection } from "../../../content/equipment";
 import { productHref, productsForDirection } from "../../../content/products";
-import { contact, equipmentNavigation } from "../../../content/site";
+import { contactsNavigation, equipmentNavigation } from "../../../content/site";
 import { absoluteUrl } from "../../../lib/structured-data";
 
 export function getStaticPaths() {
@@ -41,7 +41,7 @@ const mainEntity = {
     <section class="selection" aria-labelledby="selection-title">
       <h2 id="selection-title">Как подобрать технику</h2>
       <p>{direction.selectionAdvice}</p>
-      <a href={contact.emailHref}>Обсудить подбор с ИСВО</a>
+      <a href={contactsNavigation.href + "#contact-panel-title"} data-inquiry="catalog" aria-haspopup="dialog">Обсудить подбор со специалистом</a>
     </section>
   </div>
 </SiteLayout>

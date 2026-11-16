@@ -1,0 +1,43 @@
+---
+interface Props { step: number; }
+const { step } = Astro.props;
+---
+<svg class="process-illustration" viewBox="0 0 360 220" fill="none" aria-hidden="true" focusable="false">
+  <rect width="360" height="220" rx="12" fill="#EDF2E9" />
+  <circle cx="293" cy="49" r="29" fill="#FFCC00" opacity=".55" />
+  <path d="M28 188h304" stroke="#B8C9B8" stroke-width="2" />
+  {step === 0 && <g stroke="#086137" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="124" y="33" width="108" height="132" rx="7" fill="white" />
+    <path d="M151 33v-6h53v12h-53z" fill="#FFCC00" /><path d="M146 67h63M146 82h40M146 101h63M146 116h52" />
+    <circle cx="76" cy="91" r="17" fill="#FFCC00" /><path d="M48 166v-30c0-21 56-21 56 0v30M76 139l40-24M59 167v21M92 167v21" />
+    <circle cx="284" cy="91" r="17" fill="#FFCC00" /><path d="M257 166v-30c0-21 55-21 55 0v30M284 139l-40-24M268 167v21M301 167v21" />
+    <path d="M49 38h49v21H78l-12 9v-9H49zM263 38h49v21h-16l-12 9v-9h-21z" fill="white" />
+    <path d="M59 48h29M273 48h29" stroke-width="2" />
+  </g>}
+  {step === 1 && <g stroke="#086137" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M65 43h231v131H65z" fill="white" /><path d="M65 164h230v10H65z" fill="#D9E5D4" />
+    <path d="M85 63h167M85 83h167M85 103h167M85 123h167M85 143h167M105 53v100M135 53v100M165 53v100M195 53v100M225 53v100" stroke="#D9E5D4" stroke-width="1" />
+    <path d="M102 128h135l-17-19H104z" fill="#FFCC00" /><path d="M125 109V89h61v20M153 89V72h24v17M177 72l9 17M102 109h-10v19" />
+    <circle cx="126" cy="138" r="13" fill="#086137" /><circle cx="214" cy="138" r="13" fill="#086137" />
+    <path d="M90 159h153M90 155v8M243 155v8M261 82v66M257 82h8M257 148h8" stroke-width="2" />
+    <path d="M46 188h268M95 175l-8 13M263 175l8 13" /><path d="M269 62l14-23 9 5-14 23-12 9z" fill="#FFCC00" />
+    <path d="M41 60h25v114H41z" fill="#FFCC00" /><path d="M42 78h11M42 96h7M42 114h11M42 132h7M42 150h11" stroke-width="2" />
+  </g>}
+  {step === 2 && <g stroke="#086137" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M66 154h232v11H66zM79 165v23M284 165v23" fill="#086137" />
+    <path d="M134 151v-35h118v35M146 116v-14h90v14M166 102V87h49v15M155 116l55 35M210 116l-55 35" fill="white" />
+    <path d="M68 89c-9 0-14 7-14 18v29l33 17 11-14-24-19v-14M89 103l29 26 27-5 3 12-31 10-35-26" fill="#FFCC00" />
+    <path d="M70 83l-8-29 32-13 14 34z" fill="#086137" /><path d="M78 62l18-6 4 11-18 6z" stroke="#FFCC00" />
+    <path d="M60 137l-6 44M79 149l-3 32M48 185h16M71 185h15M148 130l8-4" />
+    <path d="M161 121l6-6M165 132h10M161 141l7 7M151 114v-8" stroke="#D99B00" />
+    <path d="M272 77v40M253 97h38M267 59h11" stroke="#B8C9B8" stroke-width="2" />
+  </g>}
+  {step === 3 && <g stroke="#086137" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M47 138h167l-18-25H69z" fill="#FFCC00" /><path d="M81 112V84h57v29M108 84V62h33l16 50M119 62v22M47 138v15h166v-15M160 113h30" fill="white" />
+    <circle cx="82" cy="161" r="26" fill="#086137" /><circle cx="82" cy="161" r="10" stroke="#FFCC00" /><circle cx="184" cy="163" r="23" fill="#086137" /><circle cx="184" cy="163" r="8" stroke="#FFCC00" />
+    <rect x="233" y="46" width="89" height="119" rx="8" fill="white" /><path d="M253 46v-7h49v14h-49z" fill="#FFCC00" />
+    <path d="M247 78l5 5 9-11M273 78h33M247 104l5 5 9-11M273 104h33M247 130l5 5 9-11M273 130h33" />
+    <path d="M31 188h297M221 186l7-10M242 186l7-10M263 186l7-10" stroke="#B8C9B8" />
+  </g>}
+</svg>
+<style>.process-illustration { display: block; width: 100%; height: auto; }</style>

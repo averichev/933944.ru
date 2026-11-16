@@ -7,26 +7,24 @@ import type { Product } from "../content/products";
 interface Props { product: Product; }
 const { product } = Astro.props;
 const photos = product.image ? [product.image, ...(product.gallery ?? [])] : [];
-const single = photos.length === 1;
-const landscape = Boolean(product.image && product.image.src.width > product.image.src.height);
 const largePhotos = await Promise.all(photos.map(photo => getImage({ src: photo.src, width: Math.min(2400, photo.src.width), format: "webp", quality: 85 })));
 const video = product.video;
-const videoHref = video ? `https://www.youtube.com/watch?v=${video.youtubeId}` : undefined;
+const videoHref = video ? `https://rutube.ru/video/${video.rutubeId}/` : undefined;
 ---
-<div class:list={["product-media", { "product-media--single": single, "product-media--landscape": landscape }]} data-product-media>
+<div class="product-media" data-product-media>
   <div class="product-media__photos" role="group" aria-label={`Фотографии ${product.name}`}>
-    {photos[0] && <ProductPhoto photo={photos[0]} href={largePhotos[0].src} index={0} count={photos.length} fullWidth={landscape || single} />}
+    {photos[0] && <ProductPhoto photo={photos[0]} href={largePhotos[0].src} index={0} count={photos.length} fullWidth />}
     {photos.length > 1 && <div class="product-media__thumbnails" data-product-thumbnails>
       {photos.slice(1).map((photo, index) => <ProductPhoto photo={photo} href={largePhotos[index + 1].src} index={index + 1} count={photos.length} />)}
     </div>}
   </div>
   {video && <a class="product-media__video" href={videoHref} data-product-video data-media-title={video.title}
-      data-video-id={video.youtubeId} aria-haspopup="dialog">
+      data-video-id={video.rutubeId} aria-haspopup="dialog">
       <span class="product-media__video-preview">
         <Picture src={video.poster.src} alt={video.poster.alt} width={480} widths={[160, 320, 480]} sizes="(max-width: 639px) 120px, 200px" formats={["avif"]} fallbackFormat="webp" quality={70} loading="lazy" />
         <span class="product-media__play"><Play size={22} stroke-width={1.75} fill="currentColor" aria-hidden="true" focusable="false" /></span>
       </span>
-      <span class="product-media__video-copy"><span class="product-media__video-label">Видео об оборудовании</span><strong>{video.title}</strong></span>
+      <span class="product-media__video-copy"><span class="product-media__video-label">Видео об оборудовании · RUTUBE</span><strong>{video.title}</strong></span>
   </a>}
 </div>
 <script>
@@ -35,17 +33,11 @@ const videoHref = video ? `https://www.youtube.com/watch?v=${video.youtubeId}` :
 </script>
 <style>
   .product-media { min-width: 0; }
-  .product-media__photos { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: start; gap: 10px; }
-  .product-media__thumbnails { min-width: 0; columns: 2; column-gap: 10px; }
+  .product-media__photos { display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; gap: 12px; }
+  .product-media__thumbnails { min-width: 0; columns: 3; column-gap: 10px; }
   .product-media__thumbnails > :global(.product-media__photo) { break-inside: avoid; margin-bottom: 10px; }
   .product-media__thumbnails.is-masonry { columns: auto; }
-  .product-media__thumbnails.is-masonry > :global(.product-media__photo) { width: calc((100% - 10px) / 2); }
-  .product-media--landscape .product-media__photos, .product-media--single .product-media__photos { grid-template-columns: minmax(0, 1fr); }
-  .product-media--landscape .product-media__thumbnails { columns: 3; }
-  .product-media--landscape .product-media__thumbnails.is-masonry { columns: auto; }
-  .product-media--landscape .product-media__thumbnails.is-masonry > :global(.product-media__photo) { width: calc((100% - 20px) / 3); }
-  .product-media--single .product-media__photos > :global(.product-media__photo--main) { width: fit-content; max-width: 100%; }
-  .product-media--single :global(.product-media__photo--main img) { width: auto; max-width: 100%; max-height: 480px; }
+  .product-media__thumbnails.is-masonry > :global(.product-media__photo) { width: calc((100% - 20px) / 3); }
   .product-media__video { display: flex; align-items: center; gap: 18px; overflow: hidden; margin-top: 24px; padding: 12px; border: 1px solid var(--color-line); border-radius: var(--radius-leaf-control); background: var(--color-white); text-decoration: none; transition: border-color var(--duration-fast); }
   .product-media__video:hover { border-color: var(--color-green); }
   .product-media__video-preview { position: relative; flex: 0 0 37%; overflow: hidden; border-radius: 2px; aspect-ratio: 16 / 9; background: var(--color-green); }
@@ -60,8 +52,7 @@ const videoHref = video ? `https://www.youtube.com/watch?v=${video.youtubeId}` :
   @media (max-width: 1023px) { .product-media { max-width: 720px; } }
   @media (max-width: 639px) {
     .product-media__photos { grid-template-columns: minmax(0, 1fr); gap: 12px; }
-    .product-media__photos > :global(.product-media__photo--main) { width: min(100%, 330px); justify-self: center; }
-    .product-media--landscape .product-media__photos > :global(.product-media__photo--main) { width: 100%; }
+    .product-media__photos > :global(.product-media__photo--main) { max-width: 100%; justify-self: center; }
     .product-media__thumbnails { columns: 3; }
     .product-media__thumbnails.is-masonry > :global(.product-media__photo) { width: calc((100% - 20px) / 3); }
     .product-media__video { gap: 12px; margin-top: 20px; padding: 10px; }

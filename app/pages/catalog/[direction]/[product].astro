@@ -8,7 +8,7 @@ import ProductMedia from "../../../components/ProductMedia.astro";
 import ProductSpecifications from "../../../components/ProductSpecifications.astro";
 import { equipmentDirections, directionHref } from "../../../content/equipment";
 import { productHref, products, productsForDirection, type Product } from "../../../content/products";
-import { contact, equipmentNavigation } from "../../../content/site";
+import { contactsNavigation, equipmentNavigation } from "../../../content/site";
 import { absoluteUrl, organizationId } from "../../../lib/structured-data";
 
 export function getStaticPaths() {
@@ -18,7 +18,7 @@ interface Props { product: Product; }
 const { product } = Astro.props;
 const direction = equipmentDirections.find(item => item.id === product.direction)!;
 const related = productsForDirection(product.direction).filter(item => item.slug !== product.slug);
-const emailHref = `mailto:${contact.email}?subject=${encodeURIComponent(`Запрос предложения — ${product.name}`)}`;
+const inquiryHref = `${contactsNavigation.href}?product=${encodeURIComponent(product.name)}#contact-panel-title`;
 const schemaImage = product.image ? await getImage({ src: product.image.src, width: Math.min(1200, product.image.src.width), format: "webp", quality: 65 }) : undefined;
 const breadcrumbs = [
   equipmentNavigation,
@@ -47,10 +47,18 @@ const mainEntity = {
       <div class="product-summary">
         <p class="product-description">{product.description}</p>
         {product.specs.length > 0 && <ProductSpecifications specs={product.specs} />}
-        <a class="button button-primary" href={emailHref}>Запросить предложение<ArrowUpRight size={20} stroke-width={1.5} aria-hidden="true" focusable="false" /></a>
+        {product.specs.some(spec => spec.label.startsWith("Производительность")) && <p class="product-spec-note">Производительность приведена по КП и зависит от культуры, условий работы и организации процесса.</p>}
+        <a class="button button-primary" href={inquiryHref} data-inquiry="product" data-inquiry-product={product.name} aria-haspopup="dialog">Запросить предложение<ArrowUpRight size={20} stroke-width={1.5} aria-hidden="true" focusable="false" /></a>
       </div>
     </div>
-    <section class="product-details" aria-labelledby="details-title"><h2 id="details-title">Особенности и применение</h2><ul>{product.features.map(feature => <li>{feature}</li>)}</ul></section>
+    <div class="product-details-grid">
+      <section class="product-details" aria-labelledby="operation-title"><h2 id="operation-title">Как работает</h2>{product.operation.map(paragraph => <p>{paragraph}</p>)}</section>
+      <section class="product-details" aria-labelledby="details-title"><h2 id="details-title">Особенности и применение</h2><ul>{product.features.map(feature => <li>{feature}</li>)}</ul></section>
+    </div>
+    <section class="product-selection" aria-labelledby="selection-title">
+      <div><p class="eyebrow">Перед заказом</p><h2 id="selection-title">Подберём комплектацию<br />под вашу задачу</h2><a class="button button-primary" href={inquiryHref} data-inquiry="product-selection" data-inquiry-product={product.name} aria-haspopup="dialog">Запросить предложение<ArrowUpRight size={20} stroke-width={1.5} aria-hidden="true" focusable="false" /></a></div>
+      <div>{product.selection.map(paragraph => <p>{paragraph}</p>)}</div>
+    </section>
     <section class="related" aria-labelledby="related-title"><h2 id="related-title">Другая техника направления</h2><ProductLinks products={related} /></section>
   </article>
 </SiteLayout>
@@ -67,10 +75,17 @@ const mainEntity = {
   .product-summary { min-width: 0; max-width: 70ch; }
   .product-description { margin: 0 0 24px; }
   h2 { font-size: clamp(1.5rem, 2vw, 2rem); font-weight: 700; letter-spacing: -.035em; line-height: 1.2; margin: 0 0 24px; }
-  .product-details { margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--color-line); }
+  .product-spec-note { margin: -8px 0 24px; color: var(--color-muted); font-size: var(--font-size-caption); line-height: 1.6; }
+  .product-details-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 48px; }
+  .product-details { min-width: 0; padding-top: 32px; border-top: 1px solid var(--color-line); }
+  .product-details p { max-width: 68ch; margin: 0 0 16px; color: var(--color-muted); }
   .product-details ul { max-width: 72ch; padding-left: 20px; margin: 0; } .product-details li { padding-left: 8px; margin-bottom: 12px; }
   .product-details li::marker { color: var(--color-green); }
+  .product-selection { display: grid; grid-template-columns: 1fr 1.2fr; gap: 32px; margin-top: 40px; padding: clamp(24px, 3vw, 40px); border: 1px solid var(--color-line); border-radius: var(--radius-leaf-card); background: var(--color-white); }
+  .product-selection h2 { margin-bottom: 24px; }
+  .product-selection p:not(.eyebrow) { margin: 0 0 16px; color: var(--color-muted); }
+  .product-selection p:last-child { margin-bottom: 0; }
   .related { margin-top: 56px; }
-  @media (max-width: 1023px) { .product-overview--with-image { grid-template-columns: 1fr; } }
-  @media (max-width: 767px) { .product-page { padding-top: 24px; } .product-heading { display: block; } .product-purpose { display: block; margin-top: 16px; } .product-details, .related { margin-top: 40px; } }
+  @media (max-width: 1023px) { .product-overview--with-image { grid-template-columns: 1fr; } .product-details-grid, .product-selection { grid-template-columns: 1fr; gap: 24px; } }
+  @media (max-width: 767px) { .product-page { padding-top: 24px; } .product-heading { display: block; } .product-purpose { display: block; margin-top: 16px; } .product-details-grid, .related { margin-top: 40px; } }
 </style>

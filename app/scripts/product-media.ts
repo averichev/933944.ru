@@ -80,17 +80,25 @@ for (const media of document.querySelectorAll<HTMLElement>("[data-product-media]
 
       const isVideo = link.hasAttribute("data-product-video");
       if (isVideo) {
-        // Native YouTube embed avoids an additional player and CDN dependencies.
-        // A separate video slide is removed on close, stopping playback completely.
+        // Load the manufacturer's RUTUBE player only after an explicit click.
+        // The inline slide and its iframe are removed when the viewer closes.
         const content = document.createElement("div");
         content.className = "product-lightbox-video";
         const frame = document.createElement("iframe");
-        frame.src = `https://www.youtube-nocookie.com/embed/${link.dataset.videoId}?autoplay=1&playsinline=1&rel=0`;
+        frame.src = `https://rutube.ru/play/embed/${link.dataset.videoId}?autoplay=true`;
         frame.title = link.dataset.mediaTitle ?? "Видео об оборудовании";
         frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
         frame.allowFullscreen = true;
         frame.referrerPolicy = "strict-origin-when-cross-origin";
         content.append(frame);
+        const directLink = document.createElement("a");
+        directLink.className = "product-lightbox-video__link";
+        directLink.href = link.href;
+        directLink.target = "_blank";
+        directLink.rel = "noopener noreferrer";
+        directLink.textContent = "Смотреть на RUTUBE ↗";
+        directLink.setAttribute("aria-label", "Смотреть видео на RUTUBE в новой вкладке");
+        content.append(directLink);
         viewer.setElements([{ type: "inline", content, title: link.dataset.mediaTitle, width: "960px", height: "auto" }]);
       } else {
         const photos = [...media.querySelectorAll<HTMLAnchorElement>("[data-product-photo]")];

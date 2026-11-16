@@ -11,7 +11,7 @@ const title = "Контакты — адрес, телефоны и схема �
 const description = `Свяжитесь с ИСВО: ${contact.phone}, ${contact.email}. ${contact.address.region}, ${contact.address.locality}, ${contact.address.street}. ${contact.workingHours}.`;
 const breadcrumbs = [{ label: "Главная", href: "/" }, contactsNavigation];
 const requestTopics = [
-  { label: "Подобрать технику", text: "Расскажите о культуре, технологии и нужной производительности.", href: contact.emailHref, action: "Написать в отдел продаж" },
+  { label: "Подобрать технику", text: "Расскажите о культуре, технологии и нужной производительности.", href: "#contact-panel-title", action: "Обсудить подбор" },
   { label: "Разработать оборудование", text: "Пришлите техническое задание или описание вашей идеи.", href: individualProjectNavigation.href, action: "Индивидуальный проект" },
   { label: "Запчасти и обслуживание", text: "Укажите модель машины и приложите фотографии узла или детали.", href: sparePartsNavigation.href, action: "Запасные части и сервис" },
 ];
@@ -28,7 +28,7 @@ const requestTopics = [
 
     <section class="contact-panel" aria-labelledby="contact-panel-title">
       <div class="contact-panel__heading">
-        <h2 id="contact-panel-title">Связаться с ИСВО</h2>
+        <h2 id="contact-panel-title">Связаться с нами</h2>
         <span>Инженерия. Производство. Сервис.</span>
       </div>
       <address class="contact-methods">
@@ -49,7 +49,7 @@ const requestTopics = [
     <section class="contacts-visit" aria-labelledby="contacts-visit-title">
       <div class="contacts-visit__details">
         <p class="eyebrow">Адрес и схема проезда</p>
-        <h2 id="contacts-visit-title">Приезжайте<br />в ИСВО</h2>
+        <h2 id="contacts-visit-title">Приезжайте<br />на производство</h2>
         <p class="contacts-office">{contact.officeName}</p>
         <div class="visit-detail">
           <MapPin size={20} stroke-width={1.75} aria-hidden="true" focusable="false" />
@@ -80,7 +80,7 @@ const requestTopics = [
           <li>
             <h3>{topic.label}</h3>
             <p>{topic.text}</p>
-            <a href={topic.href}>{topic.action}<ArrowRight size={18} stroke-width={1.75} aria-hidden="true" focusable="false" /></a>
+            <a href={topic.href} data-inquiry={topic.href === "#contact-panel-title" ? "contacts" : undefined}>{topic.action}<ArrowRight size={18} stroke-width={1.75} aria-hidden="true" focusable="false" /></a>
           </li>
         ))}
       </ul>

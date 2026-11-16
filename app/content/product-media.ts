@@ -1,3 +1,10 @@
+import skr14405 from "../assets/products/details/skr-144/05.jpg";
+import tp903 from "../assets/products/details/tp-9/03.jpg";
+import tp902 from "../assets/products/details/tp-9/02.jpg";
+import tp901 from "../assets/products/details/tp-9/01.jpg";
+import nout1808 from "../assets/products/details/nout-18/08.jpg";
+import nout1807 from "../assets/products/details/nout-18/07.jpg";
+import nout1806 from "../assets/products/details/nout-18/06.jpg";
 import type { ImageMetadata } from "astro";
 import type { Product, ProductImage } from "./products";
 import skr14401 from "../assets/products/details/skr-144/01.jpg";
@@ -74,18 +81,24 @@ import po101 from "../assets/products/po-1/01.jpg";
 import po102 from "../assets/products/po-1/02.jpg";
 
 // Sources and brochure extraction bounds: product-media-sources.json.
-// Video IDs are verified on the manufacturer's channel; omit unavailable media.
+// RUTUBE videos: manufacturer channel 24119343; verified 2026-11-16.
+// Original YouTube IDs and verification sources: product-video-sources.json.
 const photo = (src: ImageMetadata, alt: string): ProductImage => ({ src, alt });
 
 export const productMedia: Record<string, Pick<Product, "image" | "gallery" | "video">> = {
+  "tp-9": {
+    image: photo(tp901, "ТП-9 в прицепе в составе уборочного комплекта с НОУТ-18"),
+    gallery: [photo(tp902, "Продольная подача брокколи транспортером в прицепе"), photo(tp903, "Схема размещения ТП-9 в прицепе за НОУТ-18")],
+  },
   "skr-144": {
     image: photo(skr14401, "Ручная кассетная сеялка СКР-144"),
     gallery: [
+      photo(skr14405, "Кассетная сеялка СКР в сборе с семяпроводами"),
       photo(skr14402, "Высевающие лотки и корпус сеялки СКР-144"),
       photo(skr14403, "Работа с высевающим лотком сеялки"),
       photo(skr14404, "Сеялка, маркер и принадлежности для посева в кассеты"),
     ],
-    video: { youtubeId: "GxiaN1x9vJY", title: "СКР-144, МКР-144 и СП-1-144: инструкция и ответы на вопросы", poster: photo(skr14401, "Ручная кассетная сеялка СКР-144") },
+    video: { rutubeId: "bf175902c8655ed330f38f14da3332f1", title: "СКР-144, МКР-144 и СП-1-144: инструкция и ответы на вопросы", poster: photo(skr14401, "Ручная кассетная сеялка СКР-144") },
   },
   "mkr-144": {
     image: photo(mkr14401, "Маркер МКР-144 с полимерными конусами"),
@@ -93,7 +106,7 @@ export const productMedia: Record<string, Pick<Product, "image" | "gallery" | "v
       photo(mkr14402, "Маркер над рассадной кассетой на посевном столе"),
       photo(mkr14403, "Маркер в комплекте с кассетной сеялкой"),
     ],
-    video: { youtubeId: "GxiaN1x9vJY", title: "СКР-144, МКР-144 и СП-1-144: инструкция и ответы на вопросы", poster: photo(mkr14401, "Маркер МКР-144 с полимерными конусами") },
+    video: { rutubeId: "bf175902c8655ed330f38f14da3332f1", title: "СКР-144, МКР-144 и СП-1-144: инструкция и ответы на вопросы", poster: photo(mkr14401, "Маркер МКР-144 с полимерными конусами") },
   },
   "sp-1-144": {
     image: photo(sp114401, "Посевной стол СП-1-144 с оборудованием для кассет"),
@@ -101,7 +114,7 @@ export const productMedia: Record<string, Pick<Product, "image" | "gallery" | "v
       photo(sp114402, "Рабочая поверхность посевного стола в теплице"),
       photo(sp114403, "Посевной стол СП-1-144 среди рассадных кассет"),
     ],
-    video: { youtubeId: "GxiaN1x9vJY", title: "СКР-144, МКР-144 и СП-1-144: инструкция и ответы на вопросы", poster: photo(sp114401, "Посевной стол СП-1-144 с оборудованием для кассет") },
+    video: { rutubeId: "bf175902c8655ed330f38f14da3332f1", title: "СКР-144, МКР-144 и СП-1-144: инструкция и ответы на вопросы", poster: photo(sp114401, "Посевной стол СП-1-144 с оборудованием для кассет") },
   },
   "kpm": {
     image: photo(kpm01, "Культиватор КПМ на тракторе в поле"),
@@ -111,7 +124,7 @@ export const productMedia: Record<string, Pick<Product, "image" | "gallery" | "v
       photo(kpm04, "Операторы направляют секции КПМ между растениями"),
       photo(kpm05, "Рабочее место оператора культиватора КПМ"),
     ],
-    video: { youtubeId: "YGNmd7U4qkM", title: "Прополка капусты культиваторами КПМ", poster: photo(kpm01, "Культиватор КПМ на тракторе в поле") },
+    video: { rutubeId: "4222bdc70f5e564c4d6bfef85a4af6d1", title: "Прополка капусты культиваторами КПМ", poster: photo(kpm01, "Культиватор КПМ на тракторе в поле") },
   },
   "kpp-4": {
     image: photo(kpp401, "Прополочный культиватор КПП-4 на тракторе"),
@@ -121,17 +134,20 @@ export const productMedia: Record<string, Pick<Product, "image" | "gallery" | "v
       photo(kpp404, "Четырёхрядный культиватор КПП-4"),
       photo(kpp405, "Бункер комплектации КПП-4 с внесением удобрений"),
     ],
-    video: { youtubeId: "DfZM8d1a6oA", title: "Культиватор пропашной прополочный КПП", poster: photo(kpp401, "Прополочный культиватор КПП-4 на тракторе") },
+    video: { rutubeId: "9a8a3b0568220666df1cb03d3aca2288", title: "Прополка свёклы культиватором КПП-4", poster: photo(kpp401, "Прополочный культиватор КПП-4 на тракторе") },
   },
   "nout-18": {
     image: photo(nout1801, "НОУТ-18 на уборке овощей с подачей урожая в прицеп"),
     gallery: [
+      photo(nout1808, "Брокколи на протяжной ленте в прицепе"),
+      photo(nout1807, "Транспортер НОУТ-18 с раскрытыми крыльями"),
+      photo(nout1806, "НОУТ-18 в работе: два крыла по обе стороны трактора"),
       photo(nout1802, "НОУТ-18 со сложенными рабочими крыльями"),
       photo(nout1803, "Передача брокколи с крыла НОУТ-18 на продольную ленту"),
       photo(nout1804, "Схема основной части транспортера НОУТ-18"),
       photo(nout1805, "Схема НОУТ-18 с протяжным транспортером ТП-9"),
     ],
-    video: { youtubeId: "Il3Z62EHaao", title: "Уборка брокколи транспортером НОУТ-18", poster: photo(nout1801, "НОУТ-18 на уборке овощей с подачей урожая в прицеп") },
+    video: { rutubeId: "8e57a6e405645858c65bcedbc1c85747", title: "Уборка брокколи транспортером НОУТ-18", poster: photo(nout1801, "НОУТ-18 на уборке овощей с подачей урожая в прицеп") },
   },
   "pvu-18": {
     image: photo(pvu1801, "Платформа ПВУ-18 с рабочим крылом на уборке овощей"),
@@ -142,7 +158,7 @@ export const productMedia: Record<string, Pick<Product, "image" | "gallery" | "v
       photo(pvu1805, "Схема ПВУ-18 с продольным транспортером"),
       photo(pvu1806, "Вариант ПВУ-18 с селекционным столом"),
     ],
-    video: { youtubeId: "kfiFARWxUOQ", title: "Уборка перца платформой ПВУ-18", poster: photo(pvu1801, "Платформа ПВУ-18 с рабочим крылом на уборке овощей") },
+    video: { rutubeId: "7d9c870c86143606ca69314f85c2af64", title: "Уборка перца платформой ПВУ-18", poster: photo(pvu1801, "Платформа ПВУ-18 с рабочим крылом на уборке овощей") },
   },
   "tus-9p": {
     image: photo(tus9p01, "Транспортер ТУС-9П на уборке салатов"),
@@ -153,7 +169,7 @@ export const productMedia: Record<string, Pick<Product, "image" | "gallery" | "v
       photo(tus9p05, "ТУС-9П на полуприцепе в рабочем положении"),
       photo(tus9p06, "ТУС-9П на полуприцепе в транспортном положении"),
     ],
-    video: { youtubeId: "1d9wL5_fXDA", title: "Уборка салата Айсберг транспортером ТУС-9П", poster: photo(tus9p01, "Транспортер ТУС-9П на уборке салатов") },
+    video: { rutubeId: "aabaae9a0411889ba2a28ef188235ad0", title: "Уборка салата Айсберг транспортером ТУС-9П", poster: photo(tus9p01, "Транспортер ТУС-9П на уборке салатов") },
   },
   "nout-3": {
     image: photo(nout301, "Транспортер НОУТ-3 подаёт капусту с поля"),
@@ -162,7 +178,7 @@ export const productMedia: Record<string, Pick<Product, "image" | "gallery" | "v
       photo(nout303, "НОУТ-3 установлен на прицепе"),
       photo(nout304, "НОУТ-3 при уборке овощей с погрузкой в прицеп"),
     ],
-    video: { youtubeId: "0lLsDNaHNdI", title: "Уборка цукини транспортером НОУТ-3", poster: photo(nout301, "Транспортер НОУТ-3 подаёт капусту с поля") },
+    video: { rutubeId: "19cfb99e9ef805a6584d56837371647e", title: "Уборка цукини транспортером НОУТ-3", poster: photo(nout301, "Транспортер НОУТ-3 подаёт капусту с поля") },
   },
   "nout-5": {
     image: photo(nout501, "НОУТ-5 на уборке капусты с погрузкой в прицеп"),
@@ -171,7 +187,7 @@ export const productMedia: Record<string, Pick<Product, "image" | "gallery" | "v
       photo(nout503, "Рабочая лента комплекта НОУТ-5"),
       photo(nout504, "Подача овощей транспортером НОУТ-5 в прицеп"),
     ],
-    video: { youtubeId: "Bs5x2sj_kJk", title: "Уборка капусты транспортером НОУТ-5", poster: photo(nout501, "НОУТ-5 на уборке капусты с погрузкой в прицеп") },
+    video: { rutubeId: "c6206345a59cfe87a04408093c920b50", title: "Уборка капусты транспортером НОУТ-5", poster: photo(nout501, "НОУТ-5 на уборке капусты с погрузкой в прицеп") },
   },
   "nout-6": {
     image: photo(nout601, "Навесной транспортер НОУТ-6 на уборке капусты"),
@@ -180,11 +196,11 @@ export const productMedia: Record<string, Pick<Product, "image" | "gallery" | "v
       photo(nout603, "Выгрузная часть НОУТ-6 подаёт капусту в прицеп"),
       photo(nout604, "НОУТ-6 со сложенными крыльями на тракторе"),
     ],
-    video: { youtubeId: "9GodS-nJdCI", title: "Транспортер НОУТ-6.1: инструкция по эксплуатации", poster: photo(nout601, "Навесной транспортер НОУТ-6 на уборке капусты") },
+    video: { rutubeId: "5f25f18e3971decb23b01099a5f31822", title: "Транспортер НОУТ-6.1: инструкция по эксплуатации", poster: photo(nout601, "Навесной транспортер НОУТ-6 на уборке капусты") },
   },
   "nout-1": {
     image: photo(nout101, "Лента НОУТ-1 поднимает мешки с поля к прицепу"),
-    video: { youtubeId: "Go6uRHFVOpk", title: "Уборка мешков с картофелем транспортером НОУТ-1", poster: photo(nout101, "Лента НОУТ-1 поднимает мешки с поля к прицепу") },
+    video: { rutubeId: "8054955085357eab7c88514e036697d7", title: "Уборка мешков с картофелем транспортером НОУТ-1", poster: photo(nout101, "Лента НОУТ-1 поднимает мешки с поля к прицепу") },
   },
   "lch-2": {
     image: photo(lch201, "Схема линии ЛЧ-2 с контейнерами, двумя постами очистки и транспортерами"),
@@ -229,6 +245,6 @@ export const productMedia: Record<string, Pick<Product, "image" | "gallery" | "v
       photo(po101, "Пост ПО-1 в работе на линии предпродажной подготовки капусты"),
       photo(po102, "Пост ПО-1 в помещении для хранения и подготовки капусты"),
     ],
-    video: { youtubeId: "egFz48Rl3DM", title: "Пост очистки овощей ПО-1. Инструкция по эксплуатации", poster: photo(po103, "Два оператора очищают капусту на посту ПО-1") },
+    video: { rutubeId: "8f290071db4962ba1092d3f948bc0f1c", title: "Пост очистки овощей ПО-1. Инструкция по эксплуатации", poster: photo(po103, "Два оператора очищают капусту на посту ПО-1") },
   },
 };

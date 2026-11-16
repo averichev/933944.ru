@@ -2,6 +2,7 @@
 import ArrowRight from "@lucide/astro/icons/arrow-right";
 import Menu from "@lucide/astro/icons/menu";
 import X from "@lucide/astro/icons/x";
+import PhoneCall from "@lucide/astro/icons/phone-call";
 import Brand from "./Brand.astro";
 import NavigationLinks from "./NavigationLinks.astro";
 import NavigationContacts from "./NavigationContacts.astro";
@@ -10,7 +11,6 @@ import { contact, equipmentNavigation } from "../content/site";
 import "./navigation.css";
 
 const equipmentCurrent = Astro.url.pathname.startsWith("/catalog/") ? "location" : undefined;
-const EquipmentTag = equipmentCurrent ? "span" : "a";
 ---
 <header class="site-navigation" aria-label="Навигация и контакты ИСВО">
   <Brand />
@@ -21,12 +21,13 @@ const EquipmentTag = equipmentCurrent ? "span" : "a";
 <header class="mobile-header">
   <Brand compact />
   <nav class="mobile-header-actions" aria-label="Быстрая навигация">
-    <EquipmentTag class="mobile-equipment-link" href={equipmentCurrent ? undefined : equipmentNavigation.href} aria-current={equipmentCurrent}>{equipmentNavigation.label}</EquipmentTag>
+    <a class="mobile-equipment-link" href={equipmentNavigation.href} aria-current={equipmentCurrent}>{equipmentNavigation.label}</a>
     <button type="button" class="menu-toggle" aria-label="Открыть меню" aria-controls="mobile-menu" aria-expanded="false">
       <Menu size={18} stroke-width={1.75} aria-hidden="true" focusable="false" /><span>Меню</span>
     </button>
   </nav>
 </header>
+<a class="mobile-call" href={contact.phoneHref} aria-label={`Позвонить: ${contact.phone}, бесплатно по России`}><PhoneCall size={22} stroke-width={1.75} aria-hidden="true" focusable="false" /><span>Позвонить<small>Бесплатно по России</small></span></a>
 <dialog id="mobile-menu" class="mobile-menu" aria-label="Меню сайта">
   <div class="mobile-menu-top">
     <Brand />
@@ -42,12 +43,13 @@ const EquipmentTag = equipmentCurrent ? "span" : "a";
     <X size={20} stroke-width={1.75} aria-hidden="true" focusable="false" />
   </button>
   <p class="dialog-eyebrow">Напрямую с производителем</p>
-  <h2 id="inquiry-title">Обсудим ваше хозяйство</h2>
-  <p id="inquiry-description">Расскажите, какие овощи выращиваете и какую задачу хотите решить. Специалисты ИСВО помогут подобрать оборудование.</p>
+  <h2 id="inquiry-title">Получить предложение</h2>
+  <p id="inquiry-description">Наши специалисты помогут подобрать оборудование и комплектацию. Позвоните нам или отправьте письмо с описанием задачи.</p>
   <a class="dialog-phone" href={contact.phoneHref}>{contact.phone}</a>
   <p class="contact-note">бесплатно по России</p>
-  <a class="button button-primary" href={contact.emailHref}>Написать в отдел продаж<ArrowRight size={20} stroke-width={1.75} aria-hidden="true" focusable="false" /></a>
-  <a class="dialog-email" href={`mailto:${contact.email}`}>{contact.email}</a>
+  <a class="button button-primary" href={contact.phoneHref}><PhoneCall size={20} stroke-width={1.75} aria-hidden="true" focusable="false" />Позвонить специалисту</a>
+  <a class="dialog-email" href={contact.emailHref} data-inquiry-email>Отправить письмо<ArrowRight size={18} stroke-width={1.75} aria-hidden="true" focusable="false" /></a>
+  <p class="dialog-mail-note">{contact.email} · откроется ваша почтовая программа</p>
 </dialog>
 
 <script>

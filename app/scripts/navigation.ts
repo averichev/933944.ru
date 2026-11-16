@@ -1,4 +1,4 @@
-export type InquiryDetail = { source: string; intent: "proposal" | "selection" };
+export type InquiryDetail = { source: string; intent: "proposal" | "selection"; product?: string };
 
 declare global {
   interface DocumentEventMap { "isvo:inquiry": CustomEvent<InquiryDetail> }
@@ -8,6 +8,9 @@ const menu = document.querySelector<HTMLDialogElement>("#mobile-menu")!;
 const inquiry = document.querySelector<HTMLDialogElement>(".inquiry-dialog")!;
 const menuToggle = document.querySelector<HTMLButtonElement>(".menu-toggle")!;
 const inquiryTitle = document.querySelector<HTMLElement>("#inquiry-title")!;
+const inquiryDescription = document.querySelector<HTMLElement>("#inquiry-description")!;
+const inquiryEmail = document.querySelector<HTMLAnchorElement>("[data-inquiry-email]")!;
+const defaultEmailHref = inquiryEmail.href;
 let returnFocus: HTMLElement | null = null;
 
 function restoreVisibleFocus(target: HTMLElement) {
@@ -83,13 +86,19 @@ document.addEventListener("click", (event) => {
   const intent = selection ? "selection" : "proposal";
   returnFocus = menu.contains(target) ? menuToggle : target;
   closeMenu();
-  // A future form can cancel this event to replace the contact dialog.
+  const product = target.dataset.inquiryProduct;
   const useFallback = document.dispatchEvent(new CustomEvent<InquiryDetail>("isvo:inquiry", {
     cancelable: true,
-    detail: { source: target.dataset.inquiry ?? "hero-selector", intent },
+    detail: { source: target.dataset.inquiry ?? "hero-selector", intent, product },
   }));
   if (useFallback) {
-    inquiryTitle.textContent = selection ? "Подберём технику под вашу задачу" : "Обсудим ваше хозяйство";
+    inquiryTitle.textContent = selection ? "Подберём технику под вашу задачу" : "Получить предложение";
+    inquiryDescription.textContent = product
+      ? `Вас интересует ${product}. Наши специалисты уточнят комплектацию и подготовят предложение. Позвоните нам или отправьте письмо.`
+      : "Наши специалисты помогут подобрать оборудование и комплектацию. Позвоните нам или отправьте письмо с описанием задачи.";
+    const email = new URL(defaultEmailHref);
+    if (product) email.search = `?subject=${encodeURIComponent(`Запрос предложения — ${product}`)}`;
+    inquiryEmail.href = email.href;
     inquiry.showModal();
   }
 });
