@@ -7,8 +7,12 @@
     "node": ">=22.19.0"
   },
   "scripts": {
+    "images:products": "node scripts/prepare-product-images.mjs",
+    "predev": "npm run images:products",
     "dev": "astro dev --host 127.0.0.1 --port 4321",
+    "prebuild": "npm run images:products",
     "build": "astro build",
+    "precheck": "npm run images:products",
     "check": "astro check",
     "check:seo": "node scripts/check-seo.mjs",
     "preview": "astro preview --host 127.0.0.1 --port 4321",
@@ -34,6 +38,7 @@
   },
   "dependencies": {
     "glightbox": "3.3.1",
-    "masonry-layout": "4.2.2"
+    "masonry-layout": "4.2.2",
+    "sharp": "0.35.5"
   }
 }
