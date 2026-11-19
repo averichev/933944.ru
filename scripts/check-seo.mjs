@@ -53,6 +53,8 @@ for (const [path, file] of html) {
   const route = path.replace(/index\.html$/, "");
   try {
     const all = await documentFor(file);
+    const copy = [text(all[0]), ...all.flatMap(node => (node.attrs ?? []).filter(({ name }) => ["content", "alt", "title", "aria-label"].includes(name)).map(({ value }) => value))].join(" ");
+    assert(!/(?:^|[^\p{L}\p{N}_])КП(?:$|[^\p{L}\p{N}_])|коммерческ[а-яё]*\s+предложен[а-яё]*/iu.test(copy), "Publish product information directly, without references to commercial proposals");
     const title = text(one(tag(all, "title"), "title"));
     const description = meta(all, "description");
     const h1 = text(one(tag(all, "h1"), "H1"));

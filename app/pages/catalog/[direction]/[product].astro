@@ -47,7 +47,7 @@ const mainEntity = {
       <div class="product-summary">
         <p class="product-description">{product.description}</p>
         {product.specs.length > 0 && <ProductSpecifications specs={product.specs} />}
-        {product.specs.some(spec => spec.label.startsWith("Производительность")) && <p class="product-spec-note">Производительность приведена по КП и зависит от культуры, условий работы и организации процесса.</p>}
+        {product.specs.some(spec => spec.label.startsWith("Производительность")) && <p class="product-spec-note">Фактическая производительность зависит от культуры, условий работы и организации процесса.</p>}
         <a class="button button-primary" href={inquiryHref} data-inquiry="product" data-inquiry-product={product.name} aria-haspopup="dialog">Запросить предложение<ArrowUpRight size={20} stroke-width={1.5} aria-hidden="true" focusable="false" /></a>
       </div>
     </div>
